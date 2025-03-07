@@ -25,7 +25,7 @@ class IntroPage extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -34,7 +34,7 @@ class IntroPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 21,
                       fontFamily: "Poppins",
-                      color: Colors.grey[700],
+                      color: const Color.fromARGB(66, 255, 255, 255),
                     )
                   ),
                   Text(
@@ -45,6 +45,65 @@ class IntroPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.deepOrange[400]
                     )
+                  ),
+                  Text(
+                    "Share your meals with the community and earn some cash while doing it!",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: "Poppins",
+                      color: Colors.grey[600]
+                    )
+                  ),
+                  SizedBox(height: 20),
+
+                  // Login and Signup buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Navigate to login
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepOrange,
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )
+                          ),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black
+                            )
+                          )
+                        )
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            // Navigate to Sign up
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: Colors.deepOrange),
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )
+                          ),
+                          child: Text(
+                            "Signup",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.deepOrange
+                            )
+                          )
+                        )
+                      )
+                    ]
                   )
                 ]
               ),
