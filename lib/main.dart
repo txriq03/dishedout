@@ -7,10 +7,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  final String name = "Tariq Mullings";
-  final int age = 22;
-  final bool isPremium = false;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
