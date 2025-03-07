@@ -1,3 +1,5 @@
+import 'package:dishedout/pages/login.dart';
+import 'package:dishedout/pages/signup.dart';
 import 'package:flutter/material.dart';
 
 
@@ -24,8 +26,9 @@ class IntroPage extends StatelessWidget {
               )
             ),
 
+            // Rest of the elements below image
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -43,7 +46,7 @@ class IntroPage extends StatelessWidget {
                       fontSize: 55,
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.bold,
-                      color: Colors.deepOrange[400]
+                      color: Colors.deepOrange[500]
                     )
                   ),
                   Text(
@@ -51,7 +54,7 @@ class IntroPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: "Poppins",
-                      color: Colors.grey[600]
+                      color: const Color.fromARGB(150, 255, 255, 255)
                     )
                   ),
                   SizedBox(height: 20),
@@ -64,6 +67,9 @@ class IntroPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             // Navigate to login
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => const Login())
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.deepOrange,
@@ -86,6 +92,9 @@ class IntroPage extends StatelessWidget {
                         child: OutlinedButton(
                           onPressed: () {
                             // Navigate to Sign up
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => const Signup())
+                            );
                           },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Colors.deepOrange),

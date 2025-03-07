@@ -64,6 +64,8 @@ flutter:
     - assets/meat.jpg
     - assets/noodles.jpg
     - assets/pancake.jpg
+    - assets/signup.svg
+    - assets/login.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
