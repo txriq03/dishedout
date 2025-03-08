@@ -33,6 +33,8 @@ class IntroPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+                      // Text elements
                       Text(
                         "Welcome to",
                         style: TextStyle(
@@ -55,7 +57,7 @@ class IntroPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: "Poppins",
-                          color: const Color.fromARGB(150, 255, 255, 255),
+                          color: Colors.grey[400],
                         ),
                       ),
                       SizedBox(height: 20),
@@ -75,7 +77,7 @@ class IntroPage extends StatelessWidget {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepOrange,
+                                backgroundColor: Colors.white,
                                 padding: EdgeInsets.symmetric(vertical: 15),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -102,7 +104,7 @@ class IntroPage extends StatelessWidget {
                                 );
                               },
                               style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: Colors.deepOrange),
+                                side: BorderSide(color: Colors.white),
                                 padding: EdgeInsets.symmetric(vertical: 15),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -112,7 +114,7 @@ class IntroPage extends StatelessWidget {
                                 "Signup",
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: Colors.deepOrange,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
