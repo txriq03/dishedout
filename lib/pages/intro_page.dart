@@ -28,7 +28,7 @@ class IntroPage extends StatelessWidget {
 
             // Rest of the elements below image
             Padding(
-              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 10, left: 25, right: 25),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
