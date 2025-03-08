@@ -74,10 +74,10 @@ class _SignupFormState extends State<SignupForm> {
             cursorColor: Colors.deepOrange[200],
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(255, 255, 60, 0)),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepOrange)
+                borderSide: BorderSide(color: Colors.transparent)
               ),
               filled: true,
               fillColor: const Color.fromARGB(106, 255, 204, 188),
@@ -89,10 +89,10 @@ class _SignupFormState extends State<SignupForm> {
             cursorColor: Colors.deepOrange[200],
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepOrange),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepOrange)
+                borderSide: BorderSide(color: Colors.transparent)
               ),
               filled: true,
               fillColor: const Color.fromARGB(106, 255, 204, 188),
@@ -104,10 +104,10 @@ class _SignupFormState extends State<SignupForm> {
             cursorColor: Colors.deepOrange[200],
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepOrange),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepOrange)
+                borderSide: BorderSide(color: Colors.transparent)
               ),
               filled: true,
               fillColor: const Color.fromARGB(106, 255, 204, 188),
