@@ -8,7 +8,7 @@ class Signup extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Color.fromARGB(255, 20, 20, 20),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -97,7 +97,7 @@ class _SignupFormState extends State<SignupForm> {
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color accentColor = Colors.deepOrange[400] as Color;
   final Color primaryColor = Color.fromARGB(106, 255, 204, 188);
-  final Color backgroundFieldColor = Color.fromARGB(255, 49, 49, 49);
+  final Color backgroundFieldColor = Colors.grey[900] as Color;
 
   String? isFieldValid(String? value, String type) {
     if (value == null || value.isEmpty) {
