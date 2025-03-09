@@ -98,16 +98,25 @@ class _SignupFormState extends State<SignupForm> {
   bool _isConfirmPasswordHidden = true;
 
   late TextEditingController _usernameController;
-  bool _showClearButton = false;
+  late TextEditingController _emailController;
+  bool _showUsernameClearButton = false;
+  bool _showEmailClearButton = false;
 
   @override
   void initState() {
     super.initState();
     _usernameController = TextEditingController();
+    _emailController = TextEditingController();
+
+    _emailController.addListener(() {
+      setState(() {
+        _showEmailClearButton = _emailController.text.isNotEmpty;
+      });
+    });
 
     _usernameController.addListener(() {
       setState(() {
-        _showClearButton = _usernameController.text.isNotEmpty;
+        _showUsernameClearButton = _usernameController.text.isNotEmpty;
       });
     });
   }
@@ -115,6 +124,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   void dispose() {
     _usernameController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -138,6 +148,7 @@ class _SignupFormState extends State<SignupForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
+
           // Input fields
           TextFormField(
             controller: _usernameController,
@@ -151,13 +162,13 @@ class _SignupFormState extends State<SignupForm> {
                 semanticLabel: 'Input display name here',
               ),
               suffixIcon:
-                  _showClearButton
+                  _showUsernameClearButton
                       ? IconButton(
                         icon: Icon(Icons.clear, color: Colors.grey[500]),
                         onPressed: () {
                           _usernameController.clear();
                           setState(() {
-                            _showClearButton = false;
+                            _showUsernameClearButton = false;
                           });
                         },
                       )
@@ -192,6 +203,7 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(height: 15),
 
           TextFormField(
+            controller: _emailController,
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
@@ -201,6 +213,18 @@ class _SignupFormState extends State<SignupForm> {
                 color: Colors.grey[600],
                 semanticLabel: 'Input email here',
               ),
+              suffixIcon:
+                  _showEmailClearButton
+                      ? IconButton(
+                        icon: Icon(Icons.clear, color: Colors.grey[500]),
+                        onPressed: () {
+                          _emailController.clear();
+                          setState(() {
+                            _showEmailClearButton = false;
+                          });
+                        },
+                      )
+                      : null,
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(15),
