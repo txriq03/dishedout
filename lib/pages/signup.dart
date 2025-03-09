@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Signup extends StatelessWidget {
-  const Signup({ super.key });
+  const Signup({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -18,20 +18,23 @@ class Signup extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 10, 
+                        top: 10,
                         left: 16,
                         child: BackButton(
                           color: Colors.white,
                           onPressed: () {
                             Navigator.pop(context);
-                          }
-                        )
-                      )
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.symmetric(vertical: 25, horizontal: 25),
+                  padding: EdgeInsetsDirectional.symmetric(
+                    vertical: 25,
+                    horizontal: 25,
+                  ),
                   child: Column(
                     children: [
                       Text(
@@ -40,16 +43,13 @@ class Signup extends StatelessWidget {
                           fontFamily: "Poppins",
                           fontSize: 52,
                           color: Colors.deepOrange[400],
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(height: 2),
                       Text(
                         "Create your account",
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.grey[300]
-                        ),
+                        style: TextStyle(fontSize: 24, color: Colors.grey[300]),
                       ),
                       SizedBox(height: 35),
                       SignupForm(),
@@ -59,35 +59,30 @@ class Signup extends StatelessWidget {
                         children: [
                           Text(
                             "Already have an account?",
-                            style: TextStyle(
-                              color: Colors.grey[400]
-                            ),
+                            style: TextStyle(color: Colors.grey[400]),
                           ),
                           SizedBox(width: 5),
                           Text(
                             "Sign in",
-                            style: TextStyle(
-                              color: Colors.deepOrange[400]
-                            ),
-                          )
+                            style: TextStyle(color: Colors.deepOrange[400]),
+                          ),
                         ],
                       ),
-                      SizedBox(height: 20)
+                      SizedBox(height: 20),
                     ],
-                  )
-                )
-                    
-              ]
-            )
+                  ),
+                ),
+              ],
+            ),
           ),
-        )
-      )
+        ),
+      ),
     );
   }
 }
 
 class SignupForm extends StatefulWidget {
-  const SignupForm({ super.key });
+  const SignupForm({super.key});
 
   @override
   State<SignupForm> createState() => _SignupFormState();
@@ -98,6 +93,30 @@ class _SignupFormState extends State<SignupForm> {
   final Color accentColor = Colors.deepOrange[400] as Color;
   final Color primaryColor = Color.fromARGB(106, 255, 204, 188);
   final Color backgroundFieldColor = Colors.grey[900] as Color;
+
+  bool _isPasswordHidden = true;
+  bool _isConfirmPasswordHidden = true;
+
+  late TextEditingController _usernameController;
+  bool _showClearButton = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+
+    _usernameController.addListener(() {
+      setState(() {
+        _showClearButton = _usernameController.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
 
   String? isFieldValid(String? value, String type) {
     if (value == null || value.isEmpty) {
@@ -119,9 +138,9 @@ class _SignupFormState extends State<SignupForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-
           // Input fields
           TextFormField(
+            controller: _usernameController,
             cursorColor: Colors.deepOrange,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
@@ -131,21 +150,33 @@ class _SignupFormState extends State<SignupForm> {
                 color: Colors.grey[600],
                 semanticLabel: 'Input display name here',
               ),
+              suffixIcon:
+                  _showClearButton
+                      ? IconButton(
+                        icon: Icon(Icons.clear, color: Colors.grey[500]),
+                        onPressed: () {
+                          _usernameController.clear();
+                          setState(() {
+                            _showClearButton = false;
+                          });
+                        },
+                      )
+                      : null,
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               errorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedErrorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               filled: true,
               fillColor: backgroundFieldColor,
@@ -156,9 +187,10 @@ class _SignupFormState extends State<SignupForm> {
                 fontSize: 14,
               ),
             ),
-            validator: (value) => isFieldValid(value, "username")
+            validator: (value) => isFieldValid(value, "username"),
           ),
           SizedBox(height: 15),
+
           TextFormField(
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.deepOrange,
@@ -171,21 +203,21 @@ class _SignupFormState extends State<SignupForm> {
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               errorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedErrorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
-             
+
               filled: true,
               fillColor: backgroundFieldColor,
               labelText: 'Email',
@@ -195,9 +227,10 @@ class _SignupFormState extends State<SignupForm> {
                 fontSize: 14,
               ),
             ),
-            validator: (value) => isFieldValid(value, "email")
+            validator: (value) => isFieldValid(value, "email"),
           ),
           SizedBox(height: 15),
+
           TextFormField(
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.deepOrange,
@@ -208,25 +241,34 @@ class _SignupFormState extends State<SignupForm> {
                 color: Colors.grey[600],
                 semanticLabel: 'Input password',
               ),
-              suffixIcon: Icon(
-                Icons.visibility_off_rounded,
-                color: Colors.grey[500],
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isPasswordHidden
+                      ? Icons.visibility_off_rounded
+                      : Icons.visibility_rounded,
+                  color: Colors.grey[500],
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isPasswordHidden = !_isPasswordHidden;
+                  });
+                },
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               errorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedErrorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               filled: true,
               fillColor: backgroundFieldColor,
@@ -235,12 +277,13 @@ class _SignupFormState extends State<SignupForm> {
                 color: Colors.grey[600],
                 fontFamily: 'Poppins',
                 fontSize: 14,
-              )
+              ),
             ),
-            obscureText: true,
-            validator: (value) => isFieldValid(value, "password")
+            obscureText: _isPasswordHidden,
+            validator: (value) => isFieldValid(value, "password"),
           ),
           SizedBox(height: 15),
+
           TextFormField(
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.deepOrange,
@@ -251,25 +294,34 @@ class _SignupFormState extends State<SignupForm> {
                 color: Colors.grey[600],
                 semanticLabel: 'Confirm your password',
               ),
-              suffixIcon: Icon(
-                Icons.visibility_off_rounded,
-                color: Colors.grey[500],
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isConfirmPasswordHidden
+                      ? Icons.visibility_off_rounded
+                      : Icons.visibility_rounded,
+                  color: Colors.grey[500],
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isConfirmPasswordHidden = !_isConfirmPasswordHidden;
+                  });
+                },
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               errorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               focusedErrorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
               ),
               filled: true,
               fillColor: backgroundFieldColor,
@@ -278,15 +330,13 @@ class _SignupFormState extends State<SignupForm> {
                 color: Colors.grey[600],
                 fontFamily: 'Poppins',
                 fontSize: 14,
-              )
+              ),
             ),
-            obscureText: true,
-            validator: (value) => isFieldValid(value, "password")
+            obscureText: _isConfirmPasswordHidden,
+            validator: (value) => isFieldValid(value, "password"),
           ),
-          
           SizedBox(height: 35),
-          
-          
+
           // Sign up button
           Container(
             decoration: BoxDecoration(
@@ -295,9 +345,9 @@ class _SignupFormState extends State<SignupForm> {
                   color: Colors.deepOrange.withValues(alpha: 0.5),
                   blurRadius: 15,
                   spreadRadius: 0.1,
-                )
+                ),
               ],
-              borderRadius: BorderRadius.circular(25)
+              borderRadius: BorderRadius.circular(25),
             ),
             child: FilledButton(
               onPressed: () {
@@ -307,63 +357,57 @@ class _SignupFormState extends State<SignupForm> {
                 minimumSize: Size(double.infinity, 55),
                 backgroundColor: Colors.deepOrange[400],
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)
-                )
+                  borderRadius: BorderRadius.circular(25),
+                ),
               ),
-              child: Text("Sign up", style: TextStyle(fontSize: 18))
+              child: Text("Sign up", style: TextStyle(fontSize: 18)),
             ),
           ),
-          
+
           // Divider
           Row(
             children: [
-              Expanded(child: Divider(
-                color: Colors.grey[700],
-                thickness: 2,
-                
-              )),
+              Expanded(child: Divider(color: Colors.grey[700], thickness: 2)),
               Padding(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 35),
+                padding: EdgeInsetsDirectional.symmetric(
+                  horizontal: 10,
+                  vertical: 35,
+                ),
                 child: Text(
                   "Or continue with",
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 16,
-                    color: Colors.white
+                    color: Colors.white,
                   ),
                 ),
               ),
-              Expanded(child: Divider(
-                color: Colors.grey[700],
-                thickness: 2,
-              ))
-            ]
+              Expanded(child: Divider(color: Colors.grey[700], thickness: 2)),
+            ],
           ),
 
           // Google button
           OutlinedButton(
-            onPressed: () {
-
-            },
+            onPressed: () {},
             style: OutlinedButton.styleFrom(
               backgroundColor: backgroundFieldColor,
               minimumSize: Size(double.infinity, 55),
               side: BorderSide(color: Colors.transparent, width: 0.5),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15)
-              )
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
             child: Text(
               'Continue with Google',
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 16,
-                color: Colors.white
+                color: Colors.white,
               ),
-            )
-          )
-        ]
-      )
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
