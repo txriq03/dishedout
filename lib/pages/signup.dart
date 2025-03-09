@@ -121,6 +121,14 @@ class _SignupFormState extends State<SignupForm> {
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(12)
               ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
               filled: true,
               fillColor: backgroundFieldColor,
               labelText: 'Display name',
@@ -129,7 +137,7 @@ class _SignupFormState extends State<SignupForm> {
                 fontFamily: 'Poppins'
               ),
             ),
-            validator: (value) => isFieldValid(value, "email")
+            validator: (value) => isFieldValid(value, "username")
           ),
           SizedBox(height: 15),
           TextFormField(
@@ -149,6 +157,15 @@ class _SignupFormState extends State<SignupForm> {
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(12)
               ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
+             
               filled: true,
               fillColor: backgroundFieldColor,
               labelText: 'Email',
@@ -156,7 +173,8 @@ class _SignupFormState extends State<SignupForm> {
                 color: Colors.grey[600],
                 fontFamily: 'Poppins'
               ),
-            )
+            ),
+            validator: (value) => isFieldValid(value, "email")
           ),
           SizedBox(height: 15),
           TextFormField(
@@ -166,18 +184,25 @@ class _SignupFormState extends State<SignupForm> {
               prefixIcon: Icon(
                 Icons.lock_rounded,
                 color: Colors.grey[700],
-                semanticLabel: 'Input display name here',
+                semanticLabel: 'Input password',
               ),
               suffixIcon: Icon(
                 Icons.visibility_off_rounded,
                 color: Colors.grey[500],
-                semanticLabel: 'Input display name here',
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(12)
               ),
               focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(12)
               ),
@@ -189,6 +214,7 @@ class _SignupFormState extends State<SignupForm> {
                 fontFamily: 'Poppins'
               )
             ),
+            obscureText: true,
             validator: (value) => isFieldValid(value, "password")
           ),
           SizedBox(height: 15),
@@ -199,18 +225,25 @@ class _SignupFormState extends State<SignupForm> {
               prefixIcon: Icon(
                 Icons.lock_rounded,
                 color: Colors.grey[700],
-                semanticLabel: 'Input display name here',
+                semanticLabel: 'Confirm your password',
               ),
               suffixIcon: Icon(
                 Icons.visibility_off_rounded,
                 color: Colors.grey[500],
-                semanticLabel: 'Input display name here',
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(12)
               ),
               focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(12)
               ),
@@ -222,6 +255,7 @@ class _SignupFormState extends State<SignupForm> {
                 fontFamily: 'Poppins'
               )
             ),
+            obscureText: true,
             validator: (value) => isFieldValid(value, "password")
           ),
           
@@ -281,14 +315,16 @@ class _SignupFormState extends State<SignupForm> {
             ]
           ),
 
-          ElevatedButton(
+          // Google button
+          OutlinedButton(
             onPressed: () {
 
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundFieldColor,
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.transparent,
               minimumSize: Size(double.infinity, 55),
               shape: RoundedRectangleBorder(
+                side: BorderSide(color: accentColor, width: 2),
                 borderRadius: BorderRadius.circular(15)
               )
             ),
