@@ -9,49 +9,49 @@ class Signup extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[900],
         body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+          child: SingleChildScrollView(
             child: Column(
               children: [
-               // This is the image
-              SizedBox(
-                height: 250,
-                child: SvgPicture.asset(
-                  'assets/signup.svg',
-                  fit: BoxFit.contain,
+                SizedBox(
+                  height: 70,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 10, 
+                        left: 16,
+                        child: BackButton(color: Colors.white)
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 50, horizontal: 15),
+                  child: Column(
+                    children: [
+                      Text(
+                        "DishedOut",
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 52,
+                          color: Colors.deepOrange[400],
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "Create your account",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.grey[300]
+                        ),
+                      )
+                    ],
+                  )
                 )
-              ),
-              
-              Spacer(),
-              Column(
-                children: [
-                  Text(
-                    "Sign up",
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                  Text(
-                    "Let's get your information!",
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 21,
-                      color: Colors.grey[500]
-                    )
-                  ),
-                        
-                  Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: SignupForm()
-                  ),
-                ]
-              ),
-              Spacer()
-            ]
+                    
+              ]
             )
           ),
         )
