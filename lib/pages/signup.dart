@@ -64,7 +64,7 @@ class Signup extends StatelessWidget {
                               color: Colors.grey[400]
                             ),
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: 5),
                           Text(
                             "Sign in",
                             style: TextStyle(
