@@ -32,7 +32,7 @@ class Signup extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.symmetric(vertical: 50, horizontal: 25),
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 25, horizontal: 25),
                   child: Column(
                     children: [
                       Text(
@@ -44,7 +44,7 @@ class Signup extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 2),
                       Text(
                         "Create your account",
                         style: TextStyle(
@@ -52,7 +52,7 @@ class Signup extends StatelessWidget {
                           color: Colors.grey[300]
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 35),
                       SignupForm()
 
 
@@ -324,7 +324,7 @@ class _SignupFormState extends State<SignupForm> {
               backgroundColor: Colors.transparent,
               minimumSize: Size(double.infinity, 55),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: accentColor, width: 2),
+                side: BorderSide(color: accentColor, width: 0.5),
                 borderRadius: BorderRadius.circular(15)
               )
             ),
