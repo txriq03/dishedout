@@ -53,9 +53,27 @@ class Signup extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 35),
-                      SignupForm()
-
-
+                      SignupForm(),
+                      SizedBox(height: 25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already have an account?",
+                            style: TextStyle(
+                              color: Colors.grey[400]
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Sign in",
+                            style: TextStyle(
+                              color: Colors.deepOrange[400]
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 20)
                     ],
                   )
                 )
