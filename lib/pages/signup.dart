@@ -128,7 +128,7 @@ class _SignupFormState extends State<SignupForm> {
               contentPadding: EdgeInsets.symmetric(vertical: 8),
               prefixIcon: Icon(
                 Icons.account_circle,
-                color: Colors.grey[700],
+                color: Colors.grey[600],
                 semanticLabel: 'Input display name here',
               ),
               enabledBorder: UnderlineInputBorder(
@@ -166,7 +166,7 @@ class _SignupFormState extends State<SignupForm> {
               contentPadding: EdgeInsets.symmetric(vertical: 8),
               prefixIcon: Icon(
                 Icons.alternate_email_rounded,
-                color: Colors.grey[700],
+                color: Colors.grey[600],
                 semanticLabel: 'Input email here',
               ),
               enabledBorder: UnderlineInputBorder(
@@ -205,7 +205,7 @@ class _SignupFormState extends State<SignupForm> {
               contentPadding: EdgeInsets.symmetric(vertical: 8),
               prefixIcon: Icon(
                 Icons.lock_rounded,
-                color: Colors.grey[700],
+                color: Colors.grey[600],
                 semanticLabel: 'Input password',
               ),
               suffixIcon: Icon(
@@ -248,7 +248,7 @@ class _SignupFormState extends State<SignupForm> {
               contentPadding: EdgeInsets.symmetric(vertical: 8),
               prefixIcon: Icon(
                 Icons.lock_rounded,
-                color: Colors.grey[700],
+                color: Colors.grey[600],
                 semanticLabel: 'Confirm your password',
               ),
               suffixIcon: Icon(
@@ -346,10 +346,10 @@ class _SignupFormState extends State<SignupForm> {
 
             },
             style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.transparent,
+              backgroundColor: backgroundFieldColor,
               minimumSize: Size(double.infinity, 55),
+              side: BorderSide(color: Colors.transparent, width: 0.5),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: accentColor, width: 0.5),
                 borderRadius: BorderRadius.circular(15)
               )
             ),
