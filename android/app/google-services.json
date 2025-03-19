@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "876880650082",
+    "project_id": "dishedout-6fdf2",
+    "storage_bucket": "dishedout-6fdf2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876880650082:android:4d9b89b745fb9b27e3d63b",
+        "android_client_info": {
+          "package_name": "com.dishedout.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFSymV95xhDHh2sBMuhlTFaFFzK5YoSlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876880650082:android:23314750e9c4706ae3d63b",
+        "android_client_info": {
+          "package_name": "com.example.foodle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFSymV95xhDHh2sBMuhlTFaFFzK5YoSlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
