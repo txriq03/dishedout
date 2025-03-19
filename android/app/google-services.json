@@ -12,7 +12,20 @@
           "package_name": "com.dishedout.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "876880650082-0sdbhopi5if079anba8uikprn31eruq7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dishedout.app",
+            "certificate_hash": "fcb17e8491c1765cb51538c68102b39e4608ded1"
+          }
+        },
+        {
+          "client_id": "876880650082-90gqkkm4ekk335vr26k2c0gr04mn0k32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCFSymV95xhDHh2sBMuhlTFaFFzK5YoSlc"
@@ -20,26 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:876880650082:android:23314750e9c4706ae3d63b",
-        "android_client_info": {
-          "package_name": "com.example.foodle"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCFSymV95xhDHh2sBMuhlTFaFFzK5YoSlc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876880650082-90gqkkm4ekk335vr26k2c0gr04mn0k32.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "876880650082-jq2g7fie5gmnva82gf0uk9qbe9vf6qqq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dishedout.app"
+              }
+            }
+          ]
         }
       }
     }
