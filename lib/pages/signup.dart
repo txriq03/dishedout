@@ -51,7 +51,7 @@ class Signup extends StatelessWidget {
                       SizedBox(height: 2),
                       Text(
                         "Create your account",
-                        style: TextStyle(fontSize: 24, color: Colors.grey[300]),
+                        style: TextStyle(fontSize: 28, color: Colors.grey[300], fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 35),
                       SignupForm(),
@@ -101,6 +101,8 @@ class _SignupFormState extends State<SignupForm> {
 
   late TextEditingController _usernameController;
   late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  late TextEditingController _confirmPasswordController;
   bool _showUsernameClearButton = false;
   bool _showEmailClearButton = false;
 
@@ -109,6 +111,8 @@ class _SignupFormState extends State<SignupForm> {
     super.initState();
     _usernameController = TextEditingController();
     _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
 
     _emailController.addListener(() {
       setState(() {
@@ -127,6 +131,8 @@ class _SignupFormState extends State<SignupForm> {
   void dispose() {
     _usernameController.dispose();
     _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -151,7 +157,7 @@ class _SignupFormState extends State<SignupForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
 
-          // Input fields
+          // Username field
           TextFormField(
             controller: _usernameController,
             cursorColor: Colors.deepOrange,
@@ -204,6 +210,7 @@ class _SignupFormState extends State<SignupForm> {
           ),
           SizedBox(height: 15),
 
+          // Email field
           TextFormField(
             controller: _emailController,
             style: TextStyle(color: Colors.white),
@@ -257,7 +264,9 @@ class _SignupFormState extends State<SignupForm> {
           ),
           SizedBox(height: 15),
 
+          // Password field
           TextFormField(
+            controller: _passwordController,
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
@@ -310,7 +319,9 @@ class _SignupFormState extends State<SignupForm> {
           ),
           SizedBox(height: 15),
 
+          // Confirm password field
           TextFormField(
+            controller: _confirmPasswordController,
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
@@ -376,8 +387,45 @@ class _SignupFormState extends State<SignupForm> {
               borderRadius: BorderRadius.circular(25),
             ),
             child: FilledButton(
-              onPressed: () {
-                _formGlobalKey.currentState!.validate();
+              onPressed: () async {
+                if (_formGlobalKey.currentState!.validate()) {
+                  if (_passwordController.text != _confirmPasswordController.text) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Passwords do not match.")),
+                    );
+                    return;
+                  }
+                }
+
+                try {
+                  UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim()
+                  );
+
+                  // Update display name
+                  await userCredential.user!.updateDisplayName(_usernameController.text.trim());
+
+                  // Navigate to home screen here
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Account created successfully!"))
+                  );
+                } on FirebaseAuthException catch (e) {
+                  print("Failed with error code: ${e.code}");
+                  print(e.message);
+                  
+                  String message = e.message ?? "An unknown error occurred.";
+
+                  if (e.code == 'email-already-in-use') {
+                    message = "Email already in use.";
+                  } else if (e.code == 'weak-password') {
+                    message = "Password should be at least 6 characters";
+                  }
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(message))
+                  );
+                }
               },
               style: FilledButton.styleFrom(
                 minimumSize: Size(double.infinity, 55),

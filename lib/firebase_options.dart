@@ -64,6 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '876880650082',
     projectId: 'dishedout-6fdf2',
     storageBucket: 'dishedout-6fdf2.firebasestorage.app',
+    androidClientId: '876880650082-0sdbhopi5if079anba8uikprn31eruq7.apps.googleusercontent.com',
+    iosClientId: '876880650082-jq2g7fie5gmnva82gf0uk9qbe9vf6qqq.apps.googleusercontent.com',
     iosBundleId: 'com.dishedout.app',
   );
 
