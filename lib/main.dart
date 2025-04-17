@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dishedout/pages/intro_page.dart';
+import 'package:dishedout/pages/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:dishedout/auth.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            return IntroPage(); // Logged in
+            return HomePage(); // Logged in
           }
 
           return IntroPage();
