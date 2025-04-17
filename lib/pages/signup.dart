@@ -95,6 +95,7 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
+  final auth = Auth();
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color accentColor = Colors.deepOrange[400] as Color;
   final Color primaryColor = Color.fromARGB(106, 255, 204, 188);
@@ -402,7 +403,7 @@ class _SignupFormState extends State<SignupForm> {
                 }
 
                 try {
-                  UserCredential userCredential = await FirebaseAuth.instance
+                  UserCredential userCredential = await auth
                       .createUserWithEmailAndPassword(
                         email: _emailController.text.trim(),
                         password: _passwordController.text.trim(),
