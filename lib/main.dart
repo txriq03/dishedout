@@ -11,6 +11,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  MyApp({super.key});
   final Auth _auth = Auth();
 
   @override
