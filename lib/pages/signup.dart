@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:dishedout/auth.dart';
 
 class Signup extends StatelessWidget {
   const Signup({super.key});
@@ -51,7 +51,11 @@ class Signup extends StatelessWidget {
                       SizedBox(height: 2),
                       Text(
                         "Create your account",
-                        style: TextStyle(fontSize: 28, color: Colors.grey[300], fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: Colors.grey[300],
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 35),
                       SignupForm(),
@@ -156,7 +160,6 @@ class _SignupFormState extends State<SignupForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-
           // Username field
           TextFormField(
             controller: _usernameController,
@@ -389,7 +392,8 @@ class _SignupFormState extends State<SignupForm> {
             child: FilledButton(
               onPressed: () async {
                 if (_formGlobalKey.currentState!.validate()) {
-                  if (_passwordController.text != _confirmPasswordController.text) {
+                  if (_passwordController.text !=
+                      _confirmPasswordController.text) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Passwords do not match.")),
                     );
@@ -398,22 +402,25 @@ class _SignupFormState extends State<SignupForm> {
                 }
 
                 try {
-                  UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim()
-                  );
+                  UserCredential userCredential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim(),
+                      );
 
                   // Update display name
-                  await userCredential.user!.updateDisplayName(_usernameController.text.trim());
+                  await userCredential.user!.updateDisplayName(
+                    _usernameController.text.trim(),
+                  );
 
                   // Navigate to home screen here
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Account created successfully!"))
+                    SnackBar(content: Text("Account created successfully!")),
                   );
                 } on FirebaseAuthException catch (e) {
                   print("Failed with error code: ${e.code}");
                   print(e.message);
-                  
+
                   String message = e.message ?? "An unknown error occurred.";
 
                   if (e.code == 'email-already-in-use') {
@@ -422,9 +429,9 @@ class _SignupFormState extends State<SignupForm> {
                     message = "Password should be at least 6 characters";
                   }
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(message))
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(message)));
                 }
               },
               style: FilledButton.styleFrom(
