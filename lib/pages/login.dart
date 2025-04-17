@@ -1,86 +1,83 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:dishedout/auth.dart';
+import 'package:dishedout/pages/homepage.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 20, 20, 20),
-        body: SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 70,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                top: 10,
-                                left: 16,
-                                child: BackButton(
-                                  color: Colors.white,
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 20, 20, 20),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 70,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 10,
+                              left: 16,
+                              child: BackButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.symmetric(
-                                vertical: 25,
-                                horizontal: 25,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "DishedOut",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins",
-                                      fontSize: 52,
-                                      color: Colors.deepOrange[400],
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.symmetric(
+                              vertical: 25,
+                              horizontal: 25,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "DishedOut",
+                                  style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontSize: 52,
+                                    color: Colors.deepOrange[400],
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    "Sign in",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins",
-                                      color: Colors.white,
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                ),
+                                Text(
+                                  "Sign in",
+                                  style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    color: Colors.white,
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(height: 50),
-                                  SignupForm(),
-                                ],
-                              ),
+                                ),
+                                SizedBox(height: 50),
+                                SignupForm(),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -278,6 +275,11 @@ class _SignupFormState extends State<SignupForm> {
                   // Navigate to home screen here
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("You've logged in successfully!")),
+                  );
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 } on FirebaseAuthException catch (e) {
                   print("Failed with error code: ${e.code}");
