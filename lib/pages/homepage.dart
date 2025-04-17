@@ -7,6 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
         child: AppBar(
@@ -25,7 +26,9 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Username",
+                  _auth.currentUser?.displayName ??
+                      _auth.currentUser?.email ??
+                      'User',
                   style: TextStyle(
                     color: Colors.grey[200],
                     fontSize: 21,
@@ -40,6 +43,7 @@ class HomePage extends StatelessWidget {
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
+              color: Colors.grey[500],
               tooltip: 'Logout',
               onPressed: () async {
                 await _auth.signOut();
