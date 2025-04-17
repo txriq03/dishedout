@@ -12,11 +12,11 @@ class Auth {
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   // Future is used for asynchronous functions, when you want to declare the return type
-  Future<void> signInWithEmailAndPassword({
+  Future<UserCredential> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    await _firebaseAuth.signInWithEmailAndPassword(
+    return await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );

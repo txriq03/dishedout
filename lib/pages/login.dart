@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:dishedout/auth.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -62,11 +64,11 @@ class Login extends StatelessWidget {
                                       fontFamily: "Poppins",
                                       color: Colors.white,
                                       fontSize: 28,
-                                      fontWeight: FontWeight.bold
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   SizedBox(height: 50),
-                                  SignupForm()
+                                  SignupForm(),
                                 ],
                               ),
                             ),
@@ -93,6 +95,7 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
+  final auth = Auth();
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color accentColor = Colors.deepOrange[400] as Color;
   final Color primaryColor = Color.fromARGB(106, 255, 204, 188);
@@ -100,14 +103,14 @@ class _SignupFormState extends State<SignupForm> {
 
   bool _isPasswordHidden = true;
 
-  late TextEditingController _usernameController;
+  late TextEditingController _passwordController;
   late TextEditingController _emailController;
   bool _showEmailClearButton = false;
 
   @override
   void initState() {
     super.initState();
-    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
     _emailController = TextEditingController();
 
     _emailController.addListener(() {
@@ -119,7 +122,7 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _passwordController.dispose();
     _emailController.dispose();
     super.dispose();
   }
@@ -144,7 +147,6 @@ class _SignupFormState extends State<SignupForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-
           TextFormField(
             controller: _emailController,
             style: TextStyle(color: Colors.white),
@@ -199,6 +201,7 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(height: 15),
 
           TextFormField(
+            controller: _passwordController,
             style: TextStyle(color: Colors.white),
             cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
@@ -251,8 +254,6 @@ class _SignupFormState extends State<SignupForm> {
           ),
           SizedBox(height: 15),
 
-          
-
           // Sign up button
           Container(
             decoration: BoxDecoration(
@@ -266,8 +267,32 @@ class _SignupFormState extends State<SignupForm> {
               borderRadius: BorderRadius.circular(25),
             ),
             child: FilledButton(
-              onPressed: () {
+              onPressed: () async {
                 _formGlobalKey.currentState!.validate();
+                try {
+                  await auth.signInWithEmailAndPassword(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  );
+
+                  // Navigate to home screen here
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("You've logged in successfully!")),
+                  );
+                } on FirebaseAuthException catch (e) {
+                  print("Failed with error code: ${e.code}");
+                  print(e.message);
+
+                  String message = e.message ?? "An unknown error occurred.";
+
+                  if (e.code == 'email-already-in-use') {
+                    message = "Email already in use.";
+                  }
+
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(message)));
+                }
               },
               style: FilledButton.styleFrom(
                 minimumSize: Size(double.infinity, 55),
