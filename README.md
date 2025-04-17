@@ -1,6 +1,6 @@
-# foodle
+# DishedOut
 
-A new Flutter project.
+A food lending Flutter application. Spare your meals, don't waste them.
 
 ## Getting Started
 
