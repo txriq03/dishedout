@@ -13,7 +13,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [HomePage(), ProfilePage(), AddFoodPage()];
+  final List<Widget> _pages = [HomePage(), AddFoodPage(), ProfilePage()];
 
   @override
   Widget build(BuildContext context) {
