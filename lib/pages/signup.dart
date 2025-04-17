@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dishedout/auth.dart';
+import 'package:dishedout/pages/homepage.dart';
 
 class Signup extends StatelessWidget {
   const Signup({super.key});
@@ -414,6 +415,11 @@ class _SignupFormState extends State<SignupForm> {
                   // Navigate to home screen here
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Account created successfully!")),
+                  );
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 } on FirebaseAuthException catch (e) {
                   print("Failed with error code: ${e.code}");
