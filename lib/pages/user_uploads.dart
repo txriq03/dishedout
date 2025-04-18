@@ -60,7 +60,7 @@ class _UserUploadsState extends State<UserUploads> {
                       'Product name',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 21,
                         fontWeight: FontWeight.w200,
                       ),
                     ),
