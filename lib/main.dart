@@ -1,6 +1,6 @@
 import 'package:dishedout/pages/navbar.dart';
 import 'package:flutter/material.dart';
-import 'package:dishedout/pages/intro_page.dart';
+import 'package:dishedout/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:dishedout/auth.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             return Navbar(); // Logged in
           }
 
-          return IntroPage();
+          return AuthPage();
         },
       ),
     );

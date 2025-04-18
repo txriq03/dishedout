@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:dishedout/pages/search_bar.dart';
+import 'package:dishedout/pages/user_uploads.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/auth.dart';
 
@@ -81,7 +82,9 @@ class HomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(children: [SearchWidget()]),
+        child: Column(
+          children: [SearchWidget(), SizedBox(height: 20), UserUploads()],
+        ),
       ),
     );
   }

@@ -2,8 +2,8 @@ import 'package:dishedout/pages/login.dart';
 import 'package:dishedout/pages/signup.dart';
 import 'package:flutter/material.dart';
 
-class IntroPage extends StatelessWidget {
-  const IntroPage({super.key});
+class AuthPage extends StatelessWidget {
+  const AuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,6 @@ class IntroPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       // Text elements
                       Text(
                         "Welcome to",
@@ -61,7 +60,7 @@ class IntroPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 20),
-              
+
                       // Login and Signup buttons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +125,7 @@ class IntroPage extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer()
+            Spacer(),
           ],
         ),
       ),
