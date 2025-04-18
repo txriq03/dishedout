@@ -25,13 +25,30 @@ class _ImageUploadState extends State<ImageUpload> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Text(
+            'Upload Image',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w300,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 20),
           _image != null
               ? Image.file(_image!, height: 200, width: 200, fit: BoxFit.cover)
-              : const Text('No image selected'),
+              : Container(
+                width: screenWidth,
+                height: screenWidth,
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: _captureImage,

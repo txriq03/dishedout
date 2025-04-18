@@ -18,6 +18,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 27, 27, 27),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 27, 27, 27),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w200,
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       home: StreamBuilder<User?>(
         stream: _auth.authStateChanges,

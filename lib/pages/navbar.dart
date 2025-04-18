@@ -23,7 +23,7 @@ class _NavbarState extends State<Navbar> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.deepOrange,
         unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: const Color.fromARGB(255, 27, 27, 27),
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
