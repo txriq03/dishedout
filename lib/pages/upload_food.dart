@@ -24,7 +24,7 @@ class UploadFoodPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              ImageUpload(),
+              Expanded(child: ImageUpload()),
             ],
           ),
         ),
