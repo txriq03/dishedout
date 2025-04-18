@@ -1,8 +1,8 @@
 import 'package:dishedout/pages/image_upload.dart';
 import 'package:flutter/material.dart';
 
-class UploadFoodPage extends StatelessWidget {
-  const UploadFoodPage({super.key});
+class UploadPage extends StatelessWidget {
+  const UploadPage({super.key});
 
   @override
   Widget build(BuildContext context) {

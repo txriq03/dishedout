@@ -25,7 +25,7 @@ class _ImageUploadState extends State<ImageUpload> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    final double size = MediaQuery.of(context).size.shortestSide;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +33,7 @@ class _ImageUploadState extends State<ImageUpload> {
           const Text(
             'Upload Image',
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 28,
               fontWeight: FontWeight.w300,
               color: Colors.white,
             ),
@@ -42,8 +42,8 @@ class _ImageUploadState extends State<ImageUpload> {
           _image != null
               ? Image.file(_image!, height: 200, width: 200, fit: BoxFit.cover)
               : Container(
-                width: screenWidth,
-                height: screenWidth,
+                width: size,
+                height: size - 20,
                 decoration: BoxDecoration(
                   color: Colors.grey[900],
                   borderRadius: BorderRadius.circular(12),

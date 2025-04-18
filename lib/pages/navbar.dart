@@ -1,4 +1,4 @@
-import 'package:dishedout/pages/upload_food.dart';
+import 'package:dishedout/pages/upload.dart';
 import 'package:dishedout/pages/homepage.dart';
 import 'package:dishedout/pages/profile.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [HomePage(), UploadFoodPage(), ProfilePage()];
+  final List<Widget> _pages = [HomePage(), UploadPage(), ProfilePage()];
 
   @override
   Widget build(BuildContext context) {
