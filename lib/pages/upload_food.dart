@@ -1,3 +1,4 @@
+import 'package:dishedout/pages/image_upload.dart';
 import 'package:flutter/material.dart';
 
 class UploadFoodPage extends StatelessWidget {
@@ -6,7 +7,6 @@ class UploadFoodPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
@@ -24,6 +24,7 @@ class UploadFoodPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
+              ImageUpload(),
             ],
           ),
         ),
