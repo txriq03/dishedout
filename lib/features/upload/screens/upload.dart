@@ -16,9 +16,11 @@ class UploadPage extends StatefulWidget {
 class _UploadPageState extends State<UploadPage> {
   Step _currentStep = Step.takePhoto;
   File? _image;
+  double _previousProgress = 0.0;
 
   // Handles next step after button pressed
   void _nextStep() {
+    _previousProgress = _getProgress();
     setState(() {
       switch (_currentStep) {
         case Step.takePhoto:
@@ -32,6 +34,17 @@ class _UploadPageState extends State<UploadPage> {
           break;
       }
     });
+  }
+
+  double _getProgress() {
+    switch (_currentStep) {
+      case Step.takePhoto:
+        return 0.33;
+      case Step.fillForm:
+        return 0.66;
+      case Step.success:
+        return 1.0;
+    }
   }
 
   // Callback to update _image variable
@@ -65,10 +78,17 @@ class _UploadPageState extends State<UploadPage> {
                 borderRadius: BorderRadius.circular(12),
                 child: SizedBox(
                   height: 15,
-                  child: LinearProgressIndicator(
-                    value: 0.2,
-                    backgroundColor: Colors.grey[900],
-                    color: Colors.deepOrange,
+                  child: TweenAnimationBuilder<double>(
+                    tween: Tween(begin: _previousProgress, end: _getProgress()),
+                    duration: const Duration(milliseconds: 1200),
+                    curve: Curves.easeOutCubic,
+                    builder: (context, value, child) {
+                      return LinearProgressIndicator(
+                        value: value,
+                        backgroundColor: Colors.grey[900],
+                        color: Colors.deepOrange,
+                      );
+                    },
                   ),
                 ),
               ),
