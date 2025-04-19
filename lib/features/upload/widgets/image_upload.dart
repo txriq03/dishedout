@@ -4,7 +4,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'dart:io';
 
 class ImageUpload extends StatefulWidget {
-  const ImageUpload({super.key});
+  final Function(File?) onImageSelected;
+  const ImageUpload({super.key, required this.onImageSelected});
 
   @override
   State<ImageUpload> createState() => _ImageUploadState();
@@ -21,6 +22,9 @@ class _ImageUploadState extends State<ImageUpload> {
       setState(() {
         _image = File(pickedFile.path);
       });
+
+      // Pass the selected image to the parent widget
+      widget.onImageSelected(_image);
     }
   }
 

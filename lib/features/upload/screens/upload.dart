@@ -1,5 +1,6 @@
 import 'package:dishedout/features/upload/widgets/image_upload.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 // Enum for handling what step of upload we use
 enum Step { takePhoto, fillForm, success }
@@ -13,6 +14,7 @@ class UploadPage extends StatefulWidget {
 
 class _UploadPageState extends State<UploadPage> {
   Step _currentStep = Step.takePhoto;
+  File? _image;
 
   // Handles next step after button pressed
   void _nextStep() {
@@ -31,11 +33,18 @@ class _UploadPageState extends State<UploadPage> {
     });
   }
 
+  // Callback to update _image variable
+  void _updateImage(File? image) {
+    setState(() {
+      _image = image;
+    });
+  }
+
   // What widget is shown based on the current step
   Widget _getStepWidget() {
     switch (_currentStep) {
       case Step.takePhoto:
-        return const ImageUpload();
+        return ImageUpload(onImageSelected: _updateImage);
       case Step.fillForm:
         return const Text('Fill Form');
       case Step.success:
