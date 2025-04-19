@@ -1,4 +1,5 @@
 import 'package:dishedout/features/upload/widgets/image_upload.dart';
+import 'package:dishedout/features/upload/widgets/upload_form.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -46,7 +47,7 @@ class _UploadPageState extends State<UploadPage> {
       case Step.takePhoto:
         return ImageUpload(onImageSelected: _updateImage);
       case Step.fillForm:
-        return const Text('Fill Form');
+        return UploadForm();
       case Step.success:
         return const Text('Success!');
     }
@@ -76,6 +77,17 @@ class _UploadPageState extends State<UploadPage> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _image != null ? _nextStep : null,
+        elevation: 0,
+        shape: const CircleBorder(side: BorderSide.none),
+        backgroundColor:
+            _image != null
+                ? Colors.deepOrange.shade300.withValues(alpha: 0.3)
+                : Colors.grey[900],
+        foregroundColor: _image != null ? Colors.deepOrange : Colors.grey[800],
+        child: const Icon(Icons.chevron_right_rounded, size: 24.0),
       ),
     );
   }
