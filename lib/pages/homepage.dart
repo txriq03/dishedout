@@ -7,12 +7,10 @@ import 'package:dishedout/auth.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final Auth _auth = Auth();
-  final Color backgroundColor = Color.fromARGB(255, 19, 19, 19);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
         child: AppBar(
@@ -67,7 +65,6 @@ class HomePage extends StatelessWidget {
             ),
           ),
 
-          backgroundColor: backgroundColor,
           actions: [
             IconButton(
               icon: const Icon(Icons.logout_rounded),
