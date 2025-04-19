@@ -32,6 +32,33 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w200,
           ),
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: const EdgeInsets.symmetric(vertical: 12),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedErrorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          filled: true,
+          fillColor: Colors.grey[900],
+          labelStyle: TextStyle(
+            color: Colors.grey[600],
+            fontFamily: 'Poppins',
+            fontSize: 14,
+          ),
+          hintStyle: TextStyle(color: Colors.grey[700]),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white.withValues(alpha: 0.1),

@@ -77,7 +77,7 @@ class _UploadPageState extends State<UploadPage> {
             children: [
               ProgressIndicatorWidget(
                 previousProgress: _previousProgress,
-                currentProgress: _getProgress(), // Pass progress values
+                currentProgress: _getProgress(),
               ),
               const SizedBox(height: 20),
               Expanded(child: _getStepWidget()),

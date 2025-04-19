@@ -167,31 +167,7 @@ class _SignupFormState extends State<SignupForm> {
                         },
                       )
                       : null,
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              errorBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedErrorBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-
-              filled: true,
-              fillColor: backgroundFieldColor,
               labelText: 'Email',
-              labelStyle: TextStyle(
-                color: Colors.grey[600],
-                fontFamily: 'Poppins',
-                fontSize: 14,
-              ),
             ),
             validator: (value) => isFieldValid(value, "email"),
           ),
@@ -221,30 +197,7 @@ class _SignupFormState extends State<SignupForm> {
                   });
                 },
               ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              errorBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              focusedErrorBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              filled: true,
-              fillColor: backgroundFieldColor,
               labelText: 'Password',
-              labelStyle: TextStyle(
-                color: Colors.grey[600],
-                fontFamily: 'Poppins',
-                fontSize: 14,
-              ),
             ),
             obscureText: _isPasswordHidden,
             validator: (value) => isFieldValid(value, "password"),
