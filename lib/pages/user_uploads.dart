@@ -8,7 +8,7 @@ class UserUploads extends StatefulWidget {
 }
 
 class _UserUploadsState extends State<UserUploads> {
-  final CarouselController controller = CarouselController(initialItem: 1);
+  final CarouselController controller = CarouselController(initialItem: 0);
 
   @override
   void dispose() {
