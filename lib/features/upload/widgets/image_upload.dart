@@ -50,26 +50,39 @@ class _ImageUploadState extends State<ImageUpload> {
                   fit: BoxFit.cover,
                 ),
               )
-              : SizedBox(
-                width: size,
-                height: size,
-                child: DottedBorder(
-                  borderType: BorderType.RRect,
-                  color: Colors.grey[800]!,
-                  dashPattern: [6, 3],
-                  radius: const Radius.circular(12),
-                  strokeWidth: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Tap to take photo',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white.withValues(alpha: 0.3),
+              : GestureDetector(
+                onTap: _captureImage,
+                child: SizedBox(
+                  width: size,
+                  height: size,
+                  child: DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: Colors.grey[800]!,
+                    dashPattern: [6, 3],
+                    radius: const Radius.circular(12),
+                    strokeWidth: 2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.camera_alt,
+                              size: size * 0.2,
+                              color: Colors.white.withValues(alpha: 0.3),
+                            ),
+                            Text(
+                              'Tap to take photo',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.white.withValues(alpha: 0.3),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
