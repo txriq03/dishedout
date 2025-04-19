@@ -7,6 +7,7 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Authpage is being displayed');
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(

@@ -2,6 +2,7 @@ import 'package:dishedout/features/upload/screens/upload.dart';
 import 'package:dishedout/features/home/screens/homepage.dart';
 import 'package:dishedout/features/profile/screens/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -17,29 +18,47 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Color.fromARGB(
+          255,
+          27,
+          27,
+          27,
+        ), // Match the BottomNavigationBar color
+        systemNavigationBarIconBrightness:
+            Brightness.light, // Adjust icon brightness
+      ),
+    );
+
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepOrange,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: const Color.fromARGB(255, 27, 27, 27),
-        onTap: (index) {
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        height: 50,
+        onDestinationSelected: (int index) {
           setState(() {
             _selectedIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded),
+        backgroundColor: const Color.fromARGB(255, 27, 27, 27),
+        indicatorColor: Colors.deepOrange.shade400,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        destinations: [
+          NavigationDestination(
+            icon: Icon(Icons.home_rounded, size: 28, color: Colors.grey[800]),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_a_photo_rounded),
+          NavigationDestination(
+            icon: Icon(
+              Icons.add_a_photo_rounded,
+              size: 28,
+              color: Colors.grey[800],
+            ),
             label: 'Upload',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_rounded),
+          NavigationDestination(
+            icon: Icon(Icons.person_rounded, size: 28, color: Colors.grey[800]),
             label: 'Profile',
           ),
         ],
