@@ -1,6 +1,6 @@
-import 'package:dishedout/pages/upload.dart';
-import 'package:dishedout/pages/homepage.dart';
-import 'package:dishedout/pages/profile.dart';
+import 'package:dishedout/features/upload/screens/upload.dart';
+import 'package:dishedout/features/home/screens/homepage.dart';
+import 'package:dishedout/features/profile/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 class Navbar extends StatefulWidget {

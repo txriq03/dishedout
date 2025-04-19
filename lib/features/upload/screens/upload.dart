@@ -1,4 +1,4 @@
-import 'package:dishedout/pages/image_upload.dart';
+import 'package:dishedout/features/upload/widgets/image_upload.dart';
 import 'package:flutter/material.dart';
 
 class UploadPage extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:dishedout/pages/search_bar.dart';
-import 'package:dishedout/pages/user_uploads.dart';
+import 'package:dishedout/features/home/widgets/search_bar.dart';
+import 'package:dishedout/features/home/widgets/user_uploads.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/auth.dart';
 

@@ -1,6 +1,6 @@
-import 'package:dishedout/pages/navbar.dart';
+import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:flutter/material.dart';
-import 'package:dishedout/pages/auth_page.dart';
+import 'package:dishedout/features/authentication/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:dishedout/auth.dart';
@@ -26,6 +26,15 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
             fontSize: 22,
             fontWeight: FontWeight.w200,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white.withValues(alpha: 0.1),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
       ),
