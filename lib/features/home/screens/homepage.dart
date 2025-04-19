@@ -77,10 +77,12 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [SearchWidget(), SizedBox(height: 20), UserUploads()],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [SearchWidget(), SizedBox(height: 20), UserUploads()],
+          ),
         ),
       ),
     );

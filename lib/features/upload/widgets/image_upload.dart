@@ -101,23 +101,16 @@ class _ImageUploadState extends State<ImageUpload> {
           ),
         ),
       ),
-      floatingActionButton: Container(
-        height: 50,
-        width: 50,
-        child: FloatingActionButton(
-          onPressed: () {
-            // Handle upload action here
-          },
-          shape: const CircleBorder(side: BorderSide.none),
-          backgroundColor:
-              _image != null
-                  ? Colors.deepOrange.shade300.withValues(alpha: 0.3)
-                  : Colors.grey[900],
-          foregroundColor:
-              _image != null ? Colors.deepOrange : Colors.grey[800],
-          disabledElevation: 0,
-          child: const Icon(Icons.chevron_right_rounded, size: 24.0),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: null,
+        elevation: 0,
+        shape: const CircleBorder(side: BorderSide.none),
+        backgroundColor:
+            _image != null
+                ? Colors.deepOrange.shade300.withValues(alpha: 0.3)
+                : Colors.grey[900],
+        foregroundColor: _image != null ? Colors.deepOrange : Colors.grey[800],
+        child: const Icon(Icons.chevron_right_rounded, size: 24.0),
       ),
     );
   }
