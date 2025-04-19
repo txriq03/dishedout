@@ -1,4 +1,5 @@
 import 'package:dishedout/features/upload/widgets/image_upload.dart';
+import 'package:dishedout/features/upload/widgets/progress_indicator.dart';
 import 'package:dishedout/features/upload/widgets/upload_form.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -74,23 +75,9 @@ class _UploadPageState extends State<UploadPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
           child: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: SizedBox(
-                  height: 15,
-                  child: TweenAnimationBuilder<double>(
-                    tween: Tween(begin: _previousProgress, end: _getProgress()),
-                    duration: const Duration(milliseconds: 1200),
-                    curve: Curves.easeOutCubic,
-                    builder: (context, value, child) {
-                      return LinearProgressIndicator(
-                        value: value,
-                        backgroundColor: Colors.grey[900],
-                        color: Colors.deepOrange,
-                      );
-                    },
-                  ),
-                ),
+              ProgressIndicatorWidget(
+                previousProgress: _previousProgress,
+                currentProgress: _getProgress(), // Pass progress values
               ),
               const SizedBox(height: 20),
               Expanded(child: _getStepWidget()),
