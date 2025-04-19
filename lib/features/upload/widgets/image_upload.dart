@@ -50,7 +50,7 @@ class _ImageUploadState extends State<ImageUpload> {
                 strokeWidth: 2,
                 child: Container(
                   width: size,
-                  height: size - 20,
+                  height: size - 50,
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
                     borderRadius: BorderRadius.circular(12),
