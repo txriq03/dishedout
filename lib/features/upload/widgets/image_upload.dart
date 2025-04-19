@@ -41,19 +41,38 @@ class _ImageUploadState extends State<ImageUpload> {
           ),
           const SizedBox(height: 20),
           _image != null
-              ? Image.file(_image!, height: 200, width: 200, fit: BoxFit.cover)
-              : DottedBorder(
-                borderType: BorderType.RRect,
-                color: Colors.grey[800]!,
-                dashPattern: [6, 3],
-                radius: const Radius.circular(12),
-                strokeWidth: 2,
-                child: Container(
+              ? ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.file(
+                  _image!,
+                  height: size,
                   width: size,
-                  height: size - 50,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(12),
+                  fit: BoxFit.cover,
+                ),
+              )
+              : SizedBox(
+                width: size,
+                height: size,
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  color: Colors.grey[800]!,
+                  dashPattern: [6, 3],
+                  radius: const Radius.circular(12),
+                  strokeWidth: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Tap to take photo',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white.withValues(alpha: 0.3),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
