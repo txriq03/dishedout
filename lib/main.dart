@@ -73,14 +73,17 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder<User?>(
         stream: _auth.authStateChanges,
         builder: (context, snapshot) {
+          print('Snapshot data: ${snapshot.data}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasData) {
+            print('========== USER IS LOGGED IN ==========');
             return Navbar(); // Logged in
           }
 
+          print('========== USER IS LOGGED OUT ==========');
           return AuthPage();
         },
       ),
