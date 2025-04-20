@@ -1,6 +1,7 @@
 import 'package:dishedout/features/upload/widgets/image_upload.dart';
 import 'package:dishedout/features/upload/widgets/progress_indicator.dart';
 import 'package:dishedout/features/upload/widgets/upload_form.dart';
+import 'package:dishedout/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -18,11 +19,20 @@ class _UploadPageState extends State<UploadPage> {
   Step _currentStep = Step.takePhoto;
   File? _image;
   double _previousProgress = 0.0;
+  FirestoreService _firestoreService = FirestoreService();
 
   // Form key and controllers for the form step
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  // Submit post to Firestore
+  void _submitPost() async {
+    if (_image != null) {
+      // Upload image and grab URL
+      // String imageUrl = await _firestoreService.uploadImage(_image!);
+    }
+  }
 
   // Handles next step after button pressed
   void _nextStep() {
