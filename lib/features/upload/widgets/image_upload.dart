@@ -79,13 +79,13 @@ class _ImageUploadState extends State<ImageUpload> {
                               children: [
                                 Icon(
                                   Icons.camera_alt,
-                                  size: size * 0.2,
+                                  size: size * 0.15,
                                   color: Colors.white.withValues(alpha: 0.3),
                                 ),
                                 Text(
                                   'Tap to take photo',
                                   style: TextStyle(
-                                    fontSize: 24,
+                                    fontSize: 21,
                                     color: Colors.white.withValues(alpha: 0.3),
                                   ),
                                 ),
