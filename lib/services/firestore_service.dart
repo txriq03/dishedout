@@ -15,14 +15,14 @@ class FirestoreService {
     }
   }
 
-  Future<void> addFood(
+  Future<void> addPost(
     String uid,
     String name,
     String description,
     String imageUrl,
   ) async {
     try {
-      await db.collection('foods').add({
+      await db.collection('posts').add({
         'uid': uid,
         'name': name,
         'description': description,

@@ -39,8 +39,8 @@ class _UploadPageState extends State<UploadPage> {
             final description = _descriptionController.text;
             print('Food Name: $name');
             print('Description: $description');
+            _currentStep = Step.success;
           }
-          _currentStep = Step.success;
           break;
         case Step.success:
           // Handle success step if needed

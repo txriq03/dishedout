@@ -13,20 +13,6 @@ class UploadForm extends StatelessWidget {
     required this.descriptionController,
   });
 
-  void _submitForm() {
-    if (formKey.currentState!.validate()) {
-      // Perform submission logic
-      final name = nameController.text;
-      final description = descriptionController.text;
-
-      // For now, just print the values
-      print('Food Name: $name');
-      print('Description: $description');
-
-      // You can add further logic here, like sending data to a server
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -97,12 +83,6 @@ class UploadForm extends StatelessWidget {
             },
           ),
           const SizedBox(height: 24),
-          Center(
-            child: ElevatedButton(
-              onPressed: _submitForm,
-              child: const Text('Submit'),
-            ),
-          ),
         ],
       ),
     );
