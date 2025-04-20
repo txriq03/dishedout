@@ -1,7 +1,8 @@
 import 'package:dishedout/features/upload/widgets/image_upload.dart';
 import 'package:dishedout/features/upload/widgets/progress_indicator.dart';
 import 'package:dishedout/features/upload/widgets/upload_form.dart';
-import 'package:dishedout/services/firestore_service.dart';
+import 'package:dishedout/services/upload_service.dart';
+import 'package:dishedout/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -19,7 +20,8 @@ class _UploadPageState extends State<UploadPage> {
   Step _currentStep = Step.takePhoto;
   File? _image;
   double _previousProgress = 0.0;
-  FirestoreService _firestoreService = FirestoreService();
+  UploadService _uploadService = UploadService();
+  Auth _auth = Auth();
 
   // Form key and controllers for the form step
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -28,9 +30,29 @@ class _UploadPageState extends State<UploadPage> {
 
   // Submit post to Firestore
   void _submitPost() async {
-    if (_image != null) {
-      // Upload image and grab URL
-      // String imageUrl = await _firestoreService.uploadImage(_image!);
+    final user = _auth.currentUser;
+
+    if (user == null) {
+      // Handle user not logged in
+      print('User not logged in!');
+      return;
+    }
+
+    if (_formKey.currentState?.validate() ?? false) {
+      // Handle form submission logic here
+      final name = _nameController.text;
+      final description = _descriptionController.text;
+      if (_image != null) {
+        await _uploadService.uploadPost(
+          imageFile: _image!,
+          uid: user.uid, // Replace with actual user ID
+          name: _nameController.text.trim(),
+          description: _descriptionController.text.trim(),
+        );
+        _currentStep = Step.success;
+      }
+      print('Food Name: $name');
+      print('Description: $description');
     }
   }
 
@@ -43,14 +65,7 @@ class _UploadPageState extends State<UploadPage> {
           _currentStep = Step.fillForm;
           break;
         case Step.fillForm:
-          if (_formKey.currentState?.validate() ?? false) {
-            // Handle form submission logic here
-            final name = _nameController.text;
-            final description = _descriptionController.text;
-            print('Food Name: $name');
-            print('Description: $description');
-            _currentStep = Step.success;
-          }
+          _submitPost();
           break;
         case Step.success:
           // Handle success step if needed

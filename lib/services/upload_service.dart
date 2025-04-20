@@ -12,16 +12,19 @@ class UploadService {
     required String name,
     required String description,
   }) async {
+    final fileName =
+        DateTime.now().millisecondsSinceEpoch
+            .toString(); // Moved outside the try block
+
     try {
       // 1. Upload post image
-      final fileName = DateTime.now().millisecondsSinceEpoch.toString();
       final imageRef = _storage.ref().child('images/posts/$uid/$fileName.jpg');
       await imageRef.putFile(imageFile);
 
       // 2. Get download URL
       final downloadUrl = await imageRef.getDownloadURL();
 
-      // 2. Attempt Firstore write
+      // 3. Attempt Firestore write
       await _firestore.collection('posts').add({
         'uid': uid,
         'name': name,
