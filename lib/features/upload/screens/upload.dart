@@ -49,7 +49,9 @@ class _UploadPageState extends State<UploadPage> {
           name: _nameController.text.trim(),
           description: _descriptionController.text.trim(),
         );
-        _currentStep = Step.success;
+        setState(() {
+          _currentStep = Step.success;
+        });
       }
       print('Food Name: $name');
       print('Description: $description');
