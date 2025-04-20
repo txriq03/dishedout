@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dishedout/features/authentication/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:dishedout/auth.dart';
+import 'package:dishedout/services/auth.dart';
 import 'package:flutter/services.dart';
 import 'package:dishedout/config/themes/app_theme.dart';
 

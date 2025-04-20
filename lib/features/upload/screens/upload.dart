@@ -19,6 +19,11 @@ class _UploadPageState extends State<UploadPage> {
   File? _image;
   double _previousProgress = 0.0;
 
+  // Form key and controllers for the form step
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   // Handles next step after button pressed
   void _nextStep() {
     _previousProgress = _getProgress();
@@ -28,6 +33,13 @@ class _UploadPageState extends State<UploadPage> {
           _currentStep = Step.fillForm;
           break;
         case Step.fillForm:
+          if (_formKey.currentState?.validate() ?? false) {
+            // Handle form submission logic here
+            final name = _nameController.text;
+            final description = _descriptionController.text;
+            print('Food Name: $name');
+            print('Description: $description');
+          }
           _currentStep = Step.success;
           break;
         case Step.success:
@@ -61,7 +73,11 @@ class _UploadPageState extends State<UploadPage> {
       case Step.takePhoto:
         return ImageUpload(onImageSelected: _updateImage);
       case Step.fillForm:
-        return UploadForm();
+        return UploadForm(
+          formKey: _formKey,
+          nameController: _nameController,
+          descriptionController: _descriptionController,
+        );
       case Step.success:
         return const Text('Success!');
     }

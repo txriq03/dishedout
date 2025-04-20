@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dishedout/auth.dart';
+import 'package:dishedout/services/auth.dart';
 
 class ProfilePage extends StatelessWidget {
   final Auth _auth = Auth();

@@ -1,7 +1,7 @@
 import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dishedout/auth.dart';
+import 'package:dishedout/services/auth.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
