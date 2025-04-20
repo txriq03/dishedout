@@ -39,13 +39,12 @@ class _UploadPageState extends State<UploadPage> {
     }
 
     if (_formKey.currentState?.validate() ?? false) {
-      // Handle form submission logic here
       final name = _nameController.text;
       final description = _descriptionController.text;
       if (_image != null) {
         await _uploadService.uploadPost(
           imageFile: _image!,
-          uid: user.uid, // Replace with actual user ID
+          uid: user.uid,
           name: _nameController.text.trim(),
           description: _descriptionController.text.trim(),
         );
@@ -58,7 +57,6 @@ class _UploadPageState extends State<UploadPage> {
     }
   }
 
-  // Handles next step after button pressed
   void _nextStep() {
     _previousProgress = _getProgress();
     setState(() {
@@ -70,7 +68,6 @@ class _UploadPageState extends State<UploadPage> {
           _submitPost();
           break;
         case Step.success:
-          // Handle success step if needed
           break;
       }
     });
