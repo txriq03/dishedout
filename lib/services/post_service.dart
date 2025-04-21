@@ -1,17 +1,25 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dishedout/services/auth.dart';
 import 'dart:io';
 
-class UploadService {
+class PostService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final Auth _auth = Auth();
 
   Future<void> uploadPost({
     required File imageFile,
-    required String uid,
     required String name,
     required String description,
   }) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      // Handle user not logged in
+      print('User not logged in!');
+      return;
+    }
+    final uid = user.uid;
     final fileName =
         DateTime.now().millisecondsSinceEpoch
             .toString(); // Moved outside the try block
@@ -43,6 +51,16 @@ class UploadService {
       } catch (deleteError) {
         print('Error deleting image: $deleteError');
       }
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getPosts() async {
+    try {
+      final snapshot = await _firestore.collection('posts').get();
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    } catch (e) {
+      print('Error fetching posts: $e');
+      return [];
     }
   }
 }

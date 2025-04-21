@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class UserUploads extends StatefulWidget {
-  const UserUploads({super.key});
+class UploadsCarousel extends StatefulWidget {
+  const UploadsCarousel({super.key});
 
   @override
-  State<UserUploads> createState() => _UserUploadsState();
+  State<UploadsCarousel> createState() => _UploadsCarouselState();
 }
 
-class _UserUploadsState extends State<UserUploads> {
+class _UploadsCarouselState extends State<UploadsCarousel> {
   final CarouselController controller = CarouselController(initialItem: 0);
 
   @override
