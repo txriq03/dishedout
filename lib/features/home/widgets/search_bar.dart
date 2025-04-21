@@ -9,8 +9,6 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: TextStyle(color: Colors.grey[400]),
-      cursorColor: Colors.deepOrange,
       decoration: InputDecoration(
         hintText: 'Search...',
         prefixIcon: const Icon(Icons.search, color: Colors.grey),

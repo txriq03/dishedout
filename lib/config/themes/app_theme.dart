@@ -2,17 +2,22 @@
 import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
-  scaffoldBackgroundColor: const Color.fromARGB(255, 19, 19, 19),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Color.fromARGB(255, 19, 19, 19),
-    titleTextStyle: TextStyle(
-      color: Colors.white,
-      fontSize: 22,
-      fontWeight: FontWeight.w200,
-    ),
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Colors.indigo,
+    primary: Colors.deepOrange,
+    secondaryContainer: Colors.deepOrange.shade300,
+    brightness: Brightness.dark,
+  ),
+  appBarTheme: AppBarTheme(
+    titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.w200),
   ),
   inputDecorationTheme: InputDecorationTheme(
     contentPadding: const EdgeInsets.symmetric(vertical: 12),
+    border: UnderlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide(color: Colors.transparent),
+    ),
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: Colors.transparent),
       borderRadius: BorderRadius.circular(15),
@@ -30,19 +35,21 @@ final ThemeData appTheme = ThemeData(
       borderRadius: BorderRadius.circular(15),
     ),
     filled: true,
-    fillColor: Colors.grey[900],
-    labelStyle: TextStyle(
-      color: Colors.grey[600],
-      fontFamily: 'Poppins',
-      fontSize: 14,
-    ),
+    fillColor: Colors.white.withValues(alpha: 0.02),
+    labelStyle: TextStyle(fontFamily: 'Poppins', fontSize: 14),
     hintStyle: TextStyle(color: Colors.grey[700]),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white.withOpacity(0.1),
+      backgroundColor: Colors.white.withValues(alpha: 0.1),
       foregroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     ),
   ),
+);
+
+final ColorScheme colorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.indigo,
+  brightness: Brightness.light,
+  primary: Colors.deepOrange,
 );
