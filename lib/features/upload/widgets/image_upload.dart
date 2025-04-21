@@ -64,13 +64,13 @@ class _ImageUploadState extends State<ImageUpload> {
                       height: size,
                       child: DottedBorder(
                         borderType: BorderType.RRect,
-                        color: Colors.grey[800]!,
+                        color: Colors.white.withValues(alpha: 0.3),
                         dashPattern: [6, 3],
                         radius: const Radius.circular(12),
                         strokeWidth: 2,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey[900],
+                            color: Colors.white.withValues(alpha: 0.05),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Center(
