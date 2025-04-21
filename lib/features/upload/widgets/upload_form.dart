@@ -22,20 +22,12 @@ class UploadForm extends StatelessWidget {
         children: [
           const Text(
             "Fill in food details",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w300,
-              color: Colors.white,
-            ),
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.w300),
           ),
           const SizedBox(height: 12),
           const Text(
             'Food Name',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(height: 8),
           TextFormField(
@@ -43,7 +35,7 @@ class UploadForm extends StatelessWidget {
             cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-              hintText: 'Enter the name of the food',
+              hintText: 'Cheese burger',
             ),
             style: const TextStyle(color: Colors.white),
             validator: (value) {

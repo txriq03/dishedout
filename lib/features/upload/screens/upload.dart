@@ -20,8 +20,9 @@ class _UploadPageState extends State<UploadPage> {
   Step _currentStep = Step.takePhoto;
   File? _image;
   double _previousProgress = 0.0;
-  UploadService _uploadService = UploadService();
-  Auth _auth = Auth();
+  final UploadService _uploadService = UploadService();
+  final Auth _auth = Auth();
+  bool _isloading = false;
 
   // Form key and controllers for the form step
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -65,7 +66,9 @@ class _UploadPageState extends State<UploadPage> {
           _currentStep = Step.fillForm;
           break;
         case Step.fillForm:
+          _isloading = true;
           _submitPost();
+          _isloading = false;
           break;
         case Step.success:
           break;
