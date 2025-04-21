@@ -11,7 +11,7 @@ class SearchWidget extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         hintText: 'Search...',
-        prefixIcon: const Icon(Icons.search, color: Colors.grey),
+        prefixIcon: Icon(Icons.search, color: Colors.deepOrange.shade300),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
