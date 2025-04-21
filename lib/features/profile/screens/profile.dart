@@ -3,16 +3,13 @@ import 'package:dishedout/services/auth.dart';
 
 class ProfilePage extends StatelessWidget {
   final Auth _auth = Auth();
-  final Color backgroundColor = const Color.fromARGB(255, 19, 19, 19);
 
   @override
   Widget build(BuildContext context) {
     final user = _auth.currentUser;
 
     return Scaffold(
-      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
         elevation: 0,
         title: const Text(
           'Profile',
@@ -41,11 +38,7 @@ class ProfilePage extends StatelessWidget {
             // Display Name or Email
             Text(
               user?.displayName ?? user?.email ?? 'Unknown User',
-              style: const TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
 
             const SizedBox(height: 10),
@@ -61,7 +54,6 @@ class ProfilePage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

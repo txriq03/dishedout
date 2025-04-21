@@ -5,7 +5,7 @@ final ThemeData appTheme = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.indigo,
-    primary: Colors.deepOrange,
+    primary: Colors.deepOrange.shade400,
     secondaryContainer: Colors.deepOrange.shade300,
     brightness: Brightness.dark,
   ),

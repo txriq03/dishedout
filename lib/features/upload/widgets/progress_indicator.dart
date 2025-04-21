@@ -24,7 +24,6 @@ class ProgressIndicatorWidget extends StatelessWidget {
             return LinearProgressIndicator(
               value: value,
               backgroundColor: Colors.grey[900],
-              color: Colors.deepOrange,
             );
           },
         ),

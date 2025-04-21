@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
           actions: [
             IconButton(
               icon: const Icon(Icons.logout_rounded),
-              color: Colors.deepOrange,
+              color: Colors.deepOrange.shade400,
               tooltip: 'Logout',
               onPressed: () async {
                 await _auth.signOut();
