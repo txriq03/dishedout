@@ -1,3 +1,4 @@
+import 'package:dishedout/models/post.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/services/auth.dart';
@@ -54,10 +55,12 @@ class PostService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getPosts() async {
+  Future<List<Post>> getPosts() async {
     try {
-      final snapshot = await _firestore.collection('posts').get();
-      return snapshot.docs.map((doc) => doc.data()).toList();
+      final collection = await _firestore.collection('posts').get();
+      return collection.docs
+          .map((doc) => Post.fromMap(doc.data()))
+          .toList(); // List of posts
     } catch (e) {
       print('Error fetching posts: $e');
       return [];
