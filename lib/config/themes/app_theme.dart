@@ -35,7 +35,7 @@ final ThemeData appTheme = ThemeData(
       borderRadius: BorderRadius.circular(15),
     ),
     filled: true,
-    fillColor: Colors.white.withValues(alpha: 0.02),
+    fillColor: Colors.white.withValues(alpha: 0.04),
     labelStyle: TextStyle(fontFamily: 'Poppins', fontSize: 14),
     hintStyle: TextStyle(color: Colors.grey[700]),
   ),
