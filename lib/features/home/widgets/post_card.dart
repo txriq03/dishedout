@@ -41,6 +41,8 @@ class PostCard extends StatelessWidget {
             children: [
               Text(
                 title,
+                overflow: TextOverflow.clip,
+                softWrap: false,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -50,6 +52,8 @@ class PostCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 description,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
                 style: const TextStyle(color: Colors.white70, fontSize: 14),
               ),
             ],
