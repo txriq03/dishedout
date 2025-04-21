@@ -22,12 +22,23 @@ class _UploadPageState extends State<UploadPage> {
   double _previousProgress = 0.0;
   final UploadService _uploadService = UploadService();
   final Auth _auth = Auth();
-  bool _isloading = false;
 
   // Form key and controllers for the form step
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  // Widget with loading indicator for when user uploads a post
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Prevent dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
 
   // Submit post to Firestore
   void _submitPost() async {
@@ -43,6 +54,8 @@ class _UploadPageState extends State<UploadPage> {
       final name = _nameController.text;
       final description = _descriptionController.text;
       if (_image != null) {
+        _showLoadingDialog(context); // Show loading dialog
+
         await _uploadService.uploadPost(
           imageFile: _image!,
           uid: user.uid,
@@ -53,6 +66,8 @@ class _UploadPageState extends State<UploadPage> {
           _currentStep = Step.success;
         });
       }
+
+      Navigator.of(context).pop(); // Close loading dialog
       print('Food Name: $name');
       print('Description: $description');
     }
@@ -66,9 +81,7 @@ class _UploadPageState extends State<UploadPage> {
           _currentStep = Step.fillForm;
           break;
         case Step.fillForm:
-          _isloading = true;
           _submitPost();
-          _isloading = false;
           break;
         case Step.success:
           break;
