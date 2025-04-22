@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/upload/widgets/image_upload.dart';
 import 'package:dishedout/features/upload/widgets/progress_indicator.dart';
 import 'package:dishedout/features/upload/widgets/success.dart';
 import 'package:dishedout/features/upload/widgets/upload_form.dart';
 import 'package:dishedout/services/post_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -21,12 +24,20 @@ class _UploadPageState extends State<UploadPage> {
   Step _currentStep = Step.takePhoto;
   File? _image;
   double _previousProgress = 0.0;
-  final PostService _uploadService = PostService();
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late final PostService _postService;
 
   // Form key and controllers for the form step
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _postService = PostService(firestore, storage);
+  }
 
   // Widget with loading indicator for when user uploads a post
   void _showLoadingDialog(BuildContext context) {
@@ -47,7 +58,7 @@ class _UploadPageState extends State<UploadPage> {
       if (_image != null) {
         _showLoadingDialog(context); // Show loading dialog
 
-        await _uploadService.uploadPost(
+        await _postService.uploadPost(
           imageFile: _image!,
           name: name,
           description: description,

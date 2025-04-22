@@ -5,8 +5,10 @@ import 'package:dishedout/services/auth.dart';
 import 'dart:io';
 
 class PostService {
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore;
+  final FirebaseStorage storage;
+
+  PostService(this.firestore, this.storage);
   final Auth _auth = Auth();
 
   Future<void> uploadPost({
@@ -27,14 +29,14 @@ class PostService {
 
     try {
       // 1. Upload post image
-      final imageRef = _storage.ref().child('images/posts/$uid/$fileName.jpg');
+      final imageRef = storage.ref().child('images/posts/$uid/$fileName.jpg');
       await imageRef.putFile(imageFile);
 
       // 2. Get download URL
       final downloadUrl = await imageRef.getDownloadURL();
 
       // 3. Attempt Firestore write
-      await _firestore.collection('posts').add({
+      await firestore.collection('posts').add({
         'uid': uid,
         'name': name,
         'description': description,
@@ -47,7 +49,7 @@ class PostService {
 
       // Delete the image if Firestore write fails
       try {
-        await _storage.ref().child('images/posts/$uid/$fileName.jpg').delete();
+        await storage.ref().child('images/posts/$uid/$fileName.jpg').delete();
         print('Image deleted due to Firestore write failure.');
       } catch (deleteError) {
         print('Error deleting image: $deleteError');
@@ -57,7 +59,7 @@ class PostService {
 
   Future<List<Post>> getPosts() async {
     try {
-      final collection = await _firestore.collection('posts').get();
+      final collection = await firestore.collection('posts').get();
       return collection.docs
           .map((doc) => Post.fromMap(doc.data()))
           .toList(); // List of posts

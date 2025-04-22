@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dishedout/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 class PostCard extends StatelessWidget {
@@ -5,8 +7,9 @@ class PostCard extends StatelessWidget {
   final String title;
   final String description;
   final String uid;
+  final UserService _userService = UserService(FirebaseFirestore.instance);
 
-  const PostCard({
+  PostCard({
     super.key,
     required this.imageUrl,
     required this.title,
@@ -68,11 +71,26 @@ class PostCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                description,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
+
+              FutureBuilder<String?>(
+                future: _userService.getDisplayName(uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text(
+                      'Loading user...',
+                      style: TextStyle(color: Colors.white60, fontSize: 12),
+                    );
+                  } else if (snapshot.hasError || !snapshot.hasData) {
+                    return const Text(
+                      'Unknown user',
+                      style: TextStyle(color: Colors.white60, fontSize: 12),
+                    );
+                  }
+                  return Text(
+                    snapshot.data ?? 'Unknown user',
+                    style: const TextStyle(color: Colors.white60, fontSize: 12),
+                  );
+                },
               ),
             ],
           ),
