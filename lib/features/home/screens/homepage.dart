@@ -23,11 +23,11 @@ class HomePage extends StatelessWidget {
                   radius: 21,
                   backgroundColor:
                       ([
-                        Colors.deepOrange,
-                        Colors.blue,
-                        Colors.green,
-                        Colors.purple,
-                        Colors.teal,
+                        Colors.deepOrange.shade300,
+                        Colors.blue.shade300,
+                        Colors.green.shade300,
+                        Colors.purple.shade300,
+                        Colors.teal.shade300,
                       ]..shuffle(Random())).first,
                   child: Text(
                     (_auth.currentUser?.displayName != null &&
