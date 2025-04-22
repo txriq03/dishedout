@@ -72,7 +72,7 @@ class Login extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 50),
-                                SignupForm(),
+                                LoginForm(),
                               ],
                             ),
                           ),
@@ -90,14 +90,14 @@ class Login extends StatelessWidget {
   }
 }
 
-class SignupForm extends StatefulWidget {
-  const SignupForm({super.key});
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
 
   @override
-  State<SignupForm> createState() => _SignupFormState();
+  State<LoginForm> createState() => _SignupFormState();
 }
 
-class _SignupFormState extends State<SignupForm> {
+class _SignupFormState extends State<LoginForm> {
   final auth = Auth();
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color accentColor = Colors.deepOrange[400] as Color;
