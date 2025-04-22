@@ -31,13 +31,12 @@ class UploadForm extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           TextFormField(
+            textCapitalization: TextCapitalization.words,
             controller: nameController,
-            cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 15),
               hintText: 'Cheese burger',
             ),
-            style: const TextStyle(color: Colors.white),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter a food name';
@@ -48,16 +47,11 @@ class UploadForm extends StatelessWidget {
           const SizedBox(height: 16),
           const Text(
             'Description',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(height: 8),
           TextFormField(
             controller: descriptionController,
-            cursorColor: Colors.deepOrange,
             maxLines: 4,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(
@@ -66,7 +60,6 @@ class UploadForm extends StatelessWidget {
               ),
               hintText: 'Enter a description of the food',
             ),
-            style: const TextStyle(color: Colors.white),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter a description';
