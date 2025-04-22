@@ -19,7 +19,25 @@ class PostCard extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.network(imageUrl, fit: BoxFit.cover),
+        Image.network(
+          imageUrl,
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value:
+                    loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+              ),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return const Center(child: Icon(Icons.error, color: Colors.red));
+          },
+        ),
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
