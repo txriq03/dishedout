@@ -26,8 +26,14 @@ class Login extends StatelessWidget {
                             Positioned(
                               top: 10,
                               left: 16,
+
                               child: BackButton(
                                 color: Colors.white,
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStateProperty.all(
+                                    Colors.transparent,
+                                  ),
+                                ),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -146,8 +152,6 @@ class _SignupFormState extends State<SignupForm> {
         children: <Widget>[
           TextFormField(
             controller: _emailController,
-            style: TextStyle(color: Colors.white),
-            cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 8),
               prefixIcon: Icon(
@@ -158,7 +162,13 @@ class _SignupFormState extends State<SignupForm> {
               suffixIcon:
                   _showEmailClearButton
                       ? IconButton(
-                        icon: Icon(Icons.clear, color: Colors.grey[500]),
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.white.withValues(alpha: 0.5),
+                        ),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                        ),
                         onPressed: () {
                           _emailController.clear();
                           setState(() {
@@ -175,8 +185,6 @@ class _SignupFormState extends State<SignupForm> {
 
           TextFormField(
             controller: _passwordController,
-            style: TextStyle(color: Colors.white),
-            cursorColor: Colors.deepOrange,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 8),
               prefixIcon: Icon(
@@ -189,7 +197,10 @@ class _SignupFormState extends State<SignupForm> {
                   _isPasswordHidden
                       ? Icons.visibility_off_rounded
                       : Icons.visibility_rounded,
-                  color: Colors.grey[500],
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.transparent,
                 ),
                 onPressed: () {
                   setState(() {
@@ -256,7 +267,7 @@ class _SignupFormState extends State<SignupForm> {
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-              child: Text("Sign up", style: TextStyle(fontSize: 18)),
+              child: Text("Sign in", style: TextStyle(fontSize: 18)),
             ),
           ),
 

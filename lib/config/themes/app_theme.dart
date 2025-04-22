@@ -12,6 +12,16 @@ final ThemeData appTheme = ThemeData(
   appBarTheme: AppBarTheme(
     titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.w200),
   ),
+  filledButtonTheme: FilledButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: WidgetStateProperty.all(
+        ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+          brightness: Brightness.dark,
+        ).surfaceContainer,
+      ),
+    ),
+  ),
   inputDecorationTheme: InputDecorationTheme(
     contentPadding: const EdgeInsets.symmetric(vertical: 12),
     border: UnderlineInputBorder(

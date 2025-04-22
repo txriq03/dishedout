@@ -23,6 +23,11 @@ class Signup extends StatelessWidget {
                       left: 16,
                       child: BackButton(
                         color: Colors.white,
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            Colors.transparent,
+                          ),
+                        ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -173,7 +178,14 @@ class _SignupFormState extends State<SignupForm> {
               suffixIcon:
                   _showUsernameClearButton
                       ? IconButton(
-                        icon: Icon(Icons.clear, color: Colors.grey[500]),
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.white.withValues(alpha: 0.5),
+                        ),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                        ),
+
                         onPressed: () {
                           _usernameController.clear();
                           setState(() {
@@ -202,7 +214,13 @@ class _SignupFormState extends State<SignupForm> {
               suffixIcon:
                   _showEmailClearButton
                       ? IconButton(
-                        icon: Icon(Icons.clear, color: Colors.grey[500]),
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.white.withValues(alpha: 0.5),
+                        ),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                        ),
                         onPressed: () {
                           _emailController.clear();
                           setState(() {
@@ -233,7 +251,10 @@ class _SignupFormState extends State<SignupForm> {
                   _isPasswordHidden
                       ? Icons.visibility_off_rounded
                       : Icons.visibility_rounded,
-                  color: Colors.grey[500],
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.transparent,
                 ),
                 onPressed: () {
                   setState(() {
@@ -265,7 +286,10 @@ class _SignupFormState extends State<SignupForm> {
                   _isConfirmPasswordHidden
                       ? Icons.visibility_off_rounded
                       : Icons.visibility_rounded,
-                  color: Colors.grey[500],
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.transparent,
                 ),
                 onPressed: () {
                   setState(() {
