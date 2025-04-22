@@ -54,24 +54,6 @@ final ThemeData appTheme = ThemeData(
       foregroundColor: Colors.deepOrange.shade200,
     ),
   ),
-  iconButtonTheme: IconButtonThemeData(
-    style: ButtonStyle(
-      backgroundColor: WidgetStateProperty.resolveWith((states) {
-        if (states.isEmpty) {
-          return ColorScheme.fromSeed(
-            seedColor: Colors.indigo,
-          ).surfaceContainer; // idle fill color
-        }
-        return null;
-      }),
-      foregroundColor: WidgetStateProperty.resolveWith((states) {
-        if (states.isEmpty) {
-          return Colors.deepOrange.shade300; // idle icon color
-        }
-        return null;
-      }),
-    ),
-  ),
 );
 
 final ColorScheme colorScheme = ColorScheme.fromSeed(
