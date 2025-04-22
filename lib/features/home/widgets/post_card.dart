@@ -42,16 +42,16 @@ class PostCard extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.black.withValues(alpha: 0.6), // Dark gradient color
+                Colors.black.withValues(alpha: 0.8), // Dark gradient color
                 Colors.transparent, // Transparent color
               ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
         ),
         Positioned(
-          bottom: 16,
+          top: 16,
           left: 16,
           right: 16,
           child: Column(

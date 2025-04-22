@@ -22,19 +22,6 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    // return ConstrainedBox(
-    //   constraints: const BoxConstraints(maxHeight: 400, minHeight: 200),
-    //   child: CarouselView.weighted(
-    //     controller: controller,
-    //     itemSnapping: true,
-    //     flexWeights: [8, 2],
-    //     children: [
-    //       Image.asset('assets/pancake.jpg', fit: BoxFit.cover),
-    //       Image.asset('assets/meat.jpg', fit: BoxFit.cover),
-    //       Image.asset('assets/spices.jpg', fit: BoxFit.cover),
-    //     ],
-    //   ),
-    // );
     return FutureBuilder<List<Post>>(
       future: _postService.getPosts(),
       builder: (context, snapshot) {
