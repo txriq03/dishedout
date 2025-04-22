@@ -78,7 +78,12 @@ class PostCard extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text(
                       'Loading user...',
-                      style: TextStyle(color: Colors.white60, fontSize: 12),
+                      softWrap: false,
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 12,
+                        overflow: TextOverflow.clip,
+                      ),
                     );
                   } else if (snapshot.hasError || !snapshot.hasData) {
                     return const Text(

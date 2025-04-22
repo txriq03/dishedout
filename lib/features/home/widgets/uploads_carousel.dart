@@ -41,7 +41,23 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error loading posts: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No posts available'));
+          return Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.surfaceContainer,
+            ),
+            child: Center(
+              child: Text(
+                'No posts available :(',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
+              ),
+            ),
+          );
         }
 
         final posts = snapshot.data!;
