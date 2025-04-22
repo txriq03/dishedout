@@ -15,6 +15,7 @@ class UserService {
   Future<void> addUser(String uid, String displayName, String email) async {
     try {
       await firestore.collection('users').doc(uid).set({
+        'uid': uid,
         'displayName': displayName,
         'email': email,
         'createdAt': FieldValue.serverTimestamp(),

@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,10 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   final auth = Auth();
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late final UserService _userService;
+
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color backgroundFieldColor = Colors.grey[900] as Color;
 
@@ -28,6 +34,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   void initState() {
     super.initState();
+    _userService = UserService(_firestore);
     _usernameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
@@ -249,6 +256,13 @@ class _SignupFormState extends State<SignupForm> {
                   // Update display name
                   await userCredential.user!.updateDisplayName(
                     _usernameController.text.trim(),
+                  );
+
+                  // Add user to Firestore
+                  await _userService.addUser(
+                    userCredential.user!.uid,
+                    _usernameController.text.trim(),
+                    _emailController.text.trim(),
                   );
 
                   // Navigate to home screen here
