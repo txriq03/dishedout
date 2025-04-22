@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:dishedout/features/home/widgets/search_bar.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
@@ -11,98 +10,90 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: AppBar(
-          automaticallyImplyLeading: false, // Removes back button
-          title: Padding(
-            padding: EdgeInsets.only(top: 12.0),
-            child: Row(
+      appBar: AppBar(
+        actionsPadding: const EdgeInsets.only(right: 10),
+        automaticallyImplyLeading: false, // Removes back button
+        titleSpacing: 10,
+        title: Row(
+          children: [
+            CircleAvatar(
+              radius: 18,
+              backgroundColor:
+                  ([
+                    Colors.deepOrange.shade300,
+                    Colors.blue.shade300,
+                    Colors.green.shade300,
+                    Colors.purple.shade300,
+                    Colors.teal.shade300,
+                  ]..shuffle(Random())).first,
+              child: Text(
+                (_auth.currentUser?.displayName != null &&
+                        _auth.currentUser!.displayName!.isNotEmpty)
+                    ? _auth.currentUser!.displayName![0].toUpperCase()
+                    : (_auth.currentUser?.email?[0].toUpperCase() ?? 'U'),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
               children: [
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor:
-                      ([
-                        Colors.deepOrange.shade300,
-                        Colors.blue.shade300,
-                        Colors.green.shade300,
-                        Colors.purple.shade300,
-                        Colors.teal.shade300,
-                      ]..shuffle(Random())).first,
-                  child: Text(
-                    (_auth.currentUser?.displayName != null &&
-                            _auth.currentUser!.displayName!.isNotEmpty)
-                        ? _auth.currentUser!.displayName![0].toUpperCase()
-                        : (_auth.currentUser?.email?[0].toUpperCase() ?? 'U'),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        text:
-                            _auth.currentUser?.displayName ??
-                            _auth.currentUser?.email ??
-                            'User',
-                        children: [
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.chevron_right_rounded,
-                              weight: 100,
-                            ),
-                          ),
-                        ],
+                Text.rich(
+                  TextSpan(
+                    text:
+                        _auth.currentUser?.displayName ??
+                        _auth.currentUser?.email ??
+                        'User',
+                    children: [
+                      WidgetSpan(
+                        child: Icon(Icons.chevron_right_rounded, weight: 100),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-
-          actions: [
-            IconButton.filled(
-              icon: const Icon(Icons.search_rounded),
-              tooltip: 'Search',
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.isEmpty) {
-                    return Theme.of(context).colorScheme.surfaceContainer;
-                  }
-                  return null;
-                }),
-                foregroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.isEmpty) {
-                    return Colors.deepOrange.shade300;
-                  }
-                  return null;
-                }),
-              ),
-              onPressed: () async {},
-            ),
-            IconButton.filled(
-              icon: const Icon(Icons.notifications_rounded),
-              tooltip: 'Notifications',
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.isEmpty) {
-                    return Theme.of(context).colorScheme.surfaceContainer;
-                  }
-                  return null;
-                }),
-                foregroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.isEmpty) {
-                    return Colors.deepOrange.shade300;
-                  }
-                  return null;
-                }),
-              ),
-              onPressed: () async {},
-            ),
           ],
         ),
+
+        actions: [
+          IconButton.filled(
+            icon: const Icon(Icons.search_rounded),
+            tooltip: 'Search',
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.isEmpty) {
+                  return Theme.of(context).colorScheme.surfaceContainer;
+                }
+                return null;
+              }),
+              foregroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.isEmpty) {
+                  return Colors.deepOrange.shade300;
+                }
+                return null;
+              }),
+            ),
+            onPressed: () async {},
+          ),
+          IconButton.filled(
+            icon: const Icon(Icons.notifications_rounded),
+            tooltip: 'Notifications',
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.isEmpty) {
+                  return Theme.of(context).colorScheme.surfaceContainer;
+                }
+                return null;
+              }),
+              foregroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.isEmpty) {
+                  return Colors.deepOrange.shade300;
+                }
+                return null;
+              }),
+            ),
+            onPressed: () async {},
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

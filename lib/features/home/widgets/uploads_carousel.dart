@@ -51,6 +51,7 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
         return ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 400, minHeight: 200),
           child: CarouselView.weighted(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
             ),
