@@ -25,7 +25,7 @@ class ProfilePage extends StatelessWidget {
             // Avatar
             CircleAvatar(
               radius: 40,
-              backgroundColor: Colors.deepOrange,
+              backgroundColor: Colors.deepOrange.shade300,
               child: Text(
                 (user?.displayName != null && user!.displayName!.isNotEmpty)
                     ? user.displayName![0].toUpperCase()

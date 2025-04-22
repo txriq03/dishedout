@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 21,
+                  radius: 16,
                   backgroundColor:
                       ([
                         Colors.deepOrange.shade300,
@@ -34,21 +34,13 @@ class HomePage extends StatelessWidget {
                             _auth.currentUser!.displayName!.isNotEmpty)
                         ? _auth.currentUser!.displayName![0].toUpperCase()
                         : (_auth.currentUser?.email?[0].toUpperCase() ?? 'U'),
-                    style: const TextStyle(fontSize: 21, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Welcome back",
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
                     Text(
                       _auth.currentUser?.displayName ??
                           _auth.currentUser?.email ??
@@ -66,13 +58,43 @@ class HomePage extends StatelessWidget {
           ),
 
           actions: [
-            IconButton(
-              icon: const Icon(Icons.logout_rounded),
-              color: Colors.deepOrange.shade400,
-              tooltip: 'Logout',
-              onPressed: () async {
-                await _auth.signOut();
-              },
+            IconButton.filled(
+              icon: const Icon(Icons.search_rounded),
+              tooltip: 'Search',
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.isEmpty) {
+                    return Theme.of(context).colorScheme.surfaceContainer;
+                  }
+                  return null;
+                }),
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.isEmpty) {
+                    return Colors.deepOrange.shade300;
+                  }
+                  return null;
+                }),
+              ),
+              onPressed: () async {},
+            ),
+            IconButton.filled(
+              icon: const Icon(Icons.notifications_rounded),
+              tooltip: 'Notifications',
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.isEmpty) {
+                    return Theme.of(context).colorScheme.surfaceContainer;
+                  }
+                  return null;
+                }),
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.isEmpty) {
+                    return Colors.deepOrange.shade300;
+                  }
+                  return null;
+                }),
+              ),
+              onPressed: () async {},
             ),
           ],
         ),
@@ -81,7 +103,14 @@ class HomePage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
-            children: [SearchWidget(), SizedBox(height: 20), UploadsCarousel()],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Discover",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+              ),
+              UploadsCarousel(),
+            ],
           ),
         ),
       ),
