@@ -34,21 +34,26 @@ class HomePage extends StatelessWidget {
                             _auth.currentUser!.displayName!.isNotEmpty)
                         ? _auth.currentUser!.displayName![0].toUpperCase()
                         : (_auth.currentUser?.email?[0].toUpperCase() ?? 'U'),
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      _auth.currentUser?.displayName ??
-                          _auth.currentUser?.email ??
-                          'User',
-                      style: TextStyle(
-                        color: Colors.grey[200],
-                        fontSize: 21,
-                        fontWeight: FontWeight.w300,
+                    Text.rich(
+                      TextSpan(
+                        text:
+                            _auth.currentUser?.displayName ??
+                            _auth.currentUser?.email ??
+                            'User',
+                        children: [
+                          WidgetSpan(
+                            child: Icon(
+                              Icons.chevron_right_rounded,
+                              weight: 100,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
