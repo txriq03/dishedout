@@ -83,12 +83,22 @@ class PostCard extends StatelessWidget {
                   } else if (snapshot.hasError || !snapshot.hasData) {
                     return const Text(
                       'Unknown user',
-                      style: TextStyle(color: Colors.white60, fontSize: 12),
+                      softWrap: false,
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 12,
+                        overflow: TextOverflow.clip,
+                      ),
                     );
                   }
                   return Text(
                     snapshot.data ?? 'Unknown user',
-                    style: const TextStyle(color: Colors.white60, fontSize: 12),
+                    softWrap: false,
+                    style: const TextStyle(
+                      color: Colors.white60,
+                      fontSize: 12,
+                      overflow: TextOverflow.clip,
+                    ),
                   );
                 },
               ),
