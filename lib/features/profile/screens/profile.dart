@@ -10,6 +10,7 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: const Text(
           'Profile',
