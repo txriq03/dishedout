@@ -1,7 +1,9 @@
 import 'package:dishedout/features/upload/widgets/image_upload.dart';
 import 'package:dishedout/features/upload/widgets/progress_indicator.dart';
+import 'package:dishedout/features/upload/widgets/success.dart';
 import 'package:dishedout/features/upload/widgets/upload_form.dart';
 import 'package:dishedout/services/post_service.dart';
+import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -56,6 +58,16 @@ class _UploadPageState extends State<UploadPage> {
       }
 
       Navigator.of(context).pop(); // Close loading dialog
+
+      // Navigate to the home page after successful upload
+      if (_currentStep == Step.success) {
+        Future.delayed(const Duration(seconds: 3), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Navbar()),
+          );
+        });
+      }
     }
   }
 
@@ -105,7 +117,7 @@ class _UploadPageState extends State<UploadPage> {
           descriptionController: _descriptionController,
         );
       case Step.success:
-        return const Text('Success!');
+        return SuccessPage();
     }
   }
 
@@ -127,16 +139,23 @@ class _UploadPageState extends State<UploadPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _image != null ? _nextStep : null,
-        elevation: 0,
-        shape: const CircleBorder(side: BorderSide.none),
-        backgroundColor:
-            _image != null
-                ? Colors.deepOrange.shade300.withValues(alpha: 0.3)
-                : Colors.grey[900],
-        foregroundColor: _image != null ? Colors.deepOrange : Colors.grey[800],
-        child: const Icon(Icons.chevron_right_rounded, size: 24.0),
+      floatingActionButton: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child:
+            _currentStep != Step.success
+                ? FloatingActionButton(
+                  onPressed: _image != null ? _nextStep : null,
+                  elevation: 0,
+                  shape: const CircleBorder(side: BorderSide.none),
+                  backgroundColor:
+                      _image != null
+                          ? Colors.deepOrange.shade300.withValues(alpha: 0.3)
+                          : Colors.grey[900],
+                  foregroundColor:
+                      _image != null ? Colors.deepOrange : Colors.grey[800],
+                  child: const Icon(Icons.chevron_right_rounded, size: 24.0),
+                )
+                : null,
       ),
     );
   }
