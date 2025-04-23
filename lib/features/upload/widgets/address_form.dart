@@ -27,8 +27,8 @@ class _AddressFormState extends State<AddressForm> {
             border: OutlineInputBorder(),
             prefixIcon: Icon(Icons.location_on),
           ),
-          debounceTime: 800,
-          countries: ["us"], // Optional: restrict to country code
+          debounceTime: 500,
+          countries: ["gb"], // Optional: restrict to country code
           isLatLngRequired: true,
           getPlaceDetailWithLatLng: (prediction) {
             setState(() {
