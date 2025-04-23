@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserService {
   final FirebaseFirestore firestore;
@@ -13,16 +14,28 @@ class UserService {
     return doc.data()?['displayName'] as String?;
   }
 
-  Future<void> addUser(String uid, String displayName, String email) async {
-    try {
-      await firestore.collection('users').doc(uid).set({
-        'uid': uid,
-        'displayName': displayName,
-        'email': email,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      print('Error adding user: $e');
+  Future<void> addUserToFirestore(User user) async {
+    final userDoc = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid);
+
+    // Check if the user already exists
+    final docSnapshot = await userDoc.get();
+    if (!docSnapshot.exists) {
+      final newUser = UserModel(
+        uid: user.uid,
+        displayName: user.displayName ?? '',
+        email: user.email ?? '',
+        createdAt: DateTime.now(),
+      );
+
+      try {
+        await userDoc.set(newUser.toMap());
+      } catch (e) {
+        print('Error adding user: $e');
+      }
+    } else {
+      print('User already exists in Firestore.');
     }
   }
 

@@ -259,11 +259,7 @@ class _SignupFormState extends State<SignupForm> {
                   );
 
                   // Add user to Firestore
-                  await _userService.addUser(
-                    userCredential.user!.uid,
-                    _usernameController.text.trim(),
-                    _emailController.text.trim(),
-                  );
+                  await _userService.addUserToFirestore(userCredential.user!);
 
                   // Navigate to home screen here
                   ScaffoldMessenger.of(context).showSnackBar(
