@@ -28,6 +28,10 @@ class _AddressFormState extends State<AddressField> {
     return Column(
       children: [
         GooglePlaceAutoCompleteTextField(
+          boxDecoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[800]!),
+            borderRadius: BorderRadius.circular(20),
+          ),
           textEditingController: widget.addressController,
           googleAPIKey: googleApiKey,
           inputDecoration: const InputDecoration(
