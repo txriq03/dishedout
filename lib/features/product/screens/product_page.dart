@@ -1,4 +1,5 @@
-import 'package:dishedout/models/post.dart';
+import 'package:dishedout/models/post_model.dart';
+import 'package:dishedout/shared/widgets/Avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -103,6 +104,7 @@ class ProductPage extends StatelessWidget {
                   'Posted by',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w200),
                 ),
+                // Avatar(user: post.user),
               ],
             ),
           ),

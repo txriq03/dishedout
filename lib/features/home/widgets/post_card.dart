@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/product/screens/product_page.dart';
-import 'package:dishedout/models/post.dart';
+import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:flutter/material.dart';
 

@@ -4,8 +4,8 @@ import 'package:dishedout/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
-  final User? currentUser;
-  const Avatar({super.key, required this.currentUser});
+  final User? user;
+  const Avatar({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,9 @@ class Avatar extends StatelessWidget {
             Colors.teal.shade300,
           ]..shuffle(Random())).first,
       child: Text(
-        (currentUser?.displayName != null &&
-                currentUser!.displayName!.isNotEmpty)
-            ? currentUser!.displayName![0].toUpperCase()
-            : (currentUser?.email?[0].toUpperCase() ?? 'U'),
+        (user?.displayName != null && user!.displayName!.isNotEmpty)
+            ? user!.displayName![0].toUpperCase()
+            : (user?.email?[0].toUpperCase() ?? 'U'),
       ),
     );
   }

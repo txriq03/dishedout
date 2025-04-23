@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dishedout/models/user_model.dart';
 
 class UserService {
   final FirebaseFirestore firestore;
@@ -23,5 +24,17 @@ class UserService {
     } catch (e) {
       print('Error adding user: $e');
     }
+  }
+
+  Future<UserModel?> getUser(String uid) async {
+    try {
+      final doc = await firestore.collection('users').doc(uid).get();
+      if (doc.exists) {
+        return UserModel.fromDocument(doc);
+      }
+    } catch (e) {
+      print('Error fetching user: $e');
+    }
+    return null;
   }
 }

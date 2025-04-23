@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/shared/widgets/Avatar.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class HomePage extends StatelessWidget {
         titleSpacing: 10,
         title: Row(
           children: [
-            Avatar(currentUser: _auth.currentUser),
+            Avatar(user: _auth.currentUser),
             const SizedBox(width: 10),
             Column(
               children: [
