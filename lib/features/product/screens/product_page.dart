@@ -11,7 +11,7 @@ class ProductPage extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor:
-            Theme.of(context).colorScheme.surfaceContainer,
+            Theme.of(context).bottomSheetTheme.backgroundColor,
       ),
     );
     return Scaffold(

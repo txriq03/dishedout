@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
+import 'package:dishedout/shared/widgets/Avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -9,6 +11,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor:
+            Theme.of(context).colorScheme.surfaceContainer,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         actionsPadding: const EdgeInsets.only(right: 10),
@@ -16,23 +24,7 @@ class HomePage extends StatelessWidget {
         titleSpacing: 10,
         title: Row(
           children: [
-            CircleAvatar(
-              radius: 18,
-              backgroundColor:
-                  ([
-                    Colors.deepOrange.shade300,
-                    Colors.blue.shade300,
-                    Colors.green.shade300,
-                    Colors.purple.shade300,
-                    Colors.teal.shade300,
-                  ]..shuffle(Random())).first,
-              child: Text(
-                (_auth.currentUser?.displayName != null &&
-                        _auth.currentUser!.displayName!.isNotEmpty)
-                    ? _auth.currentUser!.displayName![0].toUpperCase()
-                    : (_auth.currentUser?.email?[0].toUpperCase() ?? 'U'),
-              ),
-            ),
+            Avatar(currentUser: _auth.currentUser),
             const SizedBox(width: 10),
             Column(
               children: [

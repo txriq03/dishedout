@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
+import 'package:flutter/services.dart';
 
 class ProfilePage extends StatelessWidget {
   final Auth _auth = Auth();
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor:
+            Theme.of(context).colorScheme.surfaceContainer,
+      ),
+    );
     final user = _auth.currentUser;
 
     return Scaffold(

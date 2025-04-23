@@ -5,10 +5,11 @@ import 'package:dishedout/features/upload/widgets/success.dart';
 import 'package:dishedout/features/upload/widgets/upload_form.dart';
 import 'package:dishedout/services/post_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+
+import 'package:flutter/services.dart';
 
 // Enum for handling what step of upload we use
 enum Step { takePhoto, fillForm, success }
@@ -134,6 +135,12 @@ class _UploadPageState extends State<UploadPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor:
+            Theme.of(context).colorScheme.surfaceContainer,
+      ),
+    );
     return Scaffold(
       body: SafeArea(
         child: Padding(
