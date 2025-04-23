@@ -1,5 +1,6 @@
 import 'package:dishedout/models/post.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ProductPage extends StatelessWidget {
   final Post post;
@@ -7,6 +8,12 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor:
+            Theme.of(context).colorScheme.surfaceContainer,
+      ),
+    );
     return Scaffold(
       bottomSheet: Container(
         width: double.infinity,
@@ -21,10 +28,7 @@ class ProductPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: Text(
-            'Add to Cart',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          child: Text('Claim item'),
         ),
       ),
       extendBodyBehindAppBar: true,

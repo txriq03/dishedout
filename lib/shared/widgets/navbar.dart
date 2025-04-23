@@ -22,11 +22,8 @@ class _NavbarState extends State<Navbar> {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor:
-            Theme.of(
-              context,
-            ).colorScheme.surfaceContainer, // Change this to your desired color
-        systemNavigationBarIconBrightness:
-            Brightness.dark, // Adjust icon brightness
+            Theme.of(context).colorScheme.surfaceContainer,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
 
@@ -39,7 +36,6 @@ class _NavbarState extends State<Navbar> {
             _selectedIndex = index;
           });
         },
-        // indicatorColor: Colors.deepOrange.shade400,
         destinations: [
           NavigationDestination(
             icon: Icon(Icons.home_rounded, color: Colors.grey[800]),
