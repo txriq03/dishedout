@@ -11,6 +11,7 @@ class ProductPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(forceMaterialTransparency: true),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
@@ -56,6 +57,26 @@ class ProductPage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  post.name,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                ),
+                Text(
+                  post.description,
+                  style: TextStyle(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
