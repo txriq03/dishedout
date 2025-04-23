@@ -106,7 +106,60 @@ class ProductPage extends StatelessWidget {
                   'Posted by',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w200),
                 ),
-                Avatar(user: user),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainer,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          Avatar(user: user),
+                          SizedBox(width: 10),
+                          Text(
+                            user!.displayName,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainer,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        icon: Icon(Icons.call_rounded),
+                        onPressed: () {},
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainer,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        icon: Icon(Icons.chat_rounded),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
