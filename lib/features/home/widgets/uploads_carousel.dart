@@ -74,12 +74,7 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
             flexWeights: [8, 2],
             children:
                 posts.map((post) {
-                  return PostCard(
-                    imageUrl: post.imageUrl,
-                    title: post.name,
-                    description: post.description,
-                    uid: post.uid,
-                  );
+                  return PostCard(post: post);
                 }).toList(),
           ),
         );

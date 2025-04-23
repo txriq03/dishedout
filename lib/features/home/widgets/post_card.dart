@@ -1,22 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/product/screens/product_page.dart';
+import 'package:dishedout/models/post.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 class PostCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String description;
-  final String uid;
+  final Post post;
   final UserService _userService = UserService(FirebaseFirestore.instance);
 
-  PostCard({
-    super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.description,
-    required this.uid,
-  });
+  PostCard({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +16,14 @@ class PostCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductPage()),
+          MaterialPageRoute(builder: (context) => ProductPage(post: post)),
         );
       },
       child: Stack(
         fit: StackFit.expand,
         children: [
           Image.network(
-            imageUrl,
+            post.imageUrl,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
@@ -69,7 +61,7 @@ class PostCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  post.name,
                   overflow: TextOverflow.clip,
                   softWrap: false,
                   style: const TextStyle(
@@ -81,7 +73,7 @@ class PostCard extends StatelessWidget {
                 const SizedBox(height: 4),
 
                 FutureBuilder<String?>(
-                  future: _userService.getDisplayName(uid),
+                  future: _userService.getDisplayName(post.uid),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Text(
