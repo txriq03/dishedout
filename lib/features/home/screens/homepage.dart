@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
+import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/Avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/services.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final Auth _auth = Auth();
+  final UserService _userService = UserService(FirebaseFirestore.instance);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +27,19 @@ class HomePage extends StatelessWidget {
         titleSpacing: 10,
         title: Row(
           children: [
-            Avatar(user: _auth.currentUser),
-            const SizedBox(width: 10),
+            FutureBuilder<UserModel?>(
+              future: _userService.getUser(_auth.currentUser!.uid),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); // or a placeholder avatar
+                } else if (snapshot.hasError) {
+                  return const Icon(Icons.error); // or handle error
+                } else {
+                  return Avatar(user: snapshot.data);
+                }
+              },
+            ),
+            SizedBox(width: 10),
             Column(
               children: [
                 Text.rich(

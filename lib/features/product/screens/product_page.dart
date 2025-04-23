@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/post_model.dart';
+import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/Avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ProductPage extends StatelessWidget {
   final Post post;
-  const ProductPage({super.key, required this.post});
+  final UserService _userService = UserService(FirebaseFirestore.instance);
+  ProductPage({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +108,18 @@ class ProductPage extends StatelessWidget {
                   'Posted by',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w200),
                 ),
-                // Avatar(user: post.user),
+                FutureBuilder<UserModel?>(
+                  future: _userService.getUser(post.uid),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(); // or a placeholder avatar
+                    } else if (snapshot.hasError) {
+                      return const Icon(Icons.error); // or handle error
+                    } else {
+                      return Avatar(user: snapshot.data);
+                    }
+                  },
+                ),
               ],
             ),
           ),

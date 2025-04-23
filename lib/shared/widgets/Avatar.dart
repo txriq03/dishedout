@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
-  final User? user;
+  final UserModel? user;
   const Avatar({super.key, required this.user});
 
   @override
