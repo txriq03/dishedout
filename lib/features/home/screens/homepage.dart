@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/user_service.dart';
-import 'package:dishedout/shared/widgets/Avatar.dart';
+import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
 import 'package:flutter/services.dart';
