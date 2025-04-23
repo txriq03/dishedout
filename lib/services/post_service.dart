@@ -61,7 +61,7 @@ class PostService {
     try {
       final collection = await firestore.collection('posts').get();
       return collection.docs
-          .map((doc) => Post.fromMap(doc.data()))
+          .map((doc) => Post.fromMap(doc.id, doc.data()))
           .toList(); // List of posts
     } catch (e) {
       print('Error fetching posts: $e');

@@ -6,8 +6,12 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Product Page')),
-      body: Center(child: Text('Product details will be displayed here.')),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(forceMaterialTransparency: true),
+      body: Column(children: [
+          
+        ]
+      ),
     );
   }
 }

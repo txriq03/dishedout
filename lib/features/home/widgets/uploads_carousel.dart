@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/home/widgets/post_card.dart';
 import 'package:dishedout/models/post.dart';
 import 'package:dishedout/services/post_service.dart';
-import 'package:dishedout/services/user_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 

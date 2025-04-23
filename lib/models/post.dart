@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
+  final String id;
   final String uid;
   final String name;
   final String description;
@@ -8,6 +9,7 @@ class Post {
   final DateTime createdAt;
 
   Post({
+    required this.id,
     required this.uid,
     required this.name,
     required this.description,
@@ -15,8 +17,9 @@ class Post {
     required this.createdAt,
   });
 
-  factory Post.fromMap(Map<String, dynamic> data) {
+  factory Post.fromMap(String id, Map<String, dynamic> data) {
     return Post(
+      id: id,
       uid: data['uid'] ?? '',
       name: data['name'] ?? '',
       description: data['description'] ?? '',
