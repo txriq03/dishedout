@@ -8,6 +8,25 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomSheet: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Colors.black,
+            padding: EdgeInsets.symmetric(vertical: 20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          child: Text(
+            'Add to Cart',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       extendBodyBehindAppBar: true,
       appBar: AppBar(forceMaterialTransparency: true),
       body: Column(
