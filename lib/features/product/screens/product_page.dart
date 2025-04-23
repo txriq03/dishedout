@@ -8,8 +8,9 @@ import 'package:flutter/services.dart';
 
 class ProductPage extends StatelessWidget {
   final Post post;
+  final UserModel? user;
   final UserService _userService = UserService(FirebaseFirestore.instance);
-  ProductPage({super.key, required this.post});
+  ProductPage({super.key, required this.post, required this.user});
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/product/screens/product_page.dart';
 import 'package:dishedout/models/post_model.dart';
+import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:flutter/material.dart';
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   final Post post;
-  final UserService _userService = UserService(FirebaseFirestore.instance);
-
+  // final UserService _userService = UserService(FirebaseFirestore.instance);
   PostCard({super.key, required this.post});
+
+  @override
+  State<PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  UserModel? user;
+  final UserService userService = UserService(FirebaseFirestore.instance);
+
+  @override
+  initState() {
+    super.initState();
+    loadUser();
+  }
+
+  Future<void> loadUser() async {
+    final fetchedUser = await userService.getUser(widget.post.uid);
+    setState(() {
+      user = fetchedUser;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +37,16 @@ class PostCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductPage(post: post)),
+          MaterialPageRoute(
+            builder: (context) => ProductPage(post: widget.post, user: user),
+          ),
         );
       },
       child: Stack(
         fit: StackFit.expand,
         children: [
           Image.network(
-            post.imageUrl,
+            widget.post.imageUrl,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
@@ -61,7 +84,7 @@ class PostCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  post.name,
+                  widget.post.name,
                   overflow: TextOverflow.clip,
                   softWrap: false,
                   style: const TextStyle(
@@ -72,40 +95,15 @@ class PostCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
 
-                FutureBuilder<String?>(
-                  future: _userService.getDisplayName(post.uid),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Text(
-                        'Loading user...',
-                        softWrap: false,
-                        style: TextStyle(
-                          color: Colors.white60,
-                          fontSize: 16,
-                          overflow: TextOverflow.clip,
-                        ),
-                      );
-                    } else if (snapshot.hasError || !snapshot.hasData) {
-                      return const Text(
-                        'Unknown user',
-                        softWrap: false,
-                        style: TextStyle(
-                          color: Colors.white60,
-                          fontSize: 16,
-                          overflow: TextOverflow.clip,
-                        ),
-                      );
-                    }
-                    return Text(
-                      snapshot.data ?? 'Unknown user',
-                      softWrap: false,
-                      style: const TextStyle(
-                        color: Colors.white60,
-                        fontSize: 16,
-                        overflow: TextOverflow.clip,
-                      ),
-                    );
-                  },
+                // Show display name
+                Text(
+                  user?.displayName ?? 'Loading...',
+                  softWrap: false,
+                  style: const TextStyle(
+                    color: Colors.white60,
+                    fontSize: 16,
+                    overflow: TextOverflow.clip,
+                  ),
                 ),
               ],
             ),
