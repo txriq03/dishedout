@@ -16,7 +16,7 @@ class ProductPage extends StatelessWidget {
           Stack(
             children: [
               SizedBox(
-                height: 250,
+                height: 400,
                 width: double.infinity,
                 child: Image.network(
                   post.imageUrl,
@@ -42,7 +42,7 @@ class ProductPage extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 250,
+                height: 400,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -74,6 +74,11 @@ class ProductPage extends StatelessWidget {
                       context,
                     ).colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Posted by',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w200),
                 ),
               ],
             ),
