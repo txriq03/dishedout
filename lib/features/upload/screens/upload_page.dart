@@ -29,6 +29,11 @@ class _UploadPageState extends State<UploadPage> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late final PostService _postService;
 
+  // Address field variables
+  double? _lat;
+  double? _lng;
+  final TextEditingController _addressController = TextEditingController();
+
   // Form key and controllers for the form step
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -127,6 +132,9 @@ class _UploadPageState extends State<UploadPage> {
           formKey: _formKey,
           nameController: _nameController,
           descriptionController: _descriptionController,
+          lat: _lat,
+          lng: _lng,
+          addressController: _addressController,
         );
       case Step.success:
         return SuccessPage();

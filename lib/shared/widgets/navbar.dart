@@ -1,4 +1,4 @@
-import 'package:dishedout/features/upload/screens/upload.dart';
+import 'package:dishedout/features/upload/screens/upload_page.dart';
 import 'package:dishedout/features/home/screens/homepage.dart';
 import 'package:dishedout/features/profile/screens/profile.dart';
 import 'package:flutter/material.dart';

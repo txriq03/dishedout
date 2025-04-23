@@ -1,17 +1,23 @@
+import 'package:dishedout/features/upload/widgets/address_field.dart';
 import 'package:flutter/material.dart';
 
 // AIzaSyCZkhmv5mPQnRNkFHXPDMdaTvtTUEH04Ws
 class UploadForm extends StatelessWidget {
-  final GlobalKey<FormState> formKey; // Key to validate the form
-  final TextEditingController nameController; // Controller for the name field
-  final TextEditingController
-  descriptionController; // Controller for the description field
+  final GlobalKey<FormState> formKey;
+  final TextEditingController nameController;
+  final TextEditingController descriptionController;
+  final double? lat;
+  final double? lng;
+  final TextEditingController addressController;
 
   const UploadForm({
     super.key,
     required this.formKey,
     required this.nameController,
     required this.descriptionController,
+    required this.lat,
+    required this.lng,
+    required this.addressController,
   });
 
   @override
@@ -69,6 +75,11 @@ class UploadForm extends StatelessWidget {
             },
           ),
           const SizedBox(height: 24),
+          AddressField(
+            lat: lat,
+            lng: lng,
+            addressController: addressController,
+          ),
         ],
       ),
     );
