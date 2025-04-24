@@ -59,7 +59,6 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      // if (permission == LocationPermission.denied) return;
     }
 
     _positionStream = Geolocator.getPositionStream(
