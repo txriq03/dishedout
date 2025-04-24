@@ -22,12 +22,20 @@ class _AddressFormState extends State<AddressField> {
   // final TextEditingController _addressController = TextEditingController();
   // double? lat;
   // double? lng;
+  final FocusNode _addressFocusNode = FocusNode();
+
+  @override
+  void dipose() {
+    _addressFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GooglePlaceAutoCompleteTextField(
+          focusNode: _addressFocusNode,
           boxDecoration: BoxDecoration(
             border: Border.all(color: Colors.transparent),
             borderRadius: BorderRadius.circular(20),
