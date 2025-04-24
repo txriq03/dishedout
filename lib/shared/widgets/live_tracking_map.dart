@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:dishedout/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,6 +22,7 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
   final googleApiKey = AppConstants.googleApiKey;
   bool _isMounted = true;
   StreamSubscription<Position>? _positionStream;
+  bool _notified = false;
 
   @override
   void initState() {
@@ -36,6 +37,19 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
     _positionStream?.cancel();
     mapController.dispose();
     super.dispose();
+  }
+
+  // Launch Google Maps for navigation
+  void _launchExternalNavigation(LatLng destination) async {
+    final Uri url = Uri.parse(
+      'https://www.google.com/maps/dir/?api=1&destination=${destination.latitude},${destination.longitude}&travelmode=driving',
+    );
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch Google Maps';
+    }
   }
 
   void _initLocationTracking() async {
@@ -107,35 +121,61 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
       widget.lenderLocation.longitude,
     );
 
-    if (distance < 100) {
+    if (distance < 100 && !_notified) {
       // Send notification here
-      print("User is near the drop-off location!");
+      _notified = true;
+      _sendArrivalNotification();
     }
+  }
+
+  void _sendArrivalNotification() {
+    // Implement your notification logic here
+    print("User has arrived at the drop-off location!");
   }
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      initialCameraPosition: CameraPosition(
-        target: widget.lenderLocation,
-        zoom: 14,
-      ),
-      onMapCreated: (controller) => mapController = controller,
-      markers: {
-        Marker(
-          markerId: MarkerId("lender"),
-          position: widget.lenderLocation,
-          infoWindow: InfoWindow(title: "Lender"),
-        ),
-        if (claimerPosition != null)
-          Marker(
-            markerId: MarkerId("claimer"),
-            position: claimerPosition!,
-            infoWindow: InfoWindow(title: "Claimer"),
+    return Stack(
+      children: [
+        GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: widget.lenderLocation,
+            zoom: 14,
           ),
-      },
-      polylines: polylines,
-      myLocationEnabled: true,
+          onMapCreated: (controller) => mapController = controller,
+          markers: {
+            Marker(
+              markerId: MarkerId("lender"),
+              position: widget.lenderLocation,
+              infoWindow: InfoWindow(title: "Lender"),
+            ),
+            if (claimerPosition != null)
+              Marker(
+                markerId: MarkerId("claimer"),
+                position: claimerPosition!,
+                infoWindow: InfoWindow(title: "Claimer"),
+              ),
+          },
+          polylines: polylines,
+          myLocationEnabled: true,
+        ),
+        Positioned(
+          bottom: 16,
+          left: 16,
+          right: 16,
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+            onPressed: () => _launchExternalNavigation(widget.lenderLocation),
+            icon: Icon(Icons.navigation),
+            label: Text('Navigate with Google Maps'),
+          ),
+        ),
+      ],
     );
   }
 }
