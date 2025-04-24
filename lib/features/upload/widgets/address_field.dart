@@ -37,7 +37,7 @@ class _AddressFormState extends State<AddressField> {
         GooglePlaceAutoCompleteTextField(
           focusNode: _addressFocusNode,
           boxDecoration: BoxDecoration(
-            border: Border.all(color: Colors.transparent),
+            border: Border.all(color: Colors.grey[800]!),
             borderRadius: BorderRadius.circular(20),
           ),
           textEditingController: widget.addressController,
