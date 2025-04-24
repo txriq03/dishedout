@@ -1,3 +1,4 @@
+import 'package:dishedout/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -16,6 +17,7 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
   LatLng? claimerPosition;
   Set<Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
+  final googleApiKey = AppConstants.googleApiKey;
 
   @override
   void initState() {
@@ -42,10 +44,55 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
       _updatePolyline();
       _checkProximity();
     });
+  }
 
-    Future<void> _updatePolyline() async {
-      if (claimerPosition == null) return;
-      PolylinePoints polylinePoints = PolylinePoints();
+  Future<void> _updatePolyline() async {
+    if (claimerPosition == null) return;
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleApiKey: googleApiKey,
+      request: PolylineRequest(
+        origin: PointLatLng(
+          claimerPosition!.latitude,
+          claimerPosition!.longitude,
+        ),
+        destination: PointLatLng(
+          widget.lenderLocation.latitude,
+          widget.lenderLocation.longitude,
+        ),
+        mode: TravelMode.driving,
+      ),
+    );
+
+    if (result.points.isNotEmpty) {
+      polylineCoordinates =
+          result.points.map((p) => LatLng(p.latitude, p.longitude)).toList();
+      setState(() {
+        polylines = {
+          Polyline(
+            polylineId: const PolylineId("route"),
+            points: polylineCoordinates,
+            color: Colors.deepOrange,
+            width: 5,
+            startCap: Cap.roundCap,
+          ),
+        };
+      });
+    }
+  }
+
+  void _checkProximity() {
+    if (claimerPosition == null) return;
+    double distance = Geolocator.distanceBetween(
+      claimerPosition!.latitude,
+      claimerPosition!.longitude,
+      widget.lenderLocation.latitude,
+      widget.lenderLocation.longitude,
+    );
+
+    if (distance < 100) {
+      // Send notification here
+      print("User is near the drop-off location!");
     }
   }
 
