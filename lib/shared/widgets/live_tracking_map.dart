@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dishedout/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,11 +20,22 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
   Set<Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   final googleApiKey = AppConstants.googleApiKey;
+  bool _isMounted = true;
+  StreamSubscription<Position>? _positionStream;
 
   @override
   void initState() {
     super.initState();
+    _isMounted = true;
     _initLocationTracking();
+  }
+
+  @override
+  void dispose() {
+    _isMounted = false;
+    _positionStream?.cancel();
+    mapController.dispose();
+    super.dispose();
   }
 
   void _initLocationTracking() async {
@@ -35,12 +48,14 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
       // if (permission == LocationPermission.denied) return;
     }
 
-    Geolocator.getPositionStream(
+    _positionStream = Geolocator.getPositionStream(
       locationSettings: LocationSettings(accuracy: LocationAccuracy.best),
     ).listen((Position position) {
-      setState(() {
-        claimerPosition = LatLng(position.latitude, position.longitude);
-      });
+      if (_isMounted) {
+        setState(() {
+          claimerPosition = LatLng(position.latitude, position.longitude);
+        });
+      }
       _updatePolyline();
       _checkProximity();
     });

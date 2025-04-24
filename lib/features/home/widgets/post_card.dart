@@ -68,7 +68,7 @@ class _PostCardState extends State<PostCard> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.black.withValues(alpha: 0.8), // Dark gradient color
+                  Colors.black.withValues(alpha: 0.5), // Dark gradient color
                   Colors.transparent, // Transparent color
                 ],
                 begin: Alignment.topCenter,
