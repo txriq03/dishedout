@@ -7,12 +7,14 @@ class AddressField extends StatefulWidget {
   double? lat;
   double? lng;
   final TextEditingController addressController;
+  final void Function(double? lat, double? lng)? onLatLngChanged;
 
   AddressField({
     super.key,
     required this.lat,
     required this.lng,
     required this.addressController,
+    this.onLatLngChanged,
   });
 
   @override
@@ -26,7 +28,7 @@ class _AddressFormState extends State<AddressField> {
   final FocusNode _addressFocusNode = FocusNode();
 
   @override
-  void dipose() {
+  void dispose() {
     _addressFocusNode.dispose();
     super.dispose();
   }
@@ -52,10 +54,10 @@ class _AddressFormState extends State<AddressField> {
           countries: ["gb"], // Optional: restrict to country code
           isLatLngRequired: true,
           getPlaceDetailWithLatLng: (prediction) {
-            setState(() {
-              widget.lat = double.tryParse(prediction.lat ?? '');
-              widget.lng = double.tryParse(prediction.lng ?? '');
-            });
+            final lat = double.tryParse(prediction.lat ?? '');
+            final lng = double.tryParse(prediction.lng ?? '');
+
+            widget.onLatLngChanged?.call(lat, lng);
           },
           itemClick: (prediction) {
             widget.addressController.text = prediction.description!;

@@ -141,6 +141,12 @@ class _UploadPageState extends State<UploadPage> {
           lat: _lat,
           lng: _lng,
           addressController: _addressController,
+          onLatLngChanged: (newLat, newLng) {
+            setState(() {
+              _lat = newLat;
+              _lng = newLng;
+            });
+          },
         );
       case Step.success:
         return SuccessPage();

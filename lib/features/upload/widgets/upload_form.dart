@@ -9,6 +9,7 @@ class UploadForm extends StatelessWidget {
   final double? lat;
   final double? lng;
   final TextEditingController addressController;
+  final void Function(double?, double?) onLatLngChanged;
 
   const UploadForm({
     super.key,
@@ -18,6 +19,7 @@ class UploadForm extends StatelessWidget {
     required this.lat,
     required this.lng,
     required this.addressController,
+    required this.onLatLngChanged,
   });
 
   @override
@@ -79,6 +81,7 @@ class UploadForm extends StatelessWidget {
             lat: lat,
             lng: lng,
             addressController: addressController,
+            onLatLngChanged: onLatLngChanged,
           ),
         ],
       ),
