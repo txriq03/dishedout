@@ -1,7 +1,6 @@
+import 'package:dishedout/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
-
-const String googleApiKey = 'AIzaSyCZkhmv5mPQnRNkFHXPDMdaTvtTUEH04Ws';
 
 class AddressField extends StatefulWidget {
   double? lat;
@@ -26,6 +25,7 @@ class _AddressFormState extends State<AddressField> {
   // double? lat;
   // double? lng;
   final FocusNode _addressFocusNode = FocusNode();
+  final String googleApiKey = AppConstants.googleApiKey;
 
   @override
   void dispose() {
