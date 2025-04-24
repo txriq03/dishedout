@@ -61,6 +61,9 @@ class _UploadPageState extends State<UploadPage> {
     if (_formKey.currentState?.validate() ?? false) {
       final name = _nameController.text.trim();
       final description = _descriptionController.text.trim();
+      final addressDescription = _addressController.text.trim();
+      final lat = _lat;
+      final lng = _lng;
       if (_image != null) {
         _showLoadingDialog(context); // Show loading dialog
 
@@ -68,6 +71,9 @@ class _UploadPageState extends State<UploadPage> {
           imageFile: _image!,
           name: name,
           description: description,
+          addressDescription: addressDescription,
+          lat: lat,
+          lng: lng,
         );
         setState(() {
           _currentStep = Step.success;

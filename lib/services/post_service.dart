@@ -15,6 +15,9 @@ class PostService {
     required File imageFile,
     required String name,
     required String description,
+    required String addressDescription,
+    required double? lat,
+    required double? lng,
   }) async {
     final user = _auth.currentUser;
     if (user == null) {
@@ -23,6 +26,7 @@ class PostService {
       return;
     }
     final uid = user.uid;
+
     final fileName =
         DateTime.now().millisecondsSinceEpoch
             .toString(); // Moved outside the try block
@@ -36,13 +40,16 @@ class PostService {
       final downloadUrl = await imageRef.getDownloadURL();
 
       // 3. Attempt Firestore write
-      await firestore.collection('posts').add({
-        'uid': uid,
-        'name': name,
-        'description': description,
-        'imageUrl': downloadUrl,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+      final post = Post(
+        uid: uid,
+        name: name,
+        description: description,
+        imageUrl: downloadUrl,
+        addressDescription: addressDescription,
+        latitude: lat ?? 0.0,
+        longitude: lng ?? 0.0,
+      );
+      await firestore.collection('posts').add(post.toMap());
       print('Post uploaded successfully!');
     } catch (e) {
       print('Error uploading post: $e');
