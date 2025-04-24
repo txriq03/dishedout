@@ -258,8 +258,12 @@ class _SignupFormState extends State<SignupForm> {
                     _usernameController.text.trim(),
                   );
 
+                  // Refresh user to get updated display name
+                  await userCredential.user!.reload();
+                  final updatedUser = auth.currentUser;
+
                   // Add user to Firestore
-                  await _userService.addUserToFirestore(userCredential.user!);
+                  await _userService.addUserToFirestore(updatedUser!);
 
                   // Navigate to home screen here
                   ScaffoldMessenger.of(context).showSnackBar(
