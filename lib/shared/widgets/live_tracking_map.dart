@@ -46,6 +46,7 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
     });
   }
 
+  // Redraw the polyline on the map
   Future<void> _updatePolyline() async {
     if (claimerPosition == null) return;
     PolylinePoints polylinePoints = PolylinePoints();
@@ -81,6 +82,7 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
     }
   }
 
+  // Check if the claimer is within 100 meters of the lender's location
   void _checkProximity() {
     if (claimerPosition == null) return;
     double distance = Geolocator.distanceBetween(
@@ -98,6 +100,27 @@ class _LiveTrackingMapState extends State<LiveTrackingMap> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: widget.lenderLocation,
+        zoom: 14,
+      ),
+      onMapCreated: (controller) => mapController = controller,
+      markers: {
+        Marker(
+          markerId: MarkerId("lender"),
+          position: widget.lenderLocation,
+          infoWindow: InfoWindow(title: "Lender"),
+        ),
+        if (claimerPosition != null)
+          Marker(
+            markerId: MarkerId("claimer"),
+            position: claimerPosition!,
+            infoWindow: InfoWindow(title: "Claimer"),
+          ),
+      },
+      polylines: polylines,
+      myLocationEnabled: true,
+    );
   }
 }
