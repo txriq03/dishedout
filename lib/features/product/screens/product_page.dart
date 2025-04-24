@@ -1,8 +1,10 @@
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
+import 'package:dishedout/shared/widgets/live_tracking_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ProductPage extends StatelessWidget {
   final Post post;
@@ -17,12 +19,24 @@ class ProductPage extends StatelessWidget {
             Theme.of(context).bottomSheetTheme.backgroundColor,
       ),
     );
+
+    final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
+
     return Scaffold(
       bottomSheet: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        LiveTrackingMap(lenderLocation: lenderLocation),
+              ),
+            );
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.black,

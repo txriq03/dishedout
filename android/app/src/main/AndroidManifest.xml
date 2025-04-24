@@ -4,11 +4,19 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCZkhmv5mPQnRNkFHXPDMdaTvtTUEH04Ws" />
 
     <application
         android:label="dishedout"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCZkhmv5mPQnRNkFHXPDMdaTvtTUEH04Ws" />
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
