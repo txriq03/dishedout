@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
+  final String id;
   final String uid;
   final String name;
   final String description;
@@ -11,6 +12,7 @@ class Post {
   final String status;
 
   Post({
+    required this.id,
     required this.uid,
     required this.name,
     required this.description,
@@ -21,9 +23,12 @@ class Post {
     this.status = 'available',
   });
 
-  factory Post.fromMap(String id, Map<String, dynamic> data) {
+  factory Post.fromDocument(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
     final address = data['address'] ?? {};
+
     return Post(
+      id: doc.id,
       uid: data['uid'] ?? '',
       name: data['name'] ?? '',
       description: data['description'] ?? '',
@@ -37,6 +42,7 @@ class Post {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'uid': uid,
       'name': name,
       'description': description,

@@ -41,8 +41,12 @@ class PostService {
       // 2. Get download URL
       final downloadUrl = await imageRef.getDownloadURL();
 
-      // 3. Attempt Firestore write
+      // 3. Create Firestore doc reference to get ID
+      final postRef = firestore.collection('posts').doc();
+
+      // 4. Attempt Firestore write
       final post = Post(
+        id: postRef.id,
         uid: uid,
         name: name,
         description: description,
@@ -70,7 +74,7 @@ class PostService {
     try {
       final collection = await firestore.collection('posts').get();
       return collection.docs
-          .map((doc) => Post.fromMap(doc.id, doc.data()))
+          .map((doc) => Post.fromDocument(doc))
           .toList(); // List of posts
     } catch (e) {
       print('Error fetching posts: $e');
