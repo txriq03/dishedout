@@ -1,3 +1,4 @@
+import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ void main() async {
   );
 
   // Initialise local notifications
-  // await initLocalNotifications();
+  await initLocalNotifications();
 
   runApp(MyApp());
 }
