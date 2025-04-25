@@ -1,16 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
 import 'package:flutter/services.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final Auth _auth = Auth();
   final UserService _userService = UserService(FirebaseFirestore.instance);
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      showLocalNotification(message);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
