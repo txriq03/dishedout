@@ -19,6 +19,13 @@ void main() async {
   // Enable edge-to-edge system UI
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
+  // Make nav and status bars transparent
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
   // Request permissions
   await FirebaseMessaging.instance.requestPermission(
     alert: true,

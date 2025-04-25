@@ -18,7 +18,7 @@ class Post {
     required this.addressDescription,
     required this.latitude,
     required this.longitude,
-    this.status = 'Available',
+    this.status = 'available',
   });
 
   factory Post.fromMap(String id, Map<String, dynamic> data) {
@@ -31,7 +31,7 @@ class Post {
       addressDescription: address['addressDescription'] ?? '',
       latitude: (address['latitude'] as num?)?.toDouble() ?? 0.0,
       longitude: (address['longitude'] as num?)?.toDouble() ?? 0.0,
-      status: data['status'] ?? 'Available',
+      status: data['status'] ?? 'available',
     );
   }
 
