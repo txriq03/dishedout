@@ -10,6 +10,19 @@ class ProductPage extends StatelessWidget {
   final UserModel? user;
   const ProductPage({super.key, required this.post, required this.user});
 
+  // void claimItem(BuildContext context) async {
+  //   final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
+
+  //   await updatedStatus(context, post.id, 'claimed');
+
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => LiveTrackingMap(lenderLocation: lenderLocation),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
