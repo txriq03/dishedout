@@ -1,27 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/post_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:dishedout/shared/widgets/live_tracking_map.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ProductPage extends StatelessWidget {
   final Post post;
   final UserModel? user;
-  const ProductPage({super.key, required this.post, required this.user});
+  final postService = PostService(
+    FirebaseFirestore.instance,
+    FirebaseStorage.instance,
+  );
 
-  // void claimItem(BuildContext context) async {
-  //   final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
+  ProductPage({super.key, required this.post, required this.user});
 
-  //   await updatedStatus(context, post.id, 'claimed');
+  void claimItem(BuildContext context) async {
+    final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
 
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => LiveTrackingMap(lenderLocation: lenderLocation),
-  //     ),
-  //   );
-  // }
+    await postService.updateStatus(context, post.id, 'claimed');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LiveTrackingMap(lenderLocation: lenderLocation),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
