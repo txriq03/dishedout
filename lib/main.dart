@@ -1,4 +1,5 @@
 import 'package:dishedout/shared/widgets/navbar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/features/authentication/screens/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,8 +12,20 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // LOck the app orientation to portrait
+  // Lock the app orientation to portrait
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Request permissions
+  await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    badge: true,
+    provisional: false,
+    sound: true,
+  );
+
+  // Initialise local notifications
+  // await initLocalNotifications();
+
   runApp(MyApp());
 }
 
