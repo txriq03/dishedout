@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/services/auth.dart';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+
 class PostService {
   final FirebaseFirestore firestore;
   final FirebaseStorage storage;
@@ -73,6 +75,42 @@ class PostService {
     } catch (e) {
       print('Error fetching posts: $e');
       return [];
+    }
+  }
+
+  Future<void> updateStatus(
+    BuildContext context,
+    String postId,
+    String updatedStatus,
+  ) async {
+    try {
+      final postRef = firestore.collection('posts').doc(postId);
+      switch (updatedStatus) {
+        case 'claimed':
+          await postRef.update({'status': 'claimed'});
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'You have claimed this item! Collect it at the pick-up location',
+              ),
+            ),
+          );
+          break;
+        case 'unavailable':
+          await postRef.update({'status': 'unavailable'});
+          break;
+        default:
+          throw Exception('Invalid status: $updatedStatus');
+      }
+    } catch (e) {
+      print('Failed to claim post: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to claim post: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 }
