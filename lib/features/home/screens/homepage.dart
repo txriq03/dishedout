@@ -7,7 +7,6 @@ import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
-import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,12 +30,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor:
-            Theme.of(context).colorScheme.surfaceContainer,
-      ),
-    );
     return Scaffold(
       appBar: AppBar(
         actionsPadding: const EdgeInsets.only(right: 10),

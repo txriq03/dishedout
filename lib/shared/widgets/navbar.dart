@@ -2,7 +2,6 @@ import 'package:dishedout/features/upload/screens/upload_page.dart';
 import 'package:dishedout/features/home/screens/homepage.dart';
 import 'package:dishedout/features/profile/screens/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -18,15 +17,6 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    // Necessary to get rid of the mismatch color below navbar
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor:
-            Theme.of(context).colorScheme.surfaceContainer,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-    );
-
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: NavigationBar(

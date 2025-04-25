@@ -3,7 +3,6 @@ import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:dishedout/shared/widgets/live_tracking_map.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ProductPage extends StatelessWidget {
@@ -13,13 +12,6 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor:
-            Theme.of(context).bottomSheetTheme.backgroundColor,
-      ),
-    );
-
     final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
 
     return Scaffold(

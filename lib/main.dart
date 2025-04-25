@@ -15,6 +15,9 @@ void main() async {
   // Lock the app orientation to portrait
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
+  // Enable edge-to-edge system UI
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
   // Request permissions
   await FirebaseMessaging.instance.requestPermission(
     alert: true,
