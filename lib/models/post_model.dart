@@ -8,7 +8,7 @@ class Post {
   final String addressDescription;
   final double latitude;
   final double longitude;
-  final String availability;
+  final String status;
 
   Post({
     required this.uid,
@@ -18,7 +18,7 @@ class Post {
     required this.addressDescription,
     required this.latitude,
     required this.longitude,
-    this.availability = 'Available',
+    this.status = 'Available',
   });
 
   factory Post.fromMap(String id, Map<String, dynamic> data) {
@@ -31,7 +31,7 @@ class Post {
       addressDescription: address['addressDescription'] ?? '',
       latitude: (address['latitude'] as num?)?.toDouble() ?? 0.0,
       longitude: (address['longitude'] as num?)?.toDouble() ?? 0.0,
-      availability: data['availability'] ?? 'Available',
+      status: data['status'] ?? 'Available',
     );
   }
 
@@ -42,7 +42,7 @@ class Post {
       'description': description,
       'imageUrl': imageUrl,
       'createdAt': FieldValue.serverTimestamp(),
-      'availability': availability,
+      'status': status,
       'address': {
         'description': addressDescription,
         'latitude': latitude,
