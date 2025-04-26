@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class UserService {
-  final FirebaseFirestore firestore;
-  UserService(this.firestore);
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  UserService();
 
   Future<String?> getDisplayName(String uid) async {
     final doc = await firestore.collection('users').doc(uid).get();

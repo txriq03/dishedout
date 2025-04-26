@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/notification_service.dart';
@@ -17,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final Auth _auth = Auth();
-  final UserService _userService = UserService(FirebaseFirestore.instance);
+  final UserService _userService = UserService();
 
   @override
   void initState() {

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/features/product/screens/product_page.dart';
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
@@ -7,8 +6,7 @@ import 'package:flutter/material.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
-  // final UserService _userService = UserService(FirebaseFirestore.instance);
-  PostCard({super.key, required this.post});
+  const PostCard({super.key, required this.post});
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -16,7 +14,7 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   UserModel? user;
-  final UserService userService = UserService(FirebaseFirestore.instance);
+  final UserService userService = UserService();
 
   @override
   initState() {

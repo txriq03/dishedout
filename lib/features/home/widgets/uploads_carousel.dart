@@ -16,12 +16,11 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
   final CarouselController controller = CarouselController(initialItem: 0);
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
-  late final PostService _postService;
+  late final PostService _postService = PostService();
 
   @override
   void initState() {
     super.initState();
-    _postService = PostService(firestore, storage);
   }
 
   @override

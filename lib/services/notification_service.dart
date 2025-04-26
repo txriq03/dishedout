@@ -49,5 +49,7 @@ void showLocalNotification(RemoteMessage message) {
       'to': token,
       'notification': {'title': title, 'body': body},
     };
+
+    final serverKey = '';
   }
 }

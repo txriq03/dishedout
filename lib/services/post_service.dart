@@ -7,11 +7,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class PostService {
-  final FirebaseFirestore firestore;
-  final FirebaseStorage storage;
-
-  PostService(this.firestore, this.storage);
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
   final Auth _auth = Auth();
+  PostService();
 
   Future<void> uploadPost({
     required File imageFile,

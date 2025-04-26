@@ -27,7 +27,7 @@ class _UploadPageState extends State<UploadPage> {
   double _previousProgress = 0.0;
   final FirebaseStorage storage = FirebaseStorage.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  late final PostService _postService;
+  late final PostService _postService = PostService();
 
   // Address field variables
   double? _lat;
@@ -38,12 +38,6 @@ class _UploadPageState extends State<UploadPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _postService = PostService(firestore, storage);
-  }
 
   // Widget with loading indicator for when user uploads a post
   void _showLoadingDialog(BuildContext context) {
