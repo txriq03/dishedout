@@ -70,7 +70,7 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
             ),
             controller: controller,
             itemSnapping: true,
-            flexWeights: [8, 2],
+            flexWeights: [8, 3],
             children:
                 posts.map((post) {
                   return PostCard(post: post);

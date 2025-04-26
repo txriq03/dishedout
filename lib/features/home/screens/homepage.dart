@@ -1,4 +1,5 @@
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
+import 'package:dishedout/features/notifications/screens/notifications_page.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/services/user_service.dart';
@@ -106,7 +107,14 @@ class _HomePageState extends State<HomePage> {
                 return null;
               }),
             ),
-            onPressed: () async {},
+            onPressed: () {
+              // Navigate to login
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const NotificationsPage(),
+                ),
+              );
+            },
           ),
         ],
       ),
