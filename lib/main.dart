@@ -9,9 +9,17 @@ import 'package:dishedout/services/auth.dart';
 import 'package:flutter/services.dart';
 import 'package:dishedout/config/themes/app_theme.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  print('Handling a background message: ${message.messageId}');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Handle background messages
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   // Lock the app orientation to portrait
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -27,12 +35,7 @@ void main() async {
     ),
   );
   // Request permissions
-  await FirebaseMessaging.instance.requestPermission(
-    alert: true,
-    badge: true,
-    provisional: false,
-    sound: true,
-  );
+  await FirebaseMessaging.instance.requestPermission();
 
   // Initialise local notifications
   await initLocalNotifications();
