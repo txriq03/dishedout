@@ -8,7 +8,6 @@ import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 
 // Enum for handling what step of upload we use

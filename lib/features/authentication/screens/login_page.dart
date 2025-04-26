@@ -110,6 +110,39 @@ class _SignupFormState extends State<LoginForm> {
   late TextEditingController _emailController;
   bool _showEmailClearButton = false;
 
+  void _handleSubmit(BuildContext context) async {
+    _formGlobalKey.currentState!.validate();
+    try {
+      await auth.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      // Navigate to home screen here
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("You've logged in successfully!")));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Navbar()),
+      );
+    } on FirebaseAuthException catch (e) {
+      print("Failed with error code: ${e.code}");
+      print(e.message);
+
+      String message = e.message ?? "An unknown error occurred.";
+
+      if (e.code == 'email-already-in-use') {
+        message = "Email already in use.";
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -228,37 +261,8 @@ class _SignupFormState extends State<LoginForm> {
               borderRadius: BorderRadius.circular(25),
             ),
             child: FilledButton(
-              onPressed: () async {
-                _formGlobalKey.currentState!.validate();
-                try {
-                  await auth.signInWithEmailAndPassword(
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
-                  );
-
-                  // Navigate to home screen here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("You've logged in successfully!")),
-                  );
-
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Navbar()),
-                  );
-                } on FirebaseAuthException catch (e) {
-                  print("Failed with error code: ${e.code}");
-                  print(e.message);
-
-                  String message = e.message ?? "An unknown error occurred.";
-
-                  if (e.code == 'email-already-in-use') {
-                    message = "Email already in use.";
-                  }
-
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(message)));
-                }
+              onPressed: () {
+                _handleSubmit(context);
               },
               style: FilledButton.styleFrom(
                 minimumSize: Size(double.infinity, 55),
