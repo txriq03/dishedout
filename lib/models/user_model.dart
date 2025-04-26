@@ -4,12 +4,14 @@ class UserModel {
   final String uid;
   final String displayName;
   final String email;
+  final String fcmToken;
   final DateTime createdAt;
 
   UserModel({
     required this.uid,
     required this.displayName,
     required this.email,
+    required this.fcmToken,
     required this.createdAt,
   });
 
@@ -20,6 +22,7 @@ class UserModel {
       uid: doc.id,
       displayName: data['displayName'] ?? '',
       email: data['email'] ?? '',
+      fcmToken: data['fcmToken'] ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
     );
   }
@@ -29,6 +32,7 @@ class UserModel {
     return {
       'displayName': displayName,
       'email': email,
+      'fcmToken': fcmToken,
       'createdAt': Timestamp.fromDate(createdAt),
     };
   }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class UserService {
   final FirebaseFirestore firestore;
@@ -22,10 +23,13 @@ class UserService {
     // Check if the user already exists
     final docSnapshot = await userDoc.get();
     if (!docSnapshot.exists) {
+      String? token = await FirebaseMessaging.instance.getToken();
+
       final newUser = UserModel(
         uid: user.uid,
         displayName: user.displayName ?? '',
         email: user.email ?? '',
+        fcmToken: token ?? '',
         createdAt: DateTime.now(),
       );
 
