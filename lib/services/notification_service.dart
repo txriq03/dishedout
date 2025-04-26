@@ -39,4 +39,15 @@ void showLocalNotification(RemoteMessage message) {
       platformDetails,
     );
   }
+
+  Future<void> sendPushNotification({
+    required String token,
+    required String title,
+    required String body,
+  }) async {
+    final data = {
+      'to': token,
+      'notification': {'title': title, 'body': body},
+    };
+  }
 }

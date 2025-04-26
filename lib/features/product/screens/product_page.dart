@@ -20,6 +20,12 @@ class ProductPage extends StatelessWidget {
 
   void claimItem(BuildContext context) async {
     final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
+    final lenderDoc =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(post.uid)
+            .get();
+    final fcmToken = lenderDoc['fcmToken'];
 
     await postService.updateStatus(context, post.id, 'claimed');
 
