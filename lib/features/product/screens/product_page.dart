@@ -33,22 +33,13 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
-
     return Scaffold(
       bottomSheet: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder:
-                    (context) =>
-                        LiveTrackingMap(lenderLocation: lenderLocation),
-              ),
-            );
+            claimItem(context);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.primary,
