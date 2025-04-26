@@ -1,3 +1,5 @@
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -41,10 +43,25 @@ void showLocalNotification(RemoteMessage message) {
   }
 }
 
-Future<void> sendPushNotification({
+Future<void> notifyLender({
   required String token,
   required String title,
   required String body,
 }) async {
-  print("Sending notification...");
+  final functions = FirebaseFunctions.instance;
+
+  if (FirebaseAuth.instance.currentUser != null) {
+    try {
+      await functions.httpsCallable('sendNotificationOnClaim').call({
+        'fcmToken': token,
+        'title': title,
+        'body': body,
+      });
+      print('Lender notified successfully');
+    } catch (e) {
+      print('Failed to notify lender: $e');
+    }
+  } else {
+    print("ERROR: currentUser == null when notifying lender.");
+  }
 }

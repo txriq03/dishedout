@@ -28,7 +28,7 @@ class ProductPage extends StatelessWidget {
     final fcmToken = lenderDoc['fcmToken'];
 
     if (fcmToken != null) {
-      await sendPushNotification(
+      await notifyLender(
         token: fcmToken,
         title: 'Your food has been claimed!',
         body: '$claimerName just claimed your item: ${post.name}',
