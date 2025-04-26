@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:firebase_auth/firebase_auth.dart' show User;
 
 class Auth {
@@ -12,25 +14,36 @@ class Auth {
   */
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
+  // Updated FCM token
+  void _handleFCMTokenRefresh(User user) {
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
+        {'fcmToken': newToken},
+      );
+    });
+  }
+
   // Future is used for asynchronous functions, when you want to declare the return type
   Future<UserCredential> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    return await _firebaseAuth.signInWithEmailAndPassword(
+    UserCredential credential = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    _handleFCMTokenRefresh(credential.user!);
+    return credential;
   }
 
   Future<UserCredential> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    UserCredential credential = await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: password);
+    _handleFCMTokenRefresh(credential.user!);
+    return credential;
   }
 
   Future<void> signOut() async {
