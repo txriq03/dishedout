@@ -59,6 +59,61 @@ class _SignupFormState extends State<SignupForm> {
     super.dispose();
   }
 
+  void _handleSubmit(BuildContext context) async {
+    if (_formGlobalKey.currentState!.validate()) {
+      if (_passwordController.text != _confirmPasswordController.text) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Passwords do not match.")));
+        return;
+      }
+    }
+
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      // Update display name
+      await userCredential.user!.updateDisplayName(
+        _usernameController.text.trim(),
+      );
+
+      // Refresh user to get updated display name
+      await userCredential.user!.reload();
+      final updatedUser = auth.currentUser;
+
+      // Add user to Firestore
+      await _userService.addUserToFirestore(updatedUser!);
+
+      // Navigate to home screen here
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Account created successfully!")));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Navbar()),
+      );
+    } on FirebaseAuthException catch (e) {
+      print("Failed with error code: ${e.code}");
+      print(e.message);
+
+      String message = e.message ?? "An unknown error occurred.";
+
+      if (e.code == 'email-already-in-use') {
+        message = "Email already in use.";
+      } else if (e.code == 'weak-password') {
+        message = "Password should be at least 6 characters";
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    }
+  }
+
   String? isFieldValid(String? value, String type) {
     if (value == null || value.isEmpty) {
       if (type.toLowerCase() == "username") {
@@ -232,61 +287,8 @@ class _SignupFormState extends State<SignupForm> {
               borderRadius: BorderRadius.circular(25),
             ),
             child: FilledButton(
-              onPressed: () async {
-                if (_formGlobalKey.currentState!.validate()) {
-                  if (_passwordController.text !=
-                      _confirmPasswordController.text) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Passwords do not match.")),
-                    );
-                    return;
-                  }
-                }
-
-                try {
-                  UserCredential userCredential = await auth
-                      .createUserWithEmailAndPassword(
-                        email: _emailController.text.trim(),
-                        password: _passwordController.text.trim(),
-                      );
-
-                  // Update display name
-                  await userCredential.user!.updateDisplayName(
-                    _usernameController.text.trim(),
-                  );
-
-                  // Refresh user to get updated display name
-                  await userCredential.user!.reload();
-                  final updatedUser = auth.currentUser;
-
-                  // Add user to Firestore
-                  await _userService.addUserToFirestore(updatedUser!);
-
-                  // Navigate to home screen here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Account created successfully!")),
-                  );
-
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Navbar()),
-                  );
-                } on FirebaseAuthException catch (e) {
-                  print("Failed with error code: ${e.code}");
-                  print(e.message);
-
-                  String message = e.message ?? "An unknown error occurred.";
-
-                  if (e.code == 'email-already-in-use') {
-                    message = "Email already in use.";
-                  } else if (e.code == 'weak-password') {
-                    message = "Password should be at least 6 characters";
-                  }
-
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(message)));
-                }
+              onPressed: () {
+                _handleSubmit(context);
               },
               style: FilledButton.styleFrom(
                 minimumSize: Size(double.infinity, 55),
