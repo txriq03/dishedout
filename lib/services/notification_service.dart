@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -39,17 +42,12 @@ void showLocalNotification(RemoteMessage message) {
       platformDetails,
     );
   }
+}
 
-  Future<void> sendPushNotification({
-    required String token,
-    required String title,
-    required String body,
-  }) async {
-    final data = {
-      'to': token,
-      'notification': {'title': title, 'body': body},
-    };
-
-    final serverKey = '';
-  }
+Future<void> sendPushNotification({
+  required String token,
+  required String title,
+  required String body,
+}) async {
+  print("Sending notification...");
 }

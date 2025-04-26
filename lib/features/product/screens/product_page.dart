@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/services/post_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:dishedout/shared/widgets/live_tracking_map.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,6 +17,8 @@ class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.post, required this.user});
 
   void claimItem(BuildContext context) async {
+    final String? claimerName = FirebaseAuth.instance.currentUser?.displayName;
+
     final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
     final lenderDoc =
         await FirebaseFirestore.instance
@@ -24,7 +28,11 @@ class ProductPage extends StatelessWidget {
     final fcmToken = lenderDoc['fcmToken'];
 
     if (fcmToken != null) {
-      // await sendPushNotification()
+      await sendPushNotification(
+        token: fcmToken,
+        title: 'Your food has been claimed!',
+        body: '$claimerName just claimed your item: ${post.name}',
+      );
     }
 
     await postService.updateStatus(context, post.id, 'claimed');
