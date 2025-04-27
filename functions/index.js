@@ -20,9 +20,16 @@ const admin = require('firebase-admin');
 //   response.send("Hello from Firebase!");
 // });
 
+admin.initializeApp();
+
 // Run this function after pressing Claim Item button
 exports.sendNotificationOnClaim = functions.https.onCall(async (data, context) => {
-    const { fcmToken, title, body } = data;
+    const { fcmToken, title, body } = data.data;
+
+    if (!fcmToken) {
+        console.error('Missing FCM token!');
+        throw new functions.https.HttpsError('invalid-argument', 'Missing FCM token');
+    }
 
     const message = {
         token: fcmToken,

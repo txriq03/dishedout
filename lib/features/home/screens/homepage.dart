@@ -1,10 +1,8 @@
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/features/notifications/screens/notifications_page.dart';
 import 'package:dishedout/models/user_model.dart';
-import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
 
@@ -23,9 +21,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      showLocalNotification(message);
-    });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   showLocalNotification(message);
+    // });
   }
 
   @override

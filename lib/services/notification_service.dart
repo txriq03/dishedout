@@ -50,6 +50,8 @@ Future<void> notifyLender({
 }) async {
   final functions = FirebaseFunctions.instance;
 
+  print("FCMTOKEN: $token");
+
   if (FirebaseAuth.instance.currentUser != null) {
     try {
       await functions.httpsCallable('sendNotificationOnClaim').call({

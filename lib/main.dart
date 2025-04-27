@@ -43,9 +43,28 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Auth _auth = Auth();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Listen to foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message in the foreground!');
+      if (message.notification != null) {
+        showLocalNotification(message);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

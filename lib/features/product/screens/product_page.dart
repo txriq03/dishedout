@@ -27,6 +27,8 @@ class ProductPage extends StatelessWidget {
             .get();
     final fcmToken = lenderDoc['fcmToken'];
 
+    await postService.updateStatus(context, post.id, 'claimed');
+
     if (fcmToken != null) {
       await notifyLender(
         token: fcmToken,
@@ -34,8 +36,6 @@ class ProductPage extends StatelessWidget {
         body: '$claimerName just claimed your item: ${post.name}',
       );
     }
-
-    await postService.updateStatus(context, post.id, 'claimed');
 
     Navigator.push(
       context,
