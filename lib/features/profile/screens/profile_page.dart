@@ -4,9 +4,30 @@ import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   final Auth _auth = Auth();
   final UserService _userService = UserService();
+
+  late Future<UserModel?> _userFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _userFuture = _userService.getUser(_auth.currentUser!.uid);
+  }
+
+  void _refreshUser() {
+    setState(() {
+      _userFuture = _userService.getUser(_auth.currentUser!.uid);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +44,7 @@ class ProfilePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: FutureBuilder<UserModel?>(
-          future: _userService.getUser(_auth.currentUser!.uid),
+          future: _userFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -42,8 +63,9 @@ class ProfilePage extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {
-                      _userService.uploadImage();
+                    onTap: () async {
+                      await _userService.uploadImage();
+                      _refreshUser();
                     },
                     borderRadius: BorderRadius.circular(100),
                     child: Avatar(user: user, radius: 72, fontSize: 32),
