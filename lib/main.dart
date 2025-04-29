@@ -62,6 +62,10 @@ class _MyAppState extends State<MyApp> {
       print('Got a message in the foreground!');
       if (message.notification != null) {
         showLocalNotification(message);
+        saveNotification(
+          title: message.notification?.title,
+          body: message.notification?.body,
+        );
       }
     });
   }

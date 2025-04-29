@@ -44,9 +44,10 @@ void showLocalNotification(RemoteMessage message) {
   }
 }
 
+// Save notification to Firestore
 Future<void> saveNotification({
-  required String title,
-  required String body,
+  required String? title,
+  required String? body,
 }) async {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   String? userId = FirebaseAuth.instance.currentUser?.uid;
