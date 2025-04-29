@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
+
   String _formatTimestamp(DateTime timestamp) {
     return "${timestamp.month}/${timestamp.day}/${timestamp.year} ${timestamp.hour}:${timestamp.minute.toString().padLeft(2, '0')}";
   }
@@ -54,13 +55,27 @@ class NotificationsPage extends StatelessWidget {
             itemCount: notifications.length,
             itemBuilder: (context, index) {
               final notification = notifications[index];
-              return ListTile(
-                leading: const Icon(Icons.notifications_rounded),
-                title: Text(notification.title),
-                subtitle: Text(notification.body),
-                trailing: Text(
-                  _formatTimestamp(notification.createdAt),
-                  style: const TextStyle(fontSize: 10),
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 0,
+                child: ListTile(
+                  leading: const Icon(Icons.notifications_rounded),
+                  title: Text(notification.title),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(notification.body),
+                      Text(
+                        _formatTimestamp(notification.createdAt),
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
