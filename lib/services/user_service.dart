@@ -77,7 +77,7 @@ class UserService {
       final userId = FirebaseAuth.instance.currentUser!.uid;
       final storageRef = _storage
           .ref()
-          .child('profile_pictures')
+          .child('images/profile_pictures')
           .child('$userId$ext');
 
       // Upload image
