@@ -3,7 +3,6 @@ import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
-import 'package:flutter/services.dart';
 
 class ProfilePage extends StatelessWidget {
   final Auth _auth = Auth();
@@ -11,8 +10,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = _auth.currentUser;
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

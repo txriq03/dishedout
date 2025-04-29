@@ -15,6 +15,15 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? imageUrl = user?.imageUrl;
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      return CircleAvatar(
+        radius: radius,
+        backgroundImage: NetworkImage(imageUrl),
+        backgroundColor: Colors.grey.shade300,
+      );
+    }
+
     return CircleAvatar(
       radius: radius,
       backgroundColor:
