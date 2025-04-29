@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/notifications_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
 
   String _formatTimestamp(DateTime timestamp) {
-    return "${timestamp.month}/${timestamp.day}/${timestamp.year} ${timestamp.hour}:${timestamp.minute.toString().padLeft(2, '0')}";
+    return timeago.format(timestamp);
   }
 
   @override
