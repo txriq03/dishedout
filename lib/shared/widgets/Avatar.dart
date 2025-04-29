@@ -4,12 +4,19 @@ import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
   final UserModel? user;
-  const Avatar({super.key, required this.user});
+  final double radius;
+  final double fontSize;
+  const Avatar({
+    super.key,
+    required this.user,
+    this.radius = 18,
+    this.fontSize = 12,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 18,
+      radius: radius,
       backgroundColor:
           ([
             Colors.deepOrange.shade300,
@@ -20,8 +27,9 @@ class Avatar extends StatelessWidget {
           ]..shuffle(Random())).first,
       child: Text(
         (user?.displayName != null && user!.displayName.isNotEmpty)
-            ? user!.displayName![0].toUpperCase()
+            ? user!.displayName[0].toUpperCase()
             : (user?.email[0].toUpperCase() ?? 'U'),
+        style: TextStyle(fontSize: fontSize),
       ),
     );
   }
