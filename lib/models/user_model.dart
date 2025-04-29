@@ -4,12 +4,14 @@ class UserModel {
   final String uid;
   final String displayName;
   final String email;
+  final String imageUrl;
   final String fcmToken;
   final DateTime createdAt;
 
   UserModel({
     required this.uid,
     required this.displayName,
+    this.imageUrl = '',
     required this.email,
     required this.fcmToken,
     required this.createdAt,
@@ -22,6 +24,7 @@ class UserModel {
       uid: doc.id,
       displayName: data['displayName'] ?? '',
       email: data['email'] ?? '',
+      imageUrl: data['imageUrl'] ?? '',
       fcmToken: data['fcmToken'] ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
     );
@@ -33,6 +36,7 @@ class UserModel {
       'displayName': displayName,
       'email': email,
       'fcmToken': fcmToken,
+      'imageUrl': imageUrl,
       'createdAt': Timestamp.fromDate(createdAt),
     };
   }

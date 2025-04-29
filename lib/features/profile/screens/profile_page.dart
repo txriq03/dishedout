@@ -42,7 +42,14 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Avatar
-                Avatar(user: user, radius: 72, fontSize: 32),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(100),
+                    child: Avatar(user: user, radius: 72, fontSize: 32),
+                  ),
+                ),
                 const SizedBox(height: 20),
 
                 // Display Name or Email
