@@ -10,6 +10,10 @@ class NotificationsPage extends StatelessWidget {
         title: Text('Notifications', style: TextStyle(fontSize: 24)),
         centerTitle: true,
       ),
+      body: Column(children: [
+          
+        ]
+      ),
     );
   }
 }
