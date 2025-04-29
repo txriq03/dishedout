@@ -44,14 +44,30 @@ void showLocalNotification(RemoteMessage message) {
   }
 }
 
-// Future<void> storeNotification({
-//   required String token,
-//   required String title,
-//   required String body,
-// }) {
-//   FirebaseFirestore firestore = FirebaseFirestore.instance;
+Future<void> saveNotification({
+  required String title,
+  required String body,
+}) async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  String? userId = FirebaseAuth.instance.currentUser?.uid;
 
-// }
+  if (userId == null) {
+    print('Cannot save notification as user is null.');
+    return;
+  }
+
+  await firestore
+      .collection('users')
+      .doc(userId)
+      .collection('notifications')
+      .add({
+        'title': title,
+        'body': body,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+  print('Notificaiton saved to Firestore');
+}
 
 Future<void> notifyLender({
   required String token,
