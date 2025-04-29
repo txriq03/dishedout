@@ -4,7 +4,7 @@ class AppNotification {
   final String id;
   final String title;
   final String body;
-  final FieldValue createdAt;
+  final DateTime createdAt;
 
   AppNotification({
     required this.id,
@@ -20,7 +20,7 @@ class AppNotification {
       id: doc.id,
       title: data['title'] ?? '',
       body: data['body'] ?? '',
-      createdAt: data['createdAt'] ?? '',
+      createdAt: data['createdAt'].toDate() ?? '',
     );
   }
 
