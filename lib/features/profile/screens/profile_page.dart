@@ -42,7 +42,9 @@ class ProfilePage extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      _userService.uploadImage();
+                    },
                     borderRadius: BorderRadius.circular(100),
                     child: Avatar(user: user, radius: 72, fontSize: 32),
                   ),

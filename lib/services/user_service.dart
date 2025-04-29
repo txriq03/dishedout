@@ -61,7 +61,7 @@ class UserService {
     return null;
   }
 
-  Future<void> _uploadImage() async {
+  Future<void> uploadImage() async {
     try {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
