@@ -1,3 +1,4 @@
+import 'package:dishedout/features/home/widgets/autohide_text_group.dart';
 import 'package:dishedout/features/product/screens/product_page.dart';
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
@@ -66,7 +67,7 @@ class _PostCardState extends State<PostCard> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.black.withValues(alpha: 0.5), // Dark gradient color
+                  Colors.black.withValues(alpha: 0.7), // Dark gradient color
                   Colors.transparent, // Transparent color
                 ],
                 begin: Alignment.topCenter,
@@ -81,26 +82,13 @@ class _PostCardState extends State<PostCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.post.name,
-                  overflow: TextOverflow.clip,
-                  softWrap: false,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
-
-                // Show display name
-                Text(
-                  user?.displayName ?? 'Loading...',
-                  softWrap: false,
-                  style: const TextStyle(
-                    color: Colors.white60,
+                AutoHideTextGroup(
+                  primaryText: widget.post.name,
+                  secondaryText: user?.displayName,
+                  primaryStyle: TextStyle(fontSize: 24),
+                  secondaryStyle: TextStyle(
                     fontSize: 16,
-                    overflow: TextOverflow.clip,
+                    color: Colors.white.withValues(alpha: 0.5),
                   ),
                 ),
               ],

@@ -1,3 +1,4 @@
+import 'package:dishedout/features/home/widgets/subscribe_banner.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/features/notifications/screens/notifications_page.dart';
 import 'package:dishedout/models/user_model.dart';
@@ -123,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
               ),
               UploadsCarousel(),
+              SubscribeBanner(),
             ],
           ),
         ),

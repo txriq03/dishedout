@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 
 class AddressField extends StatefulWidget {
-  double? lat;
-  double? lng;
+  final double? lat;
+  final double? lng;
   final TextEditingController addressController;
   final void Function(double? lat, double? lng)? onLatLngChanged;
 
-  AddressField({
+  const AddressField({
     super.key,
     required this.lat,
     required this.lng,

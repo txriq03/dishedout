@@ -47,6 +47,7 @@ class Auth {
   }
 
   Future<void> signOut() async {
+    await FirebaseMessaging.instance.deleteToken();
     await _firebaseAuth.signOut();
   }
 }
