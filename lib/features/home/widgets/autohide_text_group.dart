@@ -47,27 +47,34 @@ class AutoHideTextGroup extends StatelessWidget {
             !primaryPainter.didExceedMaxLines &&
             !secondaryPainter.didExceedMaxLines;
 
-        return bothFit
-            ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  primaryText ?? 'Loading...',
-                  style: primaryStyle,
-                  maxLines: maxLines,
-                  overflow: TextOverflow.clip,
-                  softWrap: false,
-                ),
-                Text(
-                  secondaryText ?? 'Loading...',
-                  style: secondaryStyle,
-                  maxLines: maxLines,
-                  overflow: TextOverflow.clip,
-                  softWrap: false,
-                ),
-              ],
-            )
-            : const SizedBox.shrink();
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          switchInCurve: Curves.easeIn,
+          switchOutCurve: Curves.easeOut,
+          child:
+              bothFit
+                  ? Column(
+                    key: const ValueKey(true),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        primaryText ?? 'Loading...',
+                        style: primaryStyle,
+                        maxLines: maxLines,
+                        overflow: TextOverflow.clip,
+                        softWrap: false,
+                      ),
+                      Text(
+                        secondaryText ?? 'Loading...',
+                        style: secondaryStyle,
+                        maxLines: maxLines,
+                        overflow: TextOverflow.clip,
+                        softWrap: false,
+                      ),
+                    ],
+                  )
+                  : const SizedBox(key: ValueKey(false)),
+        );
       },
     );
   }

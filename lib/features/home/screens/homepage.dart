@@ -124,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
               ),
               UploadsCarousel(),
+              SizedBox(height: 5),
               SubscribeBanner(),
             ],
           ),
