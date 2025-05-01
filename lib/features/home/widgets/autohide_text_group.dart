@@ -1,4 +1,5 @@
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/shared/widgets/Avatar.dart';
 import 'package:flutter/material.dart';
 
 class AutoHideTextGroup extends StatelessWidget {
@@ -67,12 +68,18 @@ class AutoHideTextGroup extends StatelessWidget {
                         overflow: TextOverflow.fade,
                         softWrap: false,
                       ),
-                      Text(
-                        secondaryText ?? 'Loading...',
-                        style: secondaryStyle,
-                        maxLines: maxLines,
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
+                      Row(
+                        children: [
+                          Avatar(user: user, radius: 14),
+                          SizedBox(width: 7),
+                          Text(
+                            secondaryText ?? 'Loading...',
+                            style: secondaryStyle,
+                            maxLines: maxLines,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                          ),
+                        ],
                       ),
                     ],
                   )
