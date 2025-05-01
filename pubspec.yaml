@@ -50,6 +50,7 @@ dependencies:
   cloud_functions: ^5.4.0
   timeago: ^3.7.0
   path: ^1.9.1
+  transparent_image: ^2.0.1
 
 dev_dependencies:
   flutter_test:

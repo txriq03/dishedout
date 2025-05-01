@@ -4,6 +4,7 @@ import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -44,24 +45,13 @@ class _PostCardState extends State<PostCard> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.network(
-            widget.post.imageUrl,
-            fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Center(
-                child: CircularProgressIndicator(
-                  value:
-                      loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                ),
-              );
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return const Center(child: Icon(Icons.error, color: Colors.red));
-            },
+          Hero(
+            tag: 'post-image-${widget.post.id}',
+            child: FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: widget.post.imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             decoration: BoxDecoration(

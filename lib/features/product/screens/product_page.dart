@@ -5,6 +5,7 @@ import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:dishedout/shared/widgets/live_tracking_map.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ProductPage extends StatefulWidget {
   final Post post;
@@ -81,27 +82,13 @@ class _ProductPageState extends State<ProductPage> {
               SizedBox(
                 height: 400,
                 width: double.infinity,
-                child: Image.network(
-                  widget.post.imageUrl,
-                  fit: BoxFit.cover,
-
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value:
-                            loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                      ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Center(
-                      child: Icon(Icons.error, color: Colors.red),
-                    );
-                  },
+                child: Hero(
+                  tag: 'post-image-${widget.post.id}',
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: widget.post.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Container(
