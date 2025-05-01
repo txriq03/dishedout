@@ -1,5 +1,6 @@
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/services/notification_service.dart';
+import 'package:dishedout/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -120,11 +121,13 @@ class PostService {
 
   Future<void> claimItem(BuildContext context, Post post) async {
     final String? claimerName = FirebaseAuth.instance.currentUser?.displayName;
+    final UserService userService = UserService();
 
     final lenderDoc = await firestore.collection('users').doc(post.uid).get();
     final fcmToken = lenderDoc['fcmToken'];
 
     await updateStatus(context, post.id, 'claimed');
+    await userService.updateClaimedPost(post.id);
 
     if (fcmToken != null) {
       await notifyLender(

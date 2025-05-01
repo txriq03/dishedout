@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +12,7 @@ import 'package:path/path.dart' as path;
 class UserService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+  final Auth _auth = Auth();
   UserService();
 
   Future<String?> getDisplayName(String uid) async {
@@ -86,7 +88,7 @@ class UserService {
       // Get URL
       final downloadUrl = await storageRef.getDownloadURL();
 
-      // Update Firestore user doc
+      // Update imageUrl in database
       await firestore.collection('users').doc(userId).update({
         'imageUrl': downloadUrl,
       });
@@ -95,5 +97,12 @@ class UserService {
     } catch (e) {
       print('Failed to upload image: $e');
     }
+  }
+
+  Future<void> updateClaimedPost(String postUid) async {
+    String? userId = _auth.currentUser?.uid;
+    await firestore.collection('users').doc(userId).update({
+      'claimedPost': postUid,
+    });
   }
 }

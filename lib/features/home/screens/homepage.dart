@@ -105,9 +105,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               // Navigate to login
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const NotificationsPage(),
-                ),
+                MaterialPageRoute(builder: (context) => NotificationsPage()),
               );
             },
           ),
