@@ -17,6 +17,7 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> {
   final MapService _mapService = MapService();
   final User? currentUser = FirebaseAuth.instance.currentUser;
+  LatLng? lenderLocation;
 
   String _formatTimestamp(DateTime timestamp) {
     return timeago.format(timestamp);
@@ -53,6 +54,23 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return LatLng(lat, lng);
   }
 
+  Future<void> _loadLenderLocation() async {
+    final LatLng? location = await _getPostCoordinates();
+    print('LENDER LOCATION: $location');
+
+    if (!mounted) return; // Prevent updating if widget is disposed
+
+    setState(() {
+      lenderLocation = location;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLenderLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     final String? userId = FirebaseAuth.instance.currentUser?.uid;
@@ -74,7 +92,36 @@ class _NotificationsPageState extends State<NotificationsPage> {
       ),
       body: Column(
         children: [
-          // StreamBuilder(stream: _mapService.getDistanceStream(_getPostCoordinates()), builder: builder),
+          lenderLocation == null
+              ? Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "Waiting for post location...",
+                  style: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
+                ),
+              )
+              : StreamBuilder(
+                stream: _mapService.getDistanceStream(lenderLocation!),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Waiting for claimer location...");
+                  }
+
+                  double distance = snapshot.data!;
+                  String distanceText =
+                      distance >= 1000
+                          ? "${(distance / 1000).toStringAsFixed(2)} km away"
+                          : "${distance.toStringAsFixed(0)} meters away";
+
+                  return Card(
+                    margin: EdgeInsets.all(16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text("Claimer is $distanceText"),
+                    ),
+                  );
+                },
+              ),
           StreamBuilder(
             stream:
                 FirebaseFirestore.instance
@@ -97,34 +144,36 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       .map((doc) => AppNotification.fromDocument(doc))
                       .toList();
 
-              return ListView.builder(
-                itemCount: notifications.length,
-                itemBuilder: (context, index) {
-                  final notification = notifications[index];
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                    child: ListTile(
-                      leading: const Icon(Icons.notifications_rounded),
-                      title: Text(notification.title),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(notification.body),
-                          Text(
-                            _formatTimestamp(notification.createdAt),
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white.withValues(alpha: 0.5),
-                            ),
-                          ),
-                        ],
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    final notification = notifications[index];
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ),
-                  );
-                },
+                      elevation: 0,
+                      child: ListTile(
+                        leading: const Icon(Icons.notifications_rounded),
+                        title: Text(notification.title),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(notification.body),
+                            Text(
+                              _formatTimestamp(notification.createdAt),
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.white.withValues(alpha: 0.5),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           ),

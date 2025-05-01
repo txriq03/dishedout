@@ -74,7 +74,7 @@ class PostService {
   Future<DocumentSnapshot?> getPost(String? postId) async {
     if (postId == null) return null;
 
-    return firestore.collection('posts').doc('postId').get();
+    return firestore.collection('posts').doc(postId).get();
   }
 
   Future<List<Post>> getPosts() async {

@@ -8,7 +8,6 @@ class MapService {
     foregroundNotificationConfig: ForegroundNotificationConfig(
       notificationTitle: 'Location Tracking Active',
       notificationText: 'Tracking your location for lender...',
-      enableWakeLock: true,
     ),
   );
   MapService();
