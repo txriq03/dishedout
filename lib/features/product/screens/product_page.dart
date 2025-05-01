@@ -52,9 +52,8 @@ class ProductPage extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: ElevatedButton(
-          onPressed: () {
-            claimItem(context);
-          },
+          onPressed:
+              post.status == 'available' ? () => claimItem(context) : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.black,
@@ -63,7 +62,13 @@ class ProductPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: Text('Claim item'),
+          child: Text(
+            post.status == 'available'
+                ? 'Claim item'
+                : post.status == 'claimed'
+                ? 'Claimed'
+                : 'Unavailable',
+          ),
         ),
       ),
       extendBodyBehindAppBar: true,
