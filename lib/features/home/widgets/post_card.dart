@@ -83,6 +83,7 @@ class _PostCardState extends State<PostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoHideTextGroup(
+                  user: user,
                   primaryText: widget.post.name,
                   secondaryText: user?.displayName,
                   primaryStyle: TextStyle(fontSize: 24),

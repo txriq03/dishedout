@@ -1,6 +1,8 @@
+import 'package:dishedout/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class AutoHideTextGroup extends StatelessWidget {
+  final UserModel? user;
   final String? primaryText;
   final String? secondaryText;
   final TextStyle? primaryStyle;
@@ -9,6 +11,7 @@ class AutoHideTextGroup extends StatelessWidget {
 
   const AutoHideTextGroup({
     super.key,
+    required this.user,
     required this.primaryText,
     required this.secondaryText,
     this.primaryStyle,
@@ -61,14 +64,14 @@ class AutoHideTextGroup extends StatelessWidget {
                         primaryText ?? 'Loading...',
                         style: primaryStyle,
                         maxLines: maxLines,
-                        overflow: TextOverflow.clip,
+                        overflow: TextOverflow.fade,
                         softWrap: false,
                       ),
                       Text(
                         secondaryText ?? 'Loading...',
                         style: secondaryStyle,
                         maxLines: maxLines,
-                        overflow: TextOverflow.clip,
+                        overflow: TextOverflow.fade,
                         softWrap: false,
                       ),
                     ],

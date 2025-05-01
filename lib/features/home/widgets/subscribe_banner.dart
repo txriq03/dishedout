@@ -19,7 +19,11 @@ class SubscribeBanner extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Icon(Icons.workspace_premium, size: 35),
+              Icon(
+                Icons.workspace_premium,
+                size: 35,
+                color: Colors.orange.shade300,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
