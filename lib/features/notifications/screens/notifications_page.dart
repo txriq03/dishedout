@@ -7,10 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class NotificationsPage extends StatelessWidget {
+class NotificationsPage extends StatefulWidget {
+  NotificationsPage({super.key});
+
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
   final MapService _mapService = MapService();
   final User? currentUser = FirebaseAuth.instance.currentUser;
-  NotificationsPage({super.key});
 
   String _formatTimestamp(DateTime timestamp) {
     return timeago.format(timestamp);
