@@ -1,16 +1,50 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/notifications_model.dart';
 import 'package:dishedout/services/maps_service.dart';
+import 'package:dishedout/services/post_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationsPage extends StatelessWidget {
   final MapService _mapService = MapService();
+  final User? currentUser = FirebaseAuth.instance.currentUser;
   NotificationsPage({super.key});
 
   String _formatTimestamp(DateTime timestamp) {
     return timeago.format(timestamp);
+  }
+
+  Future<String?> _getClaimedPostId() async {
+    String? userId = currentUser?.uid;
+    if (userId == null) return null;
+    final DocumentSnapshot data =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    final String? claimedPostId = data['claimedPost'];
+
+    if (claimedPostId == null || claimedPostId.isEmpty) return null;
+
+    return claimedPostId;
+  }
+
+  // Get coordinates of the post the user has claimed
+  Future<LatLng?> _getPostCoordinates() async {
+    final PostService postService = PostService();
+    final String? claimedPostId = await _getClaimedPostId();
+    if (claimedPostId == null) return null;
+
+    // Get lat and lng coordinates of post
+    final DocumentSnapshot? post = await postService.getPost(claimedPostId);
+    if (post == null || !post.exists) return null;
+
+    final address = post['address'];
+    final lat = address['latitude'];
+    final lng = address['longitude'];
+
+    if (lat == null || lng == null) return null;
+
+    return LatLng(lat, lng);
   }
 
   @override
@@ -34,7 +68,7 @@ class NotificationsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // StreamBuilder(stream: _mapService.getDistanceStream(), builder: builder),
+          // StreamBuilder(stream: _mapService.getDistanceStream(_getPostCoordinates()), builder: builder),
           StreamBuilder(
             stream:
                 FirebaseFirestore.instance
