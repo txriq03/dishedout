@@ -1,9 +1,10 @@
 import 'package:dishedout/models/post_model.dart';
+import 'package:dishedout/services/notification_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/services/auth.dart';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class PostService {
@@ -113,6 +114,23 @@ class PostService {
           content: Text('Failed to claim post: $e'),
           backgroundColor: Colors.red,
         ),
+      );
+    }
+  }
+
+  Future<void> claimItem(BuildContext context, Post post) async {
+    final String? claimerName = FirebaseAuth.instance.currentUser?.displayName;
+
+    final lenderDoc = await firestore.collection('users').doc(post.uid).get();
+    final fcmToken = lenderDoc['fcmToken'];
+
+    await updateStatus(context, post.id, 'claimed');
+
+    if (fcmToken != null) {
+      await notifyLender(
+        token: fcmToken,
+        title: 'Your food has been claimed!',
+        body: '$claimerName just claimed your item: ${post.name}',
       );
     }
   }

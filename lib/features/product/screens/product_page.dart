@@ -1,41 +1,41 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
-import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/services/post_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:dishedout/shared/widgets/live_tracking_map.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   final Post post;
   final UserModel? user;
-  final postService = PostService();
 
-  ProductPage({super.key, required this.post, required this.user});
+  const ProductPage({super.key, required this.post, required this.user});
 
-  void claimItem(BuildContext context) async {
-    final String? claimerName = FirebaseAuth.instance.currentUser?.displayName;
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
 
-    final LatLng lenderLocation = LatLng(post.latitude, post.longitude);
-    final lenderDoc =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(post.uid)
-            .get();
-    final fcmToken = lenderDoc['fcmToken'];
+class _ProductPageState extends State<ProductPage> {
+  late String postStatus;
+  final PostService postService = PostService();
 
-    await postService.updateStatus(context, post.id, 'claimed');
+  @override
+  void initState() {
+    super.initState();
+    postStatus = widget.post.status;
+  }
 
-    if (fcmToken != null) {
-      await notifyLender(
-        token: fcmToken,
-        title: 'Your food has been claimed!',
-        body: '$claimerName just claimed your item: ${post.name}',
-      );
-    }
+  Future<void> onClaimItem(BuildContext context) async {
+    final LatLng lenderLocation = LatLng(
+      widget.post.latitude,
+      widget.post.longitude,
+    );
+
+    await postService.claimItem(context, widget.post);
+    setState(() {
+      postStatus = 'claimed';
+    });
 
     Navigator.push(
       context,
@@ -53,7 +53,7 @@ class ProductPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: ElevatedButton(
           onPressed:
-              post.status == 'available' ? () => claimItem(context) : null,
+              postStatus == 'available' ? () => onClaimItem(context) : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.black,
@@ -63,9 +63,9 @@ class ProductPage extends StatelessWidget {
             ),
           ),
           child: Text(
-            post.status == 'available'
+            postStatus == 'available'
                 ? 'Claim item'
-                : post.status == 'claimed'
+                : postStatus == 'claimed'
                 ? 'Claimed'
                 : 'Unavailable',
           ),
@@ -82,7 +82,7 @@ class ProductPage extends StatelessWidget {
                 height: 400,
                 width: double.infinity,
                 child: Image.network(
-                  post.imageUrl,
+                  widget.post.imageUrl,
                   fit: BoxFit.cover,
 
                   loadingBuilder: (context, child, loadingProgress) {
@@ -127,11 +127,11 @@ class ProductPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  post.name,
+                  widget.post.name,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
                 ),
                 Text(
-                  post.description,
+                  widget.post.description,
                   style: TextStyle(
                     color: Theme.of(
                       context,
@@ -157,10 +157,10 @@ class ProductPage extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Avatar(user: user),
+                          Avatar(user: widget.user),
                           SizedBox(width: 10),
                           Text(
-                            user!.displayName,
+                            widget.user!.displayName,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w300,
