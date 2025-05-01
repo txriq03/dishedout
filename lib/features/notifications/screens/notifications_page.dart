@@ -113,11 +113,37 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           ? "${(distance * 0.000621371).toStringAsFixed(2)} miles away"
                           : "${distance.toStringAsFixed(0)} meters away";
 
-                  return Card(
-                    margin: EdgeInsets.all(16),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text("Claimer is $distanceText"),
+                  return Hero(
+                    tag: 'distance-hero',
+                    child: Card(
+                      color: Theme.of(context).colorScheme.primary,
+                      shadowColor: Theme.of(context).colorScheme.primary,
+                      elevation: 5,
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.info_rounded,
+                          color: Colors.black,
+                        ),
+                        trailing: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.white,
+                          ),
+                          child: Icon(Icons.arrow_forward_rounded),
+                        ),
+                        title: Text(
+                          'Claimer is on his way!',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        subtitle: Text(
+                          'Distance: $distanceText',
+                          style: TextStyle(color: Colors.grey[900]),
+                        ),
+                      ),
                     ),
                   );
                 },
