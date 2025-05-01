@@ -109,8 +109,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
                   double distance = snapshot.data!;
                   String distanceText =
-                      distance >= 1000
-                          ? "${(distance / 1000).toStringAsFixed(2)} km away"
+                      distance >= 1609
+                          ? "${(distance * 0.000621371).toStringAsFixed(2)} miles away"
                           : "${distance.toStringAsFixed(0)} meters away";
 
                   return Card(
