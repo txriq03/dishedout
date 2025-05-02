@@ -1,17 +1,39 @@
-import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/user_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dishedout/models/user_model.dart';
 
-final currentUserProvider = FutureProvider<UserModel?>((ref) async {
-  final user = FirebaseAuth.instance.currentUser;
+class UserController extends StateNotifier<UserModel?> {
+  UserController()
+    : super(null); // This is necessary when extending the class StateNotifier
 
-  if (user == null) return null;
+  // Load user from firestore
+  Future<void> loadUser() async {
+    final UserService userService = UserService();
+    final User? currentUser = FirebaseAuth.instance.currentUser;
 
-  final doc =
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    if (currentUser == null) {
+      state = null;
+      return;
+    }
 
-  if (!doc.exists) return null;
+    final UserModel? user = await userService.getUser(currentUser.uid);
 
-  return UserModel.fromDocument(doc);
-});
+    if (user == null) {
+      state = null;
+      return;
+    }
+
+    state = user;
+  }
+
+  // Clear user
+  void clearUser() {
+    state = null;
+  }
+
+  // Update user manually
+  void updateuser(UserModel user) {
+    state = user;
+  }
+}

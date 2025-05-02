@@ -1,5 +1,5 @@
-import 'package:dishedout/features/authentication/screens/login_page.dart';
-import 'package:dishedout/features/authentication/screens/signup_page.dart';
+import 'package:dishedout/features/authentication/presentation/screens/login_page.dart';
+import 'package:dishedout/features/authentication/presentation/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatelessWidget {

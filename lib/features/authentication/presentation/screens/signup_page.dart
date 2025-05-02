@@ -1,4 +1,4 @@
-import 'package:dishedout/features/authentication/widgets/signup_form.dart';
+import 'package:dishedout/features/authentication/presentation/widgets/signup_form.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatelessWidget {
