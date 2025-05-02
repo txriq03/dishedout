@@ -8,7 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationsPage extends StatefulWidget {
-  NotificationsPage({super.key});
+  const NotificationsPage({super.key});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -18,7 +18,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final MapService _mapService = MapService();
   final User? currentUser = FirebaseAuth.instance.currentUser;
   LatLng? lenderLocation;
-  late double? initialDistance;
   late Stream<double>? distanceStream;
   late double lat;
   late double lng;
@@ -61,12 +60,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
     if (!mounted) return; // Prevent updating if widget is disposed
 
-    if (location != null) {
-      initialDistance = await _mapService.getInitialDistance(lat, lng);
-      distanceStream = _mapService.getDistanceStream(location);
-    }
     setState(() {
       lenderLocation = location;
+      if (lenderLocation != null) {
+        distanceStream = _mapService.getDistanceStream(lenderLocation!);
+      }
     });
   }
 
@@ -108,15 +106,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
               : StreamBuilder(
                 stream: distanceStream,
                 builder: (context, snapshot) {
-                  // if (!snapshot.hasData) {
-                  //   return Text("Waiting for claimer location...");
-                  // }
-                  if (initialDistance == null) {
-                    return Text("Location permissions are not granted.");
+                  if (!snapshot.hasData) {
+                    return Text("Waiting for claimer location...");
                   }
 
-                  double distance =
-                      snapshot.hasData ? snapshot.data! : initialDistance!;
+                  double distance = snapshot.data!;
                   String distanceText =
                       distance >= 1609
                           ? "${(distance * 0.000621371).toStringAsFixed(2)} miles away"
