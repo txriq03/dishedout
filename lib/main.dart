@@ -1,3 +1,4 @@
+import 'package:dishedout/features/authentication/providers/user_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -44,14 +45,14 @@ void main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   final Auth _auth = Auth();
 
   @override
@@ -86,10 +87,16 @@ class _MyAppState extends State<MyApp> {
 
           if (snapshot.hasData) {
             print('========== USER IS LOGGED IN ==========');
+            if (ref.read(currentUserProvider) == null) {
+              // Only load user if not loaded yet
+              ref.read(currentUserProvider.notifier).loadUser();
+            }
             return Navbar(); // Logged in
           }
 
           print('========== USER IS LOGGED OUT ==========');
+
+          ref.read(currentUserProvider.notifier).clearUser();
           return AuthPage();
         },
       ),
