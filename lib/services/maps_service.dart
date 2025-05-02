@@ -12,8 +12,31 @@ class MapService {
   );
   MapService();
 
-  Stream<double> getDistanceStream(LatLng lenderLocation) {
-    return Geolocator.getPositionStream(locationSettings: locationSettings).map(
+  Future<bool> _checkLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      // Permissions are still denied so cannot continue
+      return false;
+    }
+
+    return true;
+  }
+
+  Stream<double> getDistanceStream(LatLng lenderLocation) async* {
+    bool hasPermission = await _checkLocationPermission();
+
+    if (!hasPermission) {
+      yield* Stream.empty();
+      return;
+    }
+
+    yield* Geolocator.getPositionStream(locationSettings: locationSettings).map(
       (position) {
         // Calculate distance
         return Geolocator.distanceBetween(
@@ -26,7 +49,12 @@ class MapService {
     );
   }
 
-  Future<double> getInitialDistance(double lenderLat, double lenderLng) async {
+  Future<double?> getInitialDistance(double lenderLat, double lenderLng) async {
+    bool hasPermission = await _checkLocationPermission();
+
+    if (!hasPermission) {
+      return null;
+    }
     Position currentPosition = await Geolocator.getCurrentPosition();
 
     final double initialDistance = Geolocator.distanceBetween(

@@ -18,7 +18,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final MapService _mapService = MapService();
   final User? currentUser = FirebaseAuth.instance.currentUser;
   LatLng? lenderLocation;
-  late double initialDistance;
+  late double? initialDistance;
   late Stream<double>? distanceStream;
   late double lat;
   late double lng;
@@ -111,9 +111,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   // if (!snapshot.hasData) {
                   //   return Text("Waiting for claimer location...");
                   // }
+                  if (initialDistance == null) {
+                    return Text("Location permissions are not granted.");
+                  }
 
                   double distance =
-                      snapshot.hasData ? snapshot.data! : initialDistance;
+                      snapshot.hasData ? snapshot.data! : initialDistance!;
                   String distanceText =
                       distance >= 1609
                           ? "${(distance * 0.000621371).toStringAsFixed(2)} miles away"
