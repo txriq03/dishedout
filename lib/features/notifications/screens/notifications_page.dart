@@ -18,6 +18,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final MapService _mapService = MapService();
   final User? currentUser = FirebaseAuth.instance.currentUser;
   LatLng? lenderLocation;
+  late double initialDistance;
+  late Stream<double>? distanceStream;
+  late double lat;
+  late double lng;
 
   String _formatTimestamp(DateTime timestamp) {
     return timeago.format(timestamp);
@@ -46,20 +50,21 @@ class _NotificationsPageState extends State<NotificationsPage> {
     if (post == null || !post.exists) return null;
 
     final address = post['address'];
-    final lat = address['latitude'];
-    final lng = address['longitude'];
-
-    if (lat == null || lng == null) return null;
+    lat = address['latitude'];
+    lng = address['longitude'];
 
     return LatLng(lat, lng);
   }
 
   Future<void> _loadLenderLocation() async {
     final LatLng? location = await _getPostCoordinates();
-    print('LENDER LOCATION: $location');
 
     if (!mounted) return; // Prevent updating if widget is disposed
 
+    if (location != null) {
+      initialDistance = await _mapService.getInitialDistance(lat, lng);
+      distanceStream = _mapService.getDistanceStream(location);
+    }
     setState(() {
       lenderLocation = location;
     });
@@ -101,13 +106,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 ),
               )
               : StreamBuilder(
-                stream: _mapService.getDistanceStream(lenderLocation!),
+                stream: distanceStream,
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Text("Waiting for claimer location...");
-                  }
+                  // if (!snapshot.hasData) {
+                  //   return Text("Waiting for claimer location...");
+                  // }
 
-                  double distance = snapshot.data!;
+                  double distance =
+                      snapshot.hasData ? snapshot.data! : initialDistance;
                   String distanceText =
                       distance >= 1609
                           ? "${(distance * 0.000621371).toStringAsFixed(2)} miles away"

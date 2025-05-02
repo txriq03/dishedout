@@ -25,4 +25,17 @@ class MapService {
       },
     );
   }
+
+  Future<double> getInitialDistance(double lenderLat, double lenderLng) async {
+    Position currentPosition = await Geolocator.getCurrentPosition();
+
+    final double initialDistance = Geolocator.distanceBetween(
+      currentPosition.latitude,
+      currentPosition.longitude,
+      lenderLat,
+      lenderLng,
+    );
+
+    return initialDistance;
+  }
 }
