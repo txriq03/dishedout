@@ -123,10 +123,7 @@ class _SignupFormState extends State<LoginForm> {
         context,
       ).showSnackBar(SnackBar(content: Text("You've logged in successfully!")));
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Navbar()),
-      );
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print("Failed with error code: ${e.code}");
       print(e.message);

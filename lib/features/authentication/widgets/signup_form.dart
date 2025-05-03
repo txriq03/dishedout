@@ -92,10 +92,7 @@ class _SignupFormState extends State<SignupForm> {
         context,
       ).showSnackBar(SnackBar(content: Text("Account created successfully!")));
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Navbar()),
-      );
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print("Failed with error code: ${e.code}");
       print(e.message);
