@@ -51,7 +51,6 @@ dependencies:
   timeago: ^3.7.0
   path: ^1.9.1
   transparent_image: ^2.0.1
-  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
   flutter_test:
