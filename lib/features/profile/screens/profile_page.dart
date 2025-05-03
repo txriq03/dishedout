@@ -78,7 +78,6 @@ class ProfilePage extends ConsumerWidget {
                           ),
                         ),
                         onPressed: () async {
-                          ref.read(currentUserProvider.notifier).clearUser();
                           await auth.signOut();
                         },
                         icon: const Icon(Icons.logout, color: Colors.white),

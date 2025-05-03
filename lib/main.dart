@@ -1,7 +1,6 @@
 import 'package:dishedout/features/authentication/providers/user_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/features/authentication/presentation/screens/auth_page.dart';
@@ -56,23 +55,9 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   final Auth _auth = Auth();
 
-  Future<void> _checkUser() async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      try {
-        // Force refresh the ID token
-        await user.getIdToken(true);
-      } catch (e) {
-        print("Token refresh failed. Signing out...");
-        await FirebaseAuth.instance.signOut();
-      }
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    _checkUser();
 
     // Listen to foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -106,13 +91,12 @@ class _MyAppState extends ConsumerState<MyApp> {
               // Only load user if not loaded yet
               ref.read(currentUserProvider.notifier).loadUser();
             }
-            print('SNAPSHOT DATA: ${snapshot.data}');
             return Navbar(); // Logged in
           }
 
           print('========== USER IS LOGGED OUT ==========');
 
-          // ref.read(currentUserProvider.notifier).clearUser();
+          ref.read(currentUserProvider.notifier).clearUser();
           return AuthPage();
         },
       ),
