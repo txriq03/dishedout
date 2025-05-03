@@ -2,19 +2,29 @@ import 'package:dishedout/features/home/widgets/subscribe_banner.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/features/notifications/screens/notifications_page.dart';
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dishedout/features/authentication/providers/user_provider.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.watch(currentUserProvider);
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  final Auth _auth = Auth();
+  final UserService _userService = UserService();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actionsPadding: const EdgeInsets.only(right: 10),
@@ -22,21 +32,29 @@ class HomePage extends ConsumerWidget {
         titleSpacing: 10,
         title: Row(
           children: [
-            if (currentUser == null)
-              const CircularProgressIndicator()
-            else
-              Avatar(user: currentUser),
-            const SizedBox(width: 10),
+            FutureBuilder<UserModel?>(
+              future: _userService.getUser(_auth.currentUser!.uid),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); // or a placeholder avatar
+                } else if (snapshot.hasError) {
+                  return const Icon(Icons.error); // or handle error
+                } else {
+                  return Avatar(user: snapshot.data);
+                }
+              },
+            ),
+            SizedBox(width: 10),
             Column(
               children: [
                 Text.rich(
                   TextSpan(
                     text:
-                        currentUser?.displayName ??
-                        currentUser?.email ??
+                        _auth.currentUser?.displayName ??
+                        _auth.currentUser?.email ??
                         'User',
                     children: [
-                      const WidgetSpan(
+                      WidgetSpan(
                         child: Icon(Icons.chevron_right_rounded, weight: 100),
                       ),
                     ],
@@ -46,6 +64,7 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
+
         actions: [
           IconButton.filled(
             icon: const Icon(Icons.search_rounded),
@@ -64,7 +83,7 @@ class HomePage extends ConsumerWidget {
                 return null;
               }),
             ),
-            onPressed: () {},
+            onPressed: () async {},
           ),
           IconButton.filled(
             icon: const Icon(Icons.notifications_rounded),
@@ -84,6 +103,7 @@ class HomePage extends ConsumerWidget {
               }),
             ),
             onPressed: () {
+              // Navigate to login
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => NotificationsPage()),
               );
@@ -93,17 +113,17 @@ class HomePage extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Discover",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
               ),
-              const UploadsCarousel(),
-              const SizedBox(height: 5),
-              const SubscribeBanner(),
+              UploadsCarousel(),
+              SizedBox(height: 5),
+              SubscribeBanner(),
             ],
           ),
         ),
