@@ -83,8 +83,6 @@ class _SignupFormState extends State<SignupForm> {
       await userCredential.user!.reload();
       final updatedUser = auth.currentUser;
 
-      print("UPDATED USER: $updatedUser");
-
       // Add user to Firestore
       await _userService.addUserToFirestore(updatedUser!);
 

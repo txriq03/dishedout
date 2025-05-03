@@ -11,44 +11,38 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUserAsync = ref.watch(currentUserProvider);
+    final currentUser = ref.watch(currentUserProvider);
 
     return Scaffold(
       appBar: AppBar(
         actionsPadding: const EdgeInsets.only(right: 10),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false, // Removes back button
         titleSpacing: 10,
-        title: currentUserAsync.when(
-          loading: () => const CircularProgressIndicator(),
-          error: (error, stack) => const Text("User"),
-          data:
-              (currentUser) => Row(
-                children: [
-                  Avatar(user: currentUser),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
+          children: [
+            if (currentUser == null)
+              const CircularProgressIndicator()
+            else
+              Avatar(user: currentUser),
+            const SizedBox(width: 10),
+            Column(
+              children: [
+                Text.rich(
+                  TextSpan(
+                    text:
+                        currentUser?.displayName ??
+                        currentUser?.email ??
+                        'User',
                     children: [
-                      Text.rich(
-                        TextSpan(
-                          text:
-                              currentUser?.displayName ??
-                              currentUser?.email ??
-                              'User',
-                          children: const [
-                            WidgetSpan(
-                              child: Icon(
-                                Icons.chevron_right_rounded,
-                                weight: 100,
-                              ),
-                            ),
-                          ],
-                        ),
+                      const WidgetSpan(
+                        child: Icon(Icons.chevron_right_rounded, weight: 100),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
           IconButton.filled(
@@ -100,14 +94,14 @@ class HomePage extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
+            children: [
+              const Text(
                 "Discover",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
               ),
-              UploadsCarousel(),
-              SizedBox(height: 5),
-              SubscribeBanner(),
+              const UploadsCarousel(),
+              const SizedBox(height: 5),
+              const SubscribeBanner(),
             ],
           ),
         ),

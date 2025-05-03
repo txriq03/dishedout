@@ -17,9 +17,9 @@ class Auth {
   // Updated FCM token
   void _handleFCMTokenRefresh(User user) {
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'fcmToken': newToken,
-      });
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
+        {'fcmToken': newToken},
+      );
     });
   }
 
