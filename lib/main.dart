@@ -95,19 +95,26 @@ class _MyAppState extends ConsumerState<MyApp> {
       home: StreamBuilder<User?>(
         stream: _auth.authStateChanges,
         builder: (context, snapshot) {
-          print('Snapshot data: ${snapshot.data}');
+          print('SNAPSHOT DATA: ${snapshot.data}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+          final currentUser = ref.watch(currentUserProvider);
+          print('CURRENT USER: $currentUser');
 
           if (snapshot.hasData) {
-            print('========== USER IS LOGGED IN ==========');
-            if (ref.read(currentUserProvider) == null) {
-              // Only load user if not loaded yet
-              ref.read(currentUserProvider.notifier).loadUser();
-            }
-            print('SNAPSHOT DATA: ${snapshot.data}');
-            return Navbar(); // Logged in
+            return currentUser.when(
+              data: (user) {
+                if (user == null) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  ); // Loading user
+                }
+                return Navbar();
+              },
+              loading: () => Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(child: Text('Error loading user')),
+            );
           }
 
           print('========== USER IS LOGGED OUT ==========');

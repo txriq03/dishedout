@@ -1,53 +1,42 @@
-import 'package:dishedout/services/user_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/services/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserNotifier extends StateNotifier<UserModel?> {
-  UserNotifier()
-    : super(null); // This is necessary when extending the class StateNotifier
-
-  final UserService _userService = UserService();
-
-  // Load user from firestore
-  Future<void> loadUser() async {
-    final UserService userService = UserService();
-    final User? currentUser = FirebaseAuth.instance.currentUser;
+class UserNotifier extends AsyncNotifier<UserModel?> {
+  @override
+  FutureOr<UserModel?> build() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      state = null;
-      return;
+      return null;
     }
 
-    final UserModel? user = await userService.getUser(currentUser.uid);
-
-    if (user == null) {
-      state = null;
-      return;
-    }
-
-    state = user;
+    final user = await UserService().getUser(currentUser.uid);
+    return user;
   }
 
-  // Clear user
+  Future<void> refreshUser() async {
+    state = const AsyncValue.loading();
+    state = AsyncValue.data(await build());
+  }
+
   void clearUser() {
-    state = null;
+    state = const AsyncValue.data(null);
   }
 
-  // Update user manually
-  void updateuser(UserModel user) {
-    state = user;
-  }
-
-  // Update state when changing profile picture
   Future<void> uploadImageAndReload() async {
-    await _userService.uploadImage();
-    await loadUser(); // refresh after upload
+    // Upload image
+    await UserService().uploadImage();
+
+    // Refresh user
+    state = const AsyncValue.loading();
+    state = AsyncValue.data(await build());
   }
 }
 
-final currentUserProvider = StateNotifierProvider<UserNotifier, UserModel?>((
-  ref,
-) {
-  return UserNotifier();
-});
+final currentUserProvider = AsyncNotifierProvider<UserNotifier, UserModel?>(
+  UserNotifier.new,
+);
