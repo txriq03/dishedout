@@ -1,8 +1,10 @@
 import 'package:dishedout/features/home/widgets/subscribe_banner.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/features/notifications/screens/notifications_page.dart';
+import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:dishedout/services/auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dishedout/features/authentication/providers/user_provider.dart';
 
