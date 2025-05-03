@@ -1,6 +1,5 @@
 import 'package:dishedout/services/auth.dart';
 import 'package:dishedout/services/user_service.dart';
-import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -92,10 +91,7 @@ class _SignupFormState extends State<SignupForm> {
         context,
       ).showSnackBar(SnackBar(content: Text("Account created successfully!")));
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Navbar()),
-      );
+      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       print("Failed with error code: ${e.code}");
       print(e.message);
