@@ -1,3 +1,4 @@
+import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth.dart';
@@ -122,7 +123,10 @@ class _SignupFormState extends State<LoginForm> {
         context,
       ).showSnackBar(SnackBar(content: Text("You've logged in successfully!")));
 
-      Navigator.of(context).pop();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Navbar()),
+      );
     } on FirebaseAuthException catch (e) {
       print("Failed with error code: ${e.code}");
       print(e.message);
