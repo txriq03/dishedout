@@ -37,9 +37,3 @@ class UserController extends StateNotifier<UserModel?> {
     state = user;
   }
 }
-
-final currentUserProvider = StateNotifierProvider<UserController, UserModel?>((
-  ref,
-) {
-  return UserController();
-});
