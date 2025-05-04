@@ -1,6 +1,5 @@
 import 'package:dishedout/services/auth.dart';
 import 'package:dishedout/services/user_service.dart';
-import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
