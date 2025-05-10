@@ -1,19 +1,18 @@
+import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/services/auth_service.dart';
-import 'package:dishedout/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignupForm extends StatefulWidget {
+class SignupForm extends ConsumerStatefulWidget {
   const SignupForm({super.key});
 
   @override
-  State<SignupForm> createState() => _SignupFormState();
+  ConsumerState<SignupForm> createState() => _SignupFormState();
 }
 
-class _SignupFormState extends State<SignupForm> {
+class _SignupFormState extends ConsumerState<SignupForm> {
   final auth = AuthService();
-
-  late final UserService _userService = UserService();
 
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color backgroundFieldColor = Colors.grey[900] as Color;
@@ -69,22 +68,13 @@ class _SignupFormState extends State<SignupForm> {
     }
 
     try {
-      UserCredential userCredential = await auth.signUp(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-
-      // Update display name
-      await userCredential.user!.updateDisplayName(
-        _usernameController.text.trim(),
-      );
-
-      // Refresh user to get updated display name
-      await userCredential.user!.reload();
-      final updatedUser = auth.currentUser;
-
-      // Add user to Firestore
-      await _userService.addUserToFirestore(updatedUser!);
+      await ref
+          .read(authNotifierProvider.notifier)
+          .signUp(
+            _usernameController.text.trim(),
+            _emailController.text.trim(),
+            _passwordController.text.trim(),
+          );
 
       // Navigate to home screen here
       ScaffoldMessenger.of(

@@ -1,6 +1,8 @@
+import 'package:dishedout/providers/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -89,14 +91,14 @@ class Login extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _SignupFormState();
+  ConsumerState<LoginForm> createState() => _SignupFormState();
 }
 
-class _SignupFormState extends State<LoginForm> {
+class _SignupFormState extends ConsumerState<LoginForm> {
   final auth = AuthService();
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color accentColor = Colors.deepOrange[400] as Color;
@@ -112,10 +114,9 @@ class _SignupFormState extends State<LoginForm> {
   void _handleSubmit(BuildContext context) async {
     _formGlobalKey.currentState!.validate();
     try {
-      await auth.login(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+      await ref
+          .read(authNotifierProvider.notifier)
+          .login(_emailController.text.trim(), _passwordController.text.trim());
 
       // Navigate to home screen here
       ScaffoldMessenger.of(

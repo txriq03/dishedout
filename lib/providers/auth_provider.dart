@@ -66,9 +66,9 @@ class AuthNotifier extends _$AuthNotifier {
     } catch (e) {
       print('Error during sign up: $e');
     }
+  }
 
-    Future<void> signOut() async {
-      await _auth.signOut();
-    }
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }
