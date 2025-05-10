@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/services/auth_service.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -97,7 +97,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<LoginForm> {
-  final auth = Auth();
+  final auth = AuthService();
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final Color accentColor = Colors.deepOrange[400] as Color;
   final Color primaryColor = Color.fromARGB(106, 255, 204, 188);

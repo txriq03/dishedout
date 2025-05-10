@@ -1,4 +1,4 @@
-import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/services/auth_service.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-  final auth = Auth();
+  final auth = AuthService();
 
   late final UserService _userService = UserService();
 

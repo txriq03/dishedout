@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/user_model.dart';
-import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,7 +12,7 @@ import 'package:path/path.dart' as path;
 class UserService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final Auth _auth = Auth();
+  final AuthService _auth = AuthService();
   UserService();
 
   Future<String?> getDisplayName(String uid) async {

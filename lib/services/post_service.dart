@@ -4,14 +4,14 @@ import 'package:dishedout/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/services/auth_service.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 
 class PostService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
-  final Auth _auth = Auth();
+  final AuthService _auth = AuthService();
   PostService();
 
   Future<void> uploadPost({

@@ -5,7 +5,7 @@ import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Auth _auth = Auth();
+  final AuthService _auth = AuthService();
   final UserService _userService = UserService();
 
   @override

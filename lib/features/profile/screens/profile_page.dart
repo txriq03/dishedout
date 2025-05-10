@@ -2,7 +2,7 @@ import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:dishedout/services/auth.dart';
+import 'package:dishedout/services/auth_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,7 +12,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final Auth _auth = Auth();
+  final AuthService _auth = AuthService();
   final UserService _userService = UserService();
 
   late Future<UserModel?> _userFuture;
