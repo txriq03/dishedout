@@ -5,10 +5,10 @@ import 'package:dishedout/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'user_provider.g.dart';
+part 'auth_provider.g.dart';
 
 @riverpod
-class UserNotifier extends _$UserNotifier {
+class AuthNotifier extends _$AuthNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final UserService _userService = UserService();
   User? lastUser;

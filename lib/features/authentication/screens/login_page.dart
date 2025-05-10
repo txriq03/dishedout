@@ -112,7 +112,7 @@ class _SignupFormState extends State<LoginForm> {
   void _handleSubmit(BuildContext context) async {
     _formGlobalKey.currentState!.validate();
     try {
-      await auth.signInWithEmailAndPassword(
+      await auth.login(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );

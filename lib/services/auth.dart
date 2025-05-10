@@ -24,7 +24,7 @@ class Auth {
   }
 
   // Future is used for asynchronous functions, when you want to declare the return type
-  Future<UserCredential> signInWithEmailAndPassword({
+  Future<UserCredential> login({
     required String email,
     required String password,
   }) async {
@@ -36,7 +36,7 @@ class Auth {
     return credential;
   }
 
-  Future<UserCredential> createUserWithEmailAndPassword({
+  Future<UserCredential> signUp({
     required String email,
     required String password,
   }) async {

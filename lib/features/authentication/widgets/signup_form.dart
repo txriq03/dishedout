@@ -69,7 +69,7 @@ class _SignupFormState extends State<SignupForm> {
     }
 
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await auth.signUp(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
