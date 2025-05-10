@@ -1,3 +1,4 @@
+import 'package:dishedout/providers/user_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -44,14 +45,14 @@ void main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   final Auth _auth = Auth();
 
   @override
@@ -73,6 +74,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final userAsync = ref.watch(userNotifierProvider);
+
     return MaterialApp(
       theme: appTheme,
       debugShowCheckedModeBanner: false,
