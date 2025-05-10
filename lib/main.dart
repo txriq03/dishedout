@@ -7,7 +7,6 @@ import 'package:dishedout/features/authentication/screens/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
-import 'package:dishedout/services/auth.dart';
 import 'package:flutter/services.dart';
 import 'package:dishedout/config/themes/app_theme.dart';
 
@@ -53,8 +52,6 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  final Auth _auth = Auth();
-
   @override
   void initState() {
     super.initState();
@@ -79,22 +76,10 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp(
       theme: appTheme,
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder<User?>(
-        stream: _auth.authStateChanges,
-        builder: (context, snapshot) {
-          print('Snapshot data: ${snapshot.data}');
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasData) {
-            print('========== USER IS LOGGED IN ==========');
-            return Navbar(); // Logged in
-          }
-
-          print('========== USER IS LOGGED OUT ==========');
-          return AuthPage();
-        },
+      home: userAsync.when(
+        data: (user) => user == null ? AuthPage() : Navbar(),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(child: Text('Error: $e')),
       ),
     );
   }

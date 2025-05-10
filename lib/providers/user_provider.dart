@@ -9,24 +9,35 @@ part 'user_provider.g.dart';
 
 @riverpod
 class UserNotifier extends _$UserNotifier {
-  late final StreamSubscription<User?> _sub;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final UserService _userService = UserService();
+  User? lastUser;
 
   @override
   Future<UserModel?> build() async {
-    _sub = _auth.authStateChanges().listen(
-      (_) => ref.invalidateSelf(),
-    ); // Provider rebuilds whenever auth state changes
+    final StreamSubscription<User?> sub = _auth.authStateChanges().listen((
+      user,
+    ) {
+      print('authStateChanges emitted: $user');
+
+      // Only rebuild if user changes
+      if (user?.uid != lastUser?.uid) {
+        lastUser = user;
+        ref.invalidateSelf();
+      }
+    }); // Provider rebuilds whenever auth state changes
 
     // Prevent memory leaks
     ref.onDispose(() {
-      _sub.cancel();
+      sub.cancel();
     });
 
     final user = _auth.currentUser;
+    print('User from provider: $user');
     if (user == null) return null;
 
-    return await _userService.getUser(user.uid);
+    final profile = await _userService.getUser(user.uid);
+    print('Loaded user profile: $profile');
+    return profile;
   }
 }
