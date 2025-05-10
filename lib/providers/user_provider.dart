@@ -19,6 +19,11 @@ class UserNotifier extends _$UserNotifier {
       (_) => ref.invalidateSelf(),
     ); // Provider rebuilds whenever auth state changes
 
+    // Prevent memory leaks
+    ref.onDispose(() {
+      _sub.cancel();
+    });
+
     final user = _auth.currentUser;
     if (user == null) return null;
 
