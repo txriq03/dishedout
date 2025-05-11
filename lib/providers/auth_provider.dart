@@ -17,27 +17,13 @@ class AuthNotifier extends _$AuthNotifier {
   @override
   Future<UserModel?> build() async {
     final user = _auth.currentUser;
-    if (user == null) {
-      ref.read(isAuthorisedProvider.notifier).set(false);
-      return null;
-    }
-
-    ref.read(isAuthorisedProvider.notifier).set(true);
-    return await _userService.getUser(user.uid);
+    return user == null ? null : await _userService.getUser(user.uid);
   }
 
   /// Log in and set state
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
     print("Email: $email. Password: $password");
-
-    // OLD CODE
-    // state = await AsyncValue.guard(() async {
-    //   await _auth.login(email: email, password: password);
-    //   final currentUser = _auth.currentUser!;
-    //   ref.read(isAuthorisedProvider.notifier).set(true);
-    //   return await _userService.getUser(currentUser.uid);
-    // });
 
     try {
       await _auth.login(email: email, password: password);
@@ -56,21 +42,23 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> signUp(String displayName, String email, String password) async {
     state = const AsyncLoading();
     print("Email: $email. Password: $password");
-    state = await AsyncValue.guard(() async {
-      final UserCredential credential = await _auth.signUp(
-        email: email,
-        password: password,
-      );
 
-      await credential.user!.updateDisplayName(displayName);
-      await credential.user!.reload();
-      final updatedUser = _auth.currentUser!;
+    // OLD CODE
+    // state = await AsyncValue.guard(() async {
+    //   final UserCredential credential = await _auth.signUp(
+    //     email: email,
+    //     password: password,
+    //   );
 
-      await _userService.addUserToFirestore(updatedUser);
-      ref.read(isAuthorisedProvider.notifier).set(true);
+    //   await credential.user!.updateDisplayName(displayName);
+    //   await credential.user!.reload();
+    //   final updatedUser = _auth.currentUser!;
 
-      return await _userService.getUser(updatedUser.uid);
-    });
+    //   await _userService.addUserToFirestore(updatedUser);
+    //   ref.read(isAuthorisedProvider.notifier).set(true);
+
+    //   return await _userService.getUser(updatedUser.uid);
+    // });
 
     try {
       final UserCredential credential = await _auth.signUp(

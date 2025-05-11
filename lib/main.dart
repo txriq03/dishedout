@@ -72,6 +72,13 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final isAuthorised = ref.watch(isAuthorisedProvider);
+    print('isAuthorised: $isAuthorised');
+
+    if (isAuthorised) {
+      print("User is authorised.");
+    } else {
+      print("User is not authorised.");
+    }
 
     return MaterialApp(
       theme: appTheme,

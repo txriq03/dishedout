@@ -1,17 +1,19 @@
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  ConsumerState<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends ConsumerState<ProfilePage> {
   final AuthService _auth = AuthService();
   final UserService _userService = UserService();
 
@@ -101,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     onPressed: () async {
-                      await _auth.signOut();
+                      await ref.read(authNotifierProvider.notifier).signOut();
                     },
                     icon: const Icon(Icons.logout, color: Colors.white),
                     label: const Text(
