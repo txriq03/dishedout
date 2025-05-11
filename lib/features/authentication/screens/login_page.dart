@@ -112,7 +112,9 @@ class _SignupFormState extends ConsumerState<LoginForm> {
   bool _showEmailClearButton = false;
 
   void _handleSubmit(BuildContext context) async {
-    _formGlobalKey.currentState!.validate();
+    final isValid = _formGlobalKey.currentState!.validate();
+    if (!isValid) return;
+
     try {
       await ref
           .read(authNotifierProvider.notifier)

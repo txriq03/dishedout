@@ -1,4 +1,4 @@
-import 'package:dishedout/providers/auth_provider.dart';
+import 'package:dishedout/providers/auth_gate_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -71,16 +71,12 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final authAsync = ref.watch(authNotifierProvider);
+    final isAuthorised = ref.watch(isAuthorisedProvider);
 
     return MaterialApp(
       theme: appTheme,
       debugShowCheckedModeBanner: false,
-      home: authAsync.when(
-        data: (user) => user == null ? AuthPage() : Navbar(),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
-      ),
+      home: isAuthorised ? Navbar() : AuthPage(),
     );
   }
 }
