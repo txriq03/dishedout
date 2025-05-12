@@ -1,30 +1,25 @@
 import 'package:dishedout/features/home/widgets/subscribe_banner.dart';
 import 'package:dishedout/features/home/widgets/uploads_carousel.dart';
 import 'package:dishedout/features/notifications/screens/notifications_page.dart';
-import 'package:dishedout/models/user_model.dart';
-import 'package:dishedout/services/user_service.dart';
+import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/services/auth_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   final AuthService _auth = AuthService();
-  final UserService _userService = UserService();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         actionsPadding: const EdgeInsets.only(right: 10),
@@ -32,16 +27,23 @@ class _HomePageState extends State<HomePage> {
         titleSpacing: 10,
         title: Row(
           children: [
-            FutureBuilder<UserModel?>(
-              future: _userService.getUser(_auth.currentUser!.uid),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator(); // or a placeholder avatar
-                } else if (snapshot.hasError) {
-                  return const Icon(Icons.error); // or handle error
-                } else {
-                  return Avatar(user: snapshot.data);
-                }
+            // FutureBuilder<UserModel?>(
+            //   future: _userService.getUser(_auth.currentUser!.uid),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return const CircularProgressIndicator(); // or a placeholder avatar
+            //     } else if (snapshot.hasError) {
+            //       return const Icon(Icons.error); // or handle error
+            //     } else {
+            //       return Avatar(user: snapshot.data);
+            //     }
+            //   },
+            // ),
+            authState.when(
+              loading: () => const CircularProgressIndicator(),
+              error: (e, _) => const Icon(Icons.error_rounded),
+              data: (user) {
+                return Avatar(user: user);
               },
             ),
             SizedBox(width: 10),
