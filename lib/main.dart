@@ -1,4 +1,5 @@
 import 'package:dishedout/providers/auth_gate_provider.dart';
+import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -72,6 +73,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final isAuthorised = ref.watch(isAuthorisedProvider);
+    final authState = ref.watch(authNotifierProvider);
     print('isAuthorised: $isAuthorised');
 
     if (isAuthorised) {
@@ -82,8 +84,22 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     return MaterialApp(
       theme: appTheme,
+      title: 'DishedOut',
       debugShowCheckedModeBanner: false,
-      home: isAuthorised ? Navbar() : AuthPage(),
+      home: authState.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error:
+            (e, _) => Center(
+              child: Text('Error: $e', style: TextStyle(fontSize: 24)),
+            ),
+        data: (user) {
+          if (user != null) {
+            return const Navbar();
+          } else {
+            return const AuthPage();
+          }
+        },
+      ),
     );
   }
 }

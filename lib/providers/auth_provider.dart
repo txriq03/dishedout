@@ -13,11 +13,35 @@ part 'auth_provider.g.dart';
 class AuthNotifier extends _$AuthNotifier {
   final _auth = AuthService();
   final _userService = UserService();
+  late StreamSubscription<User?> _authSub;
 
   @override
-  Future<UserModel?> build() async {
-    final user = _auth.currentUser;
-    return user == null ? null : await _userService.getUser(user.uid);
+  FutureOr<UserModel?> build() async {
+    late UserModel? profile;
+
+    // 1. Set up auth listener to track changes in real-time
+    _authSub = _auth.authStateChanges.listen((user) async {
+      if (user == null) {
+        profile = null;
+        state = const AsyncData(null);
+      } else {
+        profile = await _userService.getUser(user.uid);
+        state = AsyncData(profile);
+      }
+    });
+
+    // 2. Clean up memory
+    ref.onDispose(() {
+      _authSub.cancel();
+    });
+
+    // 3. Load and return initial value for build
+    final currentUser = _auth.currentUser;
+    if (currentUser == null) {
+      return null;
+    }
+    final initialProfile = await _userService.getUser(currentUser.uid);
+    return initialProfile;
   }
 
   /// Log in and set state
