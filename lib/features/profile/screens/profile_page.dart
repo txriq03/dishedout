@@ -43,8 +43,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () async {
-                      await _userService.uploadImage();
+                      // await _userService.uploadImage();
                       // TODO: Refresh the user after uploading image
+                      await ref
+                          .read(authNotifierProvider.notifier)
+                          .changeProfilePic();
                     },
                     borderRadius: BorderRadius.circular(100),
                     child: Avatar(user: user, radius: 72, fontSize: 32),

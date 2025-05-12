@@ -1,4 +1,3 @@
-import 'package:dishedout/providers/auth_gate_provider.dart';
 import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
@@ -72,15 +71,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final isAuthorised = ref.watch(isAuthorisedProvider);
     final authState = ref.watch(authNotifierProvider);
-    print('isAuthorised: $isAuthorised');
-
-    if (isAuthorised) {
-      print("User is authorised.");
-    } else {
-      print("User is not authorised.");
-    }
 
     return MaterialApp(
       theme: appTheme,

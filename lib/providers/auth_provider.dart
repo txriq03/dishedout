@@ -67,23 +67,6 @@ class AuthNotifier extends _$AuthNotifier {
     state = const AsyncLoading();
     print("Email: $email. Password: $password");
 
-    // OLD CODE
-    // state = await AsyncValue.guard(() async {
-    //   final UserCredential credential = await _auth.signUp(
-    //     email: email,
-    //     password: password,
-    //   );
-
-    //   await credential.user!.updateDisplayName(displayName);
-    //   await credential.user!.reload();
-    //   final updatedUser = _auth.currentUser!;
-
-    //   await _userService.addUserToFirestore(updatedUser);
-    //   ref.read(isAuthorisedProvider.notifier).set(true);
-
-    //   return await _userService.getUser(updatedUser.uid);
-    // });
-
     try {
       final UserCredential credential = await _auth.signUp(
         email: email,
@@ -105,10 +88,24 @@ class AuthNotifier extends _$AuthNotifier {
     }
   }
 
-  /// Sign out and clear state
   Future<void> signOut() async {
     await _auth.signOut();
     ref.read(isAuthorisedProvider.notifier).set(false);
     state = const AsyncData(null);
+  }
+
+  Future<void> changeProfilePic() async {
+    final previousState = state;
+    state = const AsyncLoading();
+
+    try {
+      final currentUser = _auth.currentUser;
+      await _userService.uploadImage();
+      final updatedProfile = await _userService.getUser(currentUser!.uid);
+      state = AsyncData(updatedProfile);
+    } catch (e) {
+      state = previousState;
+      print("ERROR CHANGING PROFILE: $e");
+    }
   }
 }
