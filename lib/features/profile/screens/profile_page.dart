@@ -90,18 +90,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () async {
-                      await ref
-                          .read(authNotifierProvider.notifier)
-                          .changeProfilePic();
-                    },
-                    borderRadius: BorderRadius.circular(100),
-                    child: Avatar(user: user, radius: 100, fontSize: 32),
-                  ),
-                ),
+                Avatar(user: user, radius: 100, fontSize: 32),
                 const SizedBox(height: 20),
                 Text(
                   user.displayName,
