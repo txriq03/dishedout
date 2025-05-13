@@ -108,4 +108,45 @@ class AuthNotifier extends _$AuthNotifier {
       print("ERROR CHANGING PROFILE: $e");
     }
   }
+
+  Future<void> changeProfile(Map<String, dynamic> data) async {
+    final previousState = state;
+    final user = state.asData?.value;
+    final authUser = _auth.currentUser;
+
+    if (user == null || authUser == null) return;
+
+    final newEmail = data['email'];
+    final newDisplayName = data['displayName'];
+    final phone = data['phone'];
+
+    try {
+      // 1. Update FirebaseAuth user credentials
+      if (authUser.email != newEmail) {
+        await authUser.verifyBeforeUpdateEmail(
+          newEmail,
+        ); // Verification sent to email, then email is updated
+      }
+
+      if (authUser.displayName != newDisplayName) {
+        await authUser.updateDisplayName(newDisplayName);
+      }
+
+      // TODO: Update phone number for authUser
+      // if (authUser.phoneNumber != newPhone) {
+      //   await authUser.updatePhoneNumber(newPhone);
+      // }
+
+      // 2. Update Firestore user document
+      await _userService.updateProfile(user.uid, data);
+
+      // 3. Update changes to show in UI
+      final updatedProfile = await _userService.getUser(authUser.uid);
+      state = AsyncData(updatedProfile);
+    } catch (e) {
+      state = previousState;
+      print("Error changing profile: $e");
+      rethrow;
+    }
+  }
 }

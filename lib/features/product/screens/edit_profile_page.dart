@@ -1,6 +1,4 @@
 import 'package:dishedout/providers/auth_provider.dart';
-import 'package:dishedout/services/auth_service.dart';
-import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/Avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,8 +14,6 @@ class EditProfilePage extends ConsumerStatefulWidget {
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
-  final UserService _userService = UserService();
-  final AuthService _authService = AuthService();
   TextEditingController? _displayNameController;
   TextEditingController? _emailController;
   TextEditingController? _phoneController;
@@ -157,16 +153,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     ? null
                     : () async {
                       if (_formKey.currentState!.validate()) {
-                        final authUser = _authService.currentUser;
-                        final user = ref
-                            .read(authNotifierProvider)
-                            .maybeWhen(
-                              data: (user) => user,
-                              orElse: () => null,
-                            );
-
-                        if (authUser == null || user == null) return;
-
                         setState(() => _isLoading = true); // Start loading
 
                         final newEmail = _emailController!.text.trim();
@@ -174,34 +160,16 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                             _displayNameController!.text.trim();
                         final newPhone = _phoneController!.text.trim();
 
+                        final updatedData = {
+                          'displayName': newDisplayName,
+                          'email': newEmail,
+                          'phone': newPhone,
+                        };
+
                         try {
-                          // 1. Update FirebaseAuth
-                          if (authUser.email != newEmail) {
-                            await authUser.verifyBeforeUpdateEmail(
-                              newEmail,
-                            ); // Verification sent to email, then email is updated
-                          }
-
-                          if (authUser.displayName != newDisplayName) {
-                            await authUser.updateDisplayName(newDisplayName);
-                          }
-
-                          // if (authUser.phoneNumber != newPhone) {
-                          //   await authUser.updatePhoneNumber(newPhone);
-                          // }
-
-                          // 2. Update Firestore user document
-                          final updatedData = {
-                            'displayName': newDisplayName,
-                            'email': newEmail,
-                            'phone': newPhone,
-                          };
-
-                          await _userService.updateProfile(
-                            user.uid,
-                            updatedData,
-                          );
-
+                          ref
+                              .read(authNotifierProvider.notifier)
+                              .changeProfile(updatedData);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Profile updated successfully'),
