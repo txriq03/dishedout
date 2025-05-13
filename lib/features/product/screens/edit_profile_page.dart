@@ -42,16 +42,44 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
             data: (user) {
               return Column(
                 children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () async {
-                        await ref
-                            .read(authNotifierProvider.notifier)
-                            .changeProfilePic();
-                      },
-                      borderRadius: BorderRadius.circular(100),
-                      child: Avatar(user: user, radius: 100, fontSize: 32),
+                  Center(
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        Material(
+                          color: Colors.transparent,
+                          shape: const CircleBorder(),
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            onTap: () async {
+                              await ref
+                                  .read(authNotifierProvider.notifier)
+                                  .changeProfilePic();
+                            },
+                            child: Avatar(
+                              user: user,
+                              radius: 100,
+                              fontSize: 32,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 8,
+                          right: 8,
+                          child: Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 20),
