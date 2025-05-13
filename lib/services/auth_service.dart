@@ -23,7 +23,6 @@ class AuthService {
     });
   }
 
-  // Future is used for asynchronous functions, when you want to declare the return type
   Future<UserCredential> login({
     required String email,
     required String password,
