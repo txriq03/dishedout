@@ -105,4 +105,8 @@ class UserService {
       'claimedPost': postUid,
     });
   }
+
+  Future<void> updateProfile(String uid, Map<String, dynamic> data) async {
+    await firestore.collection('users').doc(uid).update(data);
+  }
 }
