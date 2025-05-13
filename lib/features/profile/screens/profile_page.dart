@@ -1,5 +1,4 @@
 import 'package:dishedout/providers/auth_provider.dart';
-import 'package:dishedout/services/user_service.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,8 +11,6 @@ class ProfilePage extends ConsumerStatefulWidget {
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
-  final UserService _userService = UserService();
-
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
