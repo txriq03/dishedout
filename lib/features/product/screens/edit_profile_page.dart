@@ -14,25 +14,26 @@ class EditProfilePage extends ConsumerStatefulWidget {
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
-  late final TextEditingController _displayNameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _phoneController;
+  bool _isInitialized = false;
+  TextEditingController? _displayNameController;
+  TextEditingController? _emailController;
+  TextEditingController? _phoneController;
 
   @override
   void initState() {
     super.initState();
 
     // TODO: Replace with actual user data
-    _displayNameController = TextEditingController(text: "John Doe");
-    _emailController = TextEditingController(text: "john@example.com");
-    _phoneController = TextEditingController(text: "1234567890");
+    // _displayNameController = TextEditingController(text: "John Doe");
+    // _emailController = TextEditingController(text: "john@example.com");
+    // _phoneController = TextEditingController(text: "1234567890");
   }
 
   @override
   void dispose() {
-    _displayNameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
+    _displayNameController?.dispose();
+    _emailController?.dispose();
+    _phoneController?.dispose();
     super.dispose();
   }
 
@@ -50,9 +51,30 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, _) => Text("Error: $e", style: TextStyle(fontSize: 24)),
             data: (user) {
+              if (!_isInitialized) {
+                _displayNameController = TextEditingController(
+                  text: user?.displayName ?? '',
+                );
+                _emailController = TextEditingController(
+                  text: user?.email ?? '',
+                );
+
+                _isInitialized = true;
+              }
               return Column(
                 children: [
-                  Avatar(user: user, radius: 100, fontSize: 32),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        await ref
+                            .read(authNotifierProvider.notifier)
+                            .changeProfilePic();
+                      },
+                      borderRadius: BorderRadius.circular(100),
+                      child: Avatar(user: user, radius: 100, fontSize: 32),
+                    ),
+                  ),
                   SizedBox(height: 20),
                   TextFormField(
                     controller: _displayNameController,
