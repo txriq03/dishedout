@@ -20,7 +20,7 @@ class Avatar extends StatelessWidget {
       return CircleAvatar(
         radius: radius,
         backgroundImage: NetworkImage(imageUrl),
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Colors.grey.shade900,
       );
     }
 

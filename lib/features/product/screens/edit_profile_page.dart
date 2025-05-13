@@ -14,20 +14,9 @@ class EditProfilePage extends ConsumerStatefulWidget {
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
-  bool _isInitialized = false;
   TextEditingController? _displayNameController;
   TextEditingController? _emailController;
   TextEditingController? _phoneController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // TODO: Replace with actual user data
-    // _displayNameController = TextEditingController(text: "John Doe");
-    // _emailController = TextEditingController(text: "john@example.com");
-    // _phoneController = TextEditingController(text: "1234567890");
-  }
 
   @override
   void dispose() {
@@ -51,16 +40,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, _) => Text("Error: $e", style: TextStyle(fontSize: 24)),
             data: (user) {
-              if (!_isInitialized) {
-                _displayNameController = TextEditingController(
-                  text: user?.displayName ?? '',
-                );
-                _emailController = TextEditingController(
-                  text: user?.email ?? '',
-                );
-
-                _isInitialized = true;
-              }
               return Column(
                 children: [
                   Material(
@@ -78,6 +57,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                   SizedBox(height: 20),
                   TextFormField(
                     controller: _displayNameController,
+                    initialValue: user?.displayName ?? '',
                     decoration: const InputDecoration(
                       labelText: 'Display Name',
                       border: OutlineInputBorder(),
@@ -90,6 +70,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                   SizedBox(height: 12),
                   TextFormField(
                     controller: _emailController,
+                    initialValue: user?.email ?? '',
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       border: OutlineInputBorder(),
