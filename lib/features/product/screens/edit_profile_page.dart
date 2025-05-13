@@ -12,6 +12,9 @@ class EditProfilePage extends ConsumerStatefulWidget {
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Edit Profile')));
+    return Scaffold(
+      appBar: AppBar(title: Text('Edit Profile')),
+      body: Container(),
+    );
   }
 }

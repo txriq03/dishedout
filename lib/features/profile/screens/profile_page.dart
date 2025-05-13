@@ -37,17 +37,42 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       builder: (context) => const EditProfilePage(),
                     ),
                   );
+                  break;
                 case 'logout':
                   await ref.read(authNotifierProvider.notifier).signOut();
+                  break;
               }
             },
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem(
                   value: 'edit profile',
-                  child: Text('Edit Profile'),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.settings,
+                        size: 20,
+                        color: Colors.deepOrange.shade300,
+                      ),
+                      SizedBox(width: 5),
+                      Text('Edit Profile'),
+                    ],
+                  ),
                 ),
-                PopupMenuItem(value: 'logout', child: Text('Logout')),
+                PopupMenuItem(
+                  value: 'logout',
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.logout_rounded,
+                        size: 20,
+                        color: Colors.deepOrange.shade300,
+                      ),
+                      SizedBox(width: 5),
+                      Text('Logout'),
+                    ],
+                  ),
+                ),
               ];
             },
           ),
