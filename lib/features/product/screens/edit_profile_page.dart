@@ -86,32 +86,36 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                   TextFormField(
                     controller: _displayNameController,
                     initialValue: user?.displayName ?? '',
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.person_rounded,
+                        color: Colors.white.withValues(alpha: 0.4),
+                      ),
                       labelText: 'Display Name',
                       border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
                     ),
                   ),
                   SizedBox(height: 12),
                   TextFormField(
                     controller: _emailController,
                     initialValue: user?.email ?? '',
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.email_rounded,
+                        color: Colors.white.withValues(alpha: 0.4),
+                      ),
                       labelText: 'Email',
                       border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
                     ),
                   ),
                   SizedBox(height: 12),
                   TextFormField(
                     controller: _phoneController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.phone_rounded,
+                        color: Colors.white.withValues(alpha: 0.4),
+                      ),
                       labelText: 'Phone Number',
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.symmetric(
