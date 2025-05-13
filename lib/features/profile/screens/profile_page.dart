@@ -1,3 +1,4 @@
+import 'package:dishedout/features/product/screens/edit_profile_page.dart';
 import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,34 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
         ),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<String>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            onSelected: (value) async {
+              switch (value) {
+                case 'edit profile':
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const EditProfilePage(),
+                    ),
+                  );
+                case 'logout':
+                  await ref.read(authNotifierProvider.notifier).signOut();
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: 'edit profile',
+                  child: Text('Edit Profile'),
+                ),
+                PopupMenuItem(value: 'logout', child: Text('Logout')),
+              ];
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -40,8 +69,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () async {
-                      // await _userService.uploadImage();
-                      // TODO: Refresh the user after uploading image
                       await ref
                           .read(authNotifierProvider.notifier)
                           .changeProfilePic();
