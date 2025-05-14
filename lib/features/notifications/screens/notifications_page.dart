@@ -1,20 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dishedout/models/notifications_model.dart';
+import 'package:dishedout/providers/claimed_post_with_distance_provider.dart';
 import 'package:dishedout/services/maps_service.dart';
 import 'package:dishedout/services/post_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class NotificationsPage extends StatefulWidget {
+class NotificationsPage extends ConsumerStatefulWidget {
   const NotificationsPage({super.key});
 
   @override
-  State<NotificationsPage> createState() => _NotificationsPageState();
+  ConsumerState<NotificationsPage> createState() => _NotificationsPageState();
 }
 
-class _NotificationsPageState extends State<NotificationsPage> {
+class _NotificationsPageState extends ConsumerState<NotificationsPage> {
   final MapService _mapService = MapService();
   final User? currentUser = FirebaseAuth.instance.currentUser;
   LatLng? lenderLocation;
@@ -77,6 +79,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     final String? userId = FirebaseAuth.instance.currentUser?.uid;
+    final claimed = ref.watch(claimedPostWithDistanceProvider);
+    final isLoading = claimed is AsyncLoading;
+    final claimedData = claimed.asData?.value;
 
     if (userId == null) {
       return Scaffold(
@@ -95,27 +100,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
       ),
       body: Column(
         children: [
-          lenderLocation == null
-              ? Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "Waiting for post location...",
-                  style: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
-                ),
-              )
-              : StreamBuilder(
-                stream: distanceStream,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Text("Waiting for claimer location...");
-                  }
-
-                  double distance = snapshot.data!;
-                  String distanceText =
-                      distance >= 1609
-                          ? "${(distance * 0.000621371).toStringAsFixed(2)} miles away"
-                          : "${distance.toStringAsFixed(0)} meters away";
-
+          if (!isLoading)
+            StreamBuilder<double>(
+              stream: claimedData?.distanceStream,
+              builder: (context, snapshot) {
+                if (snapshot.data != null) {
                   return Hero(
                     tag: 'distance-hero',
                     child: Card(
@@ -143,14 +132,26 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           ),
                         ),
                         subtitle: Text(
-                          'Distance: $distanceText',
+                          'Distance: ${snapshot.data}',
                           style: TextStyle(color: Colors.grey[900]),
                         ),
                       ),
                     ),
                   );
-                },
-              ),
+                }
+
+                return Container(
+                  height: 70,
+                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).colorScheme.surfaceContainer,
+                  ),
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              },
+            ),
           StreamBuilder(
             stream:
                 FirebaseFirestore.instance
