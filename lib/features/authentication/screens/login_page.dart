@@ -177,6 +177,9 @@ class _SignupFormState extends ConsumerState<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authNotifierProvider);
+    final isLoading = authState is AsyncLoading;
+
     return Form(
       key: _formGlobalKey,
       child: Column(
@@ -251,18 +254,22 @@ class _SignupFormState extends ConsumerState<LoginForm> {
           Container(
             decoration: BoxDecoration(
               boxShadow: [
-                BoxShadow(
-                  color: Colors.deepOrange.withValues(alpha: 0.5),
-                  blurRadius: 15,
-                  spreadRadius: 0.1,
-                ),
+                if (!isLoading)
+                  BoxShadow(
+                    color: Colors.deepOrange.withValues(alpha: 0.5),
+                    blurRadius: 15,
+                    spreadRadius: 0.1,
+                  ),
               ],
               borderRadius: BorderRadius.circular(25),
             ),
             child: FilledButton(
-              onPressed: () {
-                _handleSubmit(context);
-              },
+              onPressed:
+                  isLoading
+                      ? null
+                      : () {
+                        _handleSubmit(context);
+                      },
               style: FilledButton.styleFrom(
                 minimumSize: Size(double.infinity, 55),
                 backgroundColor: Colors.deepOrange[400],
@@ -270,7 +277,17 @@ class _SignupFormState extends ConsumerState<LoginForm> {
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-              child: Text("Sign in", style: TextStyle(fontSize: 18)),
+              child:
+                  isLoading
+                      ? SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                      : Text("Sign in", style: TextStyle(fontSize: 18)),
             ),
           ),
 

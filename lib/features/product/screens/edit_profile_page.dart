@@ -17,7 +17,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   TextEditingController? _displayNameController;
   TextEditingController? _emailController;
   TextEditingController? _phoneController;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -149,8 +148,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     ? null
                     : () async {
                       if (_formKey.currentState!.validate()) {
-                        setState(() => _isLoading = true); // Start loading
-
                         final newEmail = _emailController!.text.trim();
                         final newDisplayName =
                             _displayNameController!.text.trim();
@@ -177,8 +174,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                               content: Text('Error updating profile: $e'),
                             ),
                           );
-                        } finally {
-                          setState(() => _isLoading = false);
                         }
                       }
                     },
