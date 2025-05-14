@@ -79,7 +79,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       child: Container(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.transparent,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
