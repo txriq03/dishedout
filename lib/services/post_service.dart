@@ -100,13 +100,13 @@ class PostService {
         case 'claimed':
           await postRef.update({'status': 'claimed'});
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'You have claimed this item! Collect it at the pick-up location',
-              ),
-            ),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(
+          //       'You have claimed this item! Collect it at the pick-up location',
+          //     ),
+          //   ),
+          // );
           break;
         case 'unavailable':
           await postRef.update({'status': 'unavailable'});
@@ -136,6 +136,7 @@ class PostService {
     await userService.updateClaimedPost(post.id);
 
     if (fcmToken != null) {
+      print("Running notifyLender!");
       await notifyLender(
         token: fcmToken,
         title: 'Your food has been claimed!',

@@ -72,7 +72,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
-    final isLoading = authState is AsyncLoading;
     final user = authState.asData?.value;
 
     return MaterialApp(
