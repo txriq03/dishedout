@@ -42,6 +42,12 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
+    final isLoading = authState is AsyncLoading;
+    final user = authState.asData?.value;
+
+    if (user == null && !isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text('Edit Profile'), centerTitle: true),
@@ -49,92 +55,82 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Form(
           key: _formKey,
-          child: authState.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, _) => Text("Error: $e", style: TextStyle(fontSize: 24)),
-            data: (user) {
-              return Column(
-                children: [
-                  Center(
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        Material(
+          child: Column(
+            children: [
+              Center(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      shape: const CircleBorder(),
+                      clipBehavior: Clip.antiAlias,
+                      child: InkWell(
+                        onTap: () async {
+                          await ref
+                              .read(authNotifierProvider.notifier)
+                              .changeProfilePic();
+                        },
+                        child: Avatar(user: user, radius: 100, fontSize: 32),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 8,
+                      right: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
                           color: Colors.transparent,
-                          shape: const CircleBorder(),
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            onTap: () async {
-                              await ref
-                                  .read(authNotifierProvider.notifier)
-                                  .changeProfilePic();
-                            },
-                            child: Avatar(
-                              user: user,
-                              radius: 100,
-                              fontSize: 32,
-                            ),
-                          ),
+                          shape: BoxShape.circle,
                         ),
-                        Positioned(
-                          bottom: 8,
-                          right: 8,
-                          child: Container(
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
+                        child: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 20,
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    controller: _displayNameController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.person_rounded,
-                        color: Colors.white.withValues(alpha: 0.4),
-                      ),
-                      labelText: 'Display Name',
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.email_rounded,
-                        color: Colors.white.withValues(alpha: 0.4),
-                      ),
-                      labelText: 'Email',
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  TextFormField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.phone_rounded,
-                        color: Colors.white.withValues(alpha: 0.4),
-                      ),
-                      labelText: 'Phone Number',
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
                       ),
                     ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _displayNameController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.person_rounded,
+                    color: Colors.white.withValues(alpha: 0.4),
                   ),
-                ],
-              );
-            },
+                  labelText: 'Display Name',
+                ),
+              ),
+              SizedBox(height: 12),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.email_rounded,
+                    color: Colors.white.withValues(alpha: 0.4),
+                  ),
+                  labelText: 'Email',
+                ),
+              ),
+              SizedBox(height: 12),
+              TextFormField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.phone_rounded,
+                    color: Colors.white.withValues(alpha: 0.4),
+                  ),
+                  labelText: 'Phone Number',
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -149,7 +145,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
               ),
             ),
             onPressed:
-                _isLoading
+                isLoading
                     ? null
                     : () async {
                       if (_formKey.currentState!.validate()) {
@@ -167,7 +163,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                         };
 
                         try {
-                          ref
+                          await ref
                               .read(authNotifierProvider.notifier)
                               .changeProfile(updatedData);
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -187,7 +183,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       }
                     },
             child:
-                _isLoading
+                isLoading
                     ? SizedBox(
                       width: 24,
                       height: 24,

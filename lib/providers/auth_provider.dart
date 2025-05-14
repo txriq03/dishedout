@@ -113,6 +113,7 @@ class AuthNotifier extends _$AuthNotifier {
     final previousState = state;
     final user = state.asData?.value;
     final authUser = _auth.currentUser;
+    state = const AsyncLoading();
 
     if (user == null || authUser == null) return;
 

@@ -72,25 +72,14 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
+    final isLoading = authState is AsyncLoading;
+    final user = authState.asData?.value;
 
     return MaterialApp(
       theme: appTheme,
       title: 'DishedOut',
       debugShowCheckedModeBanner: false,
-      home: authState.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error:
-            (e, _) => Center(
-              child: Text('Error: $e', style: TextStyle(fontSize: 24)),
-            ),
-        data: (user) {
-          if (user != null) {
-            return const Navbar();
-          } else {
-            return const AuthPage();
-          }
-        },
-      ),
+      home: user != null ? Navbar() : AuthPage(),
     );
   }
 }

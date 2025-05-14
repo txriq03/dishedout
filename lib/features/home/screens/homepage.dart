@@ -27,18 +27,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         titleSpacing: 10,
         title: Row(
           children: [
-            // FutureBuilder<UserModel?>(
-            //   future: _userService.getUser(_auth.currentUser!.uid),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.waiting) {
-            //       return const CircularProgressIndicator(); // or a placeholder avatar
-            //     } else if (snapshot.hasError) {
-            //       return const Icon(Icons.error); // or handle error
-            //     } else {
-            //       return Avatar(user: snapshot.data);
-            //     }
-            //   },
-            // ),
             authState.when(
               loading: () => const CircularProgressIndicator(),
               error: (e, _) => const Icon(Icons.error_rounded),
