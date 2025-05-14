@@ -70,6 +70,19 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
     });
   }
 
+  String? distanceInMiles(double? distanceInMeters) {
+    const double metersPerMile = 1609.34;
+
+    if (distanceInMeters == null) return null;
+
+    if (distanceInMeters >= metersPerMile) {
+      final miles = distanceInMeters / metersPerMile;
+      return '${miles.toStringAsFixed(2)} miles away';
+    } else {
+      return '${distanceInMeters.toStringAsFixed(0)} meters away';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -132,7 +145,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                           ),
                         ),
                         subtitle: Text(
-                          'Distance: ${snapshot.data}',
+                          'Distance: ${distanceInMiles(snapshot.data)}',
                           style: TextStyle(color: Colors.grey[900]),
                         ),
                       ),
