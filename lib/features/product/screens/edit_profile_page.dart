@@ -184,7 +184,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       height: 24,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.secondaryContainer,
                       ),
                     )
                     : const Text('Save Changes'),

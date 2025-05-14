@@ -284,7 +284,8 @@ class _SignupFormState extends ConsumerState<LoginForm> {
                         height: 24,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: Colors.white,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
                         ),
                       )
                       : Text("Sign in", style: TextStyle(fontSize: 18)),
