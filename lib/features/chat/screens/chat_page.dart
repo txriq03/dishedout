@@ -1,10 +1,12 @@
+import 'package:dishedout/services/chat_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   final String otherUserId;
   final String otherDisplayName;
-  const ChatPage({
+  ChatPage({
     super.key,
     required this.otherUserId,
     required this.otherDisplayName,
@@ -15,8 +17,23 @@ class ChatPage extends ConsumerStatefulWidget {
 }
 
 class _ChatPageState extends ConsumerState<ChatPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _controller = TextEditingController();
+  final ChatService _chatService = ChatService();
+
+  void _sendMessage() async {
+    final text = _controller.text.trim();
+    if (text.isNotEmpty) {}
+  }
+
   @override
   Widget build(BuildContext context) {
+    final currentUser = _auth.currentUser;
+
+    if (currentUser == null) {
+      return const Scaffold(body: Center(child: Text("User not logged in")));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.otherDisplayName, style: TextStyle(fontSize: 28)),
@@ -43,6 +60,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: _controller,
                       decoration: const InputDecoration(
                         hintText: "Type a message...",
                         border: OutlineInputBorder(),
@@ -54,7 +72,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  IconButton(icon: const Icon(Icons.send), onPressed: () {}),
+                  IconButton(
+                    icon: Icon(
+                      Icons.send,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                    ),
+                    onPressed: () {},
+                  ),
                 ],
               ),
             ),
