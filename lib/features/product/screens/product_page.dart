@@ -1,3 +1,4 @@
+import 'package:dishedout/features/chat/screens/chat_page.dart';
 import 'package:dishedout/models/post_model.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/post_service.dart';
@@ -182,7 +183,13 @@ class _ProductPageState extends State<ProductPage> {
                       child: IconButton(
                         color: Theme.of(context).colorScheme.primary,
                         icon: Icon(Icons.chat_rounded),
-                        onPressed: () {},
+                        onPressed: () {
+                          // Navigate to chat page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ChatPage()),
+                          );
+                        },
                       ),
                     ),
                   ],
