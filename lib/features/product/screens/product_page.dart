@@ -28,16 +28,19 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   Future<void> onClaimItem(BuildContext context) async {
+    // 1. Get coordinates of post (pick-up location)
     final LatLng lenderLocation = LatLng(
       widget.post.latitude,
       widget.post.longitude,
     );
 
+    // 2. Run claim item logic and set status to claimed
     await postService.claimItem(context, widget.post);
     setState(() {
       postStatus = 'claimed';
     });
 
+    // 3. Navigate to map for tracking
     Navigator.push(
       context,
       MaterialPageRoute(

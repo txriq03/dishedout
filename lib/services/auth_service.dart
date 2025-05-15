@@ -23,6 +23,7 @@ class AuthService {
     });
   }
 
+  // Login the user
   Future<UserCredential> login({
     required String email,
     required String password,
@@ -35,6 +36,7 @@ class AuthService {
     return credential;
   }
 
+  // Create a new user
   Future<UserCredential> signUp({
     required String email,
     required String password,
@@ -45,6 +47,7 @@ class AuthService {
     return credential;
   }
 
+  // Sign out the user
   Future<void> signOut() async {
     await FirebaseMessaging.instance.deleteToken();
     await _firebaseAuth.signOut();

@@ -119,7 +119,7 @@ class AuthNotifier extends _$AuthNotifier {
 
     final newEmail = data['email'];
     final newDisplayName = data['displayName'];
-    final phone = data['phone'];
+    // final phone = data['phone'];
 
     try {
       // 1. Update FirebaseAuth user credentials
