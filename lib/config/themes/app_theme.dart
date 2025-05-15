@@ -2,6 +2,12 @@
 import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
+  pageTransitionsTheme: PageTransitionsTheme(
+    builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+      TargetPlatform.values,
+      value: (_) => const FadeForwardsPageTransitionsBuilder(),
+    ),
+  ),
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.indigo,
