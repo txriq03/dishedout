@@ -187,7 +187,13 @@ class _ProductPageState extends State<ProductPage> {
                           // Navigate to chat page
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ChatPage()),
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => ChatPage(
+                                    otherUserId: widget.user!.uid,
+                                    otherDisplayName: widget.user!.displayName,
+                                  ),
+                            ),
                           );
                         },
                       ),
