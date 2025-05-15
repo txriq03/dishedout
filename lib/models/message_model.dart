@@ -4,14 +4,14 @@ class MessageModel {
   final String id;
   final String senderId;
   final String receiverId;
-  final String message;
+  final String text;
   final Timestamp timestamp;
 
   MessageModel({
     required this.id,
     required this.senderId,
     required this.receiverId,
-    required this.message,
+    required this.text,
     required this.timestamp,
   });
 
@@ -20,7 +20,7 @@ class MessageModel {
     return {
       'senderId': senderId,
       'receiverId': receiverId,
-      'message': message,
+      'text': text,
       'timestamp': timestamp,
     };
   }
@@ -32,7 +32,7 @@ class MessageModel {
       id: doc.id,
       senderId: data['senderId'] ?? '',
       receiverId: data['receiverId'] ?? '',
-      message: data['message'] ?? '',
+      text: data['text'] ?? '',
       timestamp: data['timestamp'] as Timestamp,
     );
   }
