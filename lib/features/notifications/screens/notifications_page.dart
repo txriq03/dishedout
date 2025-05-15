@@ -161,7 +161,13 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                     borderRadius: BorderRadius.circular(12),
                     color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(
+                    child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
                 );
               },
             ),

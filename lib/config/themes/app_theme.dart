@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
+  progressIndicatorTheme: ProgressIndicatorThemeData(year2023: false),
   pageTransitionsTheme: PageTransitionsTheme(
     builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
       TargetPlatform.values,
