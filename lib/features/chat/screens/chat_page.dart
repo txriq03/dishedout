@@ -1,16 +1,13 @@
+import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/chat_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
-  final String otherUserId;
-  final String otherDisplayName;
-  ChatPage({
-    super.key,
-    required this.otherUserId,
-    required this.otherDisplayName,
-  });
+  final UserModel otherUser;
+
+  const ChatPage({super.key, required this.otherUser});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatPageState();
@@ -23,7 +20,19 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   void _sendMessage() async {
     final text = _controller.text.trim();
-    if (text.isNotEmpty) {}
+    if (text.isNotEmpty) {
+      await _chatService.sendMessage(
+        receiverId: widget.otherUser.uid,
+        text: text,
+      );
+      _controller.clear();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,7 +45,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.otherDisplayName, style: TextStyle(fontSize: 28)),
+        title: Text(
+          widget.otherUser.displayName,
+          style: TextStyle(fontSize: 28),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -77,7 +89,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                       Icons.send,
                       color: Theme.of(context).colorScheme.secondaryContainer,
                     ),
-                    onPressed: () {},
+                    onPressed: () => _sendMessage(),
                   ),
                 ],
               ),

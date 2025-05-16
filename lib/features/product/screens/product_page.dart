@@ -189,10 +189,8 @@ class _ProductPageState extends State<ProductPage> {
                             context,
                             MaterialPageRoute(
                               builder:
-                                  (context) => ChatPage(
-                                    otherUserId: widget.user!.uid,
-                                    otherDisplayName: widget.user!.displayName,
-                                  ),
+                                  (context) =>
+                                      ChatPage(otherUser: widget.user!),
                             ),
                           );
                         },
