@@ -2,6 +2,7 @@ import 'package:dishedout/features/chat/widgets/chat_bubble.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/providers/chat_provider.dart';
 import 'package:dishedout/services/chat_service.dart';
+import 'package:dishedout/shared/widgets/avatar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,11 +51,41 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.otherUser.displayName,
-          style: TextStyle(fontSize: 28),
+        title: Row(
+          children: [
+            Avatar(user: widget.otherUser, radius: 20),
+            SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.otherUser.displayName,
+                  style: TextStyle(fontSize: 18),
+                ),
+                Text(
+                  'Online',
+                  style: TextStyle(fontSize: 12, color: Colors.greenAccent),
+                ),
+              ],
+            ),
+          ],
         ),
-        centerTitle: true,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainer,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.call,
+                color: Theme.of(context).colorScheme.secondaryContainer,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
