@@ -1,3 +1,4 @@
+import 'package:dishedout/features/chat/widgets/chat_bubble.dart';
 import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/providers/chat_provider.dart';
 import 'package:dishedout/services/chat_service.dart';
@@ -67,7 +68,17 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   return const Center(child: Text("Start the conversation"));
                 }
 
-                return Center(child: Text("Still in development"));
+                return ListView.builder(
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    final isCurrentUser = message.senderId == currentUser.uid;
+                    return ChatBubble(
+                      message: message,
+                      isCurrentUser: isCurrentUser,
+                    );
+                  },
+                );
               },
             ),
           ),
