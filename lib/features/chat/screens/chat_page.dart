@@ -1,4 +1,5 @@
 import 'package:dishedout/models/user_model.dart';
+import 'package:dishedout/providers/chat_provider.dart';
 import 'package:dishedout/services/chat_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final currentUser = _auth.currentUser;
+    final messageStream = ref.watch(
+      messageStreamProvider(widget.otherUser.uid),
+    );
 
     if (currentUser == null) {
       return const Scaffold(body: Center(child: Text("User not logged in")));
@@ -54,14 +58,17 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       body: Column(
         children: [
           Expanded(
-            child: Center(
-              child: Text(
-                "No messages yet :(",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white.withValues(alpha: 0.25),
-                ),
-              ),
+            child: messageStream.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error:
+                  (e, _) => Center(child: Text("Error loading messages: $e")),
+              data: (messages) {
+                if (messages.isEmpty) {
+                  return const Center(child: Text("Start the conversation"));
+                }
+
+                return Center(child: Text("Still in development"));
+              },
             ),
           ),
           SafeArea(
