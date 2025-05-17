@@ -54,7 +54,7 @@ class AuthPage extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 50),
                     child: Column(
                       children: [
                         ElevatedButton(

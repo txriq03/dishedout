@@ -91,6 +91,7 @@ flutter:
     - assets/images/onboarding/community.svg
     - assets/images/onboarding/chef.svg
     - assets/images/onboarding/selecting.svg
+    - assets/images/onboarding/navigation.svg
     - assets/animations/abstract.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

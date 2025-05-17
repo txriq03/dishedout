@@ -19,6 +19,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Scaffold(
       body: Column(
         children: [
+          // PageView showing onboarding slides
           Expanded(
             child: PageView.builder(
               controller: _controller,
@@ -30,26 +31,47 @@ class _OnboardingPageState extends State<OnboardingPage> {
               },
               itemBuilder: (context, index) {
                 final page = onboardingPages[index];
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                return Stack(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: SvgPicture.asset(page.imagePath, height: 300),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      page.title,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
+                    // Centered SVG image
+                    Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: SvgPicture.asset(page.imagePath, height: 300),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        page.description,
-                        textAlign: TextAlign.center,
+
+                    // Bottom text content
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SafeArea(
+                        minimum: const EdgeInsets.only(bottom: 100),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: [
+                              Text(
+                                page.title,
+                                style: const TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                page.description,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.75),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -57,6 +79,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
               },
             ),
           ),
+
+          // Page indicators
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
@@ -76,6 +100,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
           ),
           const SizedBox(height: 20),
+
+          // Button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ElevatedButton(
@@ -87,11 +113,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   );
                 } else {
                   _controller.nextPage(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
                 }
               },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size.fromHeight(50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
               child: Text(
                 currentPage == onboardingPages.length - 1
                     ? 'Get Started'
@@ -99,6 +131,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
             ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );

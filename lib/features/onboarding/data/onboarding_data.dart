@@ -13,17 +13,20 @@ class OnboardingInfo {
 final List<OnboardingInfo> onboardingPages = [
   OnboardingInfo(
     title: 'Welcome to DishedOut',
-    description: 'Share food and reduce waste in your community.',
+    description:
+        'DishedOut works by our users sharing the spare food they have, ultimately reducing food waste in households.',
     imagePath: 'assets/images/onboarding/community.svg',
   ),
   OnboardingInfo(
     title: 'Lend and Borrow Easily',
-    description: 'Post or claim food quickly using our simple platform.',
+    description:
+        'Post or claim food quickly using our simple platform. Our intuitive interface makes interaction super easy!',
     imagePath: 'assets/images/onboarding/selecting.svg',
   ),
   OnboardingInfo(
     title: 'Track & Meet',
-    description: 'Live tracking makes pickup seamless and secure.',
-    imagePath: 'assets/images/onboarding/chef.svg',
+    description:
+        'By using Google\'s Maps API, we provide live tracking that is seamless and secure.',
+    imagePath: 'assets/images/onboarding/navigation.svg',
   ),
 ];
