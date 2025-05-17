@@ -17,6 +17,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        actionsPadding: EdgeInsets.symmetric(horizontal: 10),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const AuthPage()),
+              );
+            },
+            child: Text(
+              "Skip",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w300,
+                color: Colors.white.withValues(alpha: 0.75),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           // PageView showing onboarding slides
