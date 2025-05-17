@@ -14,16 +14,16 @@ final List<OnboardingInfo> onboardingPages = [
   OnboardingInfo(
     title: 'Welcome to DishedOut',
     description: 'Share food and reduce waste in your community.',
-    imagePath: 'assets/animations/onboarding1.json',
+    imagePath: 'assets/images/onboarding/community.svg',
   ),
   OnboardingInfo(
     title: 'Lend and Borrow Easily',
     description: 'Post or claim food quickly using our simple platform.',
-    imagePath: 'assets/animations/onboarding2.json',
+    imagePath: 'assets/images/onboarding/selecting.svg',
   ),
   OnboardingInfo(
     title: 'Track & Meet',
     description: 'Live tracking makes pickup seamless and secure.',
-    imagePath: 'assets/animations/onboarding3.json',
+    imagePath: 'assets/images/onboarding/chef.svg',
   ),
 ];

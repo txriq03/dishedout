@@ -89,6 +89,8 @@ flutter:
     - assets/images/signup.svg
     - assets/images/login.svg
     - assets/images/onboarding/community.svg
+    - assets/images/onboarding/chef.svg
+    - assets/images/onboarding/selecting.svg
     - assets/animations/abstract.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

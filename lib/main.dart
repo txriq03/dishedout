@@ -1,3 +1,4 @@
+import 'package:dishedout/features/onboarding/screens/onboarding_page.dart';
 import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
@@ -78,7 +79,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       theme: appTheme,
       title: 'DishedOut',
       debugShowCheckedModeBanner: false,
-      home: user != null ? Navbar() : AuthPage(),
+      home: user != null ? Navbar() : OnboardingPage(),
     );
   }
 }
