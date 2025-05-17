@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:dishedout/features/authentication/screens/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:flutter/services.dart';
 import 'package:dishedout/config/themes/app_theme.dart';
@@ -42,11 +43,16 @@ void main() async {
   // Initialise local notifications
   await initLocalNotifications();
 
-  runApp(ProviderScope(child: MyApp()));
+  // Check if onboarding is complete
+  final prefs = await SharedPreferences.getInstance();
+  final showOnboarding = !(prefs.getBool('onboarding_complete') ?? false);
+
+  runApp(ProviderScope(child: MyApp(showOnboarding: showOnboarding)));
 }
 
 class MyApp extends ConsumerStatefulWidget {
-  const MyApp({super.key});
+  final bool showOnboarding;
+  const MyApp({super.key, required this.showOnboarding});
 
   @override
   ConsumerState<MyApp> createState() => _MyAppState();
@@ -74,12 +80,18 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
     final user = authState.asData?.value;
+    final showOnboarding = widget.showOnboarding;
 
     return MaterialApp(
       theme: appTheme,
       title: 'DishedOut',
       debugShowCheckedModeBanner: false,
-      home: user != null ? Navbar() : OnboardingPage(),
+      home:
+          user != null
+              ? Navbar()
+              : showOnboarding
+              ? OnboardingPage()
+              : AuthPage(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:dishedout/features/authentication/screens/auth_page.dart';
 import 'package:dishedout/features/onboarding/data/onboarding_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -14,6 +15,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _controller = PageController();
   int currentPage = 0;
 
+  Future<void> _completeOnboarding() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding_complete', true);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const AuthPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +33,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         actionsPadding: EdgeInsets.symmetric(horizontal: 10),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const AuthPage()),
-              );
-            },
+            onPressed: () => _completeOnboarding(),
             child: Text(
               "Skip",
               style: TextStyle(
@@ -131,10 +137,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: ElevatedButton(
               onPressed: () {
                 if (currentPage == onboardingPages.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AuthPage()),
-                  );
+                  _completeOnboarding();
                 } else {
                   _controller.nextPage(
                     duration: const Duration(milliseconds: 300),
