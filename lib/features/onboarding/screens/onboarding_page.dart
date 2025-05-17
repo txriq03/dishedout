@@ -85,7 +85,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
               onboardingPages.length,
-              (index) => Container(
+              (index) => AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 width: currentPage == index ? 16 : 8,
                 height: 8,
