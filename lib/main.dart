@@ -2,6 +2,7 @@ import 'package:dishedout/features/onboarding/screens/onboarding_page.dart';
 import 'package:dishedout/providers/auth_provider.dart';
 import 'package:dishedout/services/notification_service.dart';
 import 'package:dishedout/shared/widgets/navbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dishedout/features/authentication/screens/auth_page.dart';
@@ -79,8 +80,9 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
-    final user = authState.asData?.value;
+    // final user = authState.asData?.value;
     final showOnboarding = widget.showOnboarding;
+    final User? user = FirebaseAuth.instance.currentUser;
 
     return MaterialApp(
       theme: appTheme,

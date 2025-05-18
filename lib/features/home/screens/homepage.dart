@@ -27,6 +27,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         titleSpacing: 10,
         title: Row(
           children: [
+            // Display the user avatar and name if logged
             authState.when(
               loading: () => const CircularProgressIndicator(),
               error: (e, _) => const Icon(Icons.error_rounded),

@@ -32,13 +32,18 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Post>>(
-      future: _postService.getPosts(),
+      future: _postService.getPosts(), // Get list of posts
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(),
+          ); // Show loading indicator
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error loading posts: ${snapshot.error}'));
+          return Center(
+            child: Text('Error loading posts: ${snapshot.error}'),
+          ); // Show error message
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          // If posts are empty
           return Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 20),

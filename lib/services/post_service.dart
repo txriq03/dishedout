@@ -30,9 +30,7 @@ class PostService {
     }
     final uid = user.uid;
 
-    final fileName =
-        DateTime.now().millisecondsSinceEpoch
-            .toString(); // Moved outside the try block
+    final fileName = DateTime.now().millisecondsSinceEpoch.toString();
 
     try {
       // 1. Upload post image
@@ -99,14 +97,6 @@ class PostService {
       switch (updatedStatus) {
         case 'claimed':
           await postRef.update({'status': 'claimed'});
-
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text(
-          //       'You have claimed this item! Collect it at the pick-up location',
-          //     ),
-          //   ),
-          // );
           break;
         case 'unavailable':
           await postRef.update({'status': 'unavailable'});

@@ -87,44 +87,28 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             if (user == null) {
               return const Center(child: Text('User not found.'));
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Avatar(user: user, radius: 100, fontSize: 32),
-                const SizedBox(height: 20),
-                Text(
-                  user.displayName,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  user.email,
-                  style: TextStyle(fontSize: 14, color: Colors.grey[500]),
-                ),
-                const SizedBox(height: 40),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () async {
-                      await ref.read(authNotifierProvider.notifier).signOut();
-                    },
-                    icon: const Icon(Icons.logout, color: Colors.white),
-                    label: const Text(
-                      "Log out",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+            return SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+
+                children: [
+                  Avatar(user: user, radius: 100, fontSize: 32),
+                  const SizedBox(height: 20),
+                  Text(
+                    user.displayName,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Text(
+                    user.email,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                  ),
+                ],
+              ),
             );
           },
         ),
