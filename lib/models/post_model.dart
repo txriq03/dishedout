@@ -9,6 +9,7 @@ class Post {
   final String addressDescription;
   final double latitude;
   final double longitude;
+  final DateTime? createdAt;
   final String status;
 
   Post({
@@ -20,6 +21,7 @@ class Post {
     required this.addressDescription,
     required this.latitude,
     required this.longitude,
+    this.createdAt,
     this.status = 'available',
   });
 
@@ -37,6 +39,10 @@ class Post {
       latitude: (address['latitude'] as num?)?.toDouble() ?? 0.0,
       longitude: (address['longitude'] as num?)?.toDouble() ?? 0.0,
       status: data['status'] ?? 'available',
+      createdAt:
+          data['createdAt'] != null
+              ? (data['createdAt'] as Timestamp).toDate()
+              : null,
     );
   }
 
