@@ -67,15 +67,10 @@ class _UploadsCarouselState extends State<UploadsCarousel> {
 
         return ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 400, minHeight: 200),
-          child: CarouselView.weighted(
-            enableSplash: false,
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18),
-            ),
+          child: CarouselView(
+            itemExtent: 250,
+            shrinkExtent: 250,
             controller: controller,
-            itemSnapping: true,
-            flexWeights: [8, 3],
             children:
                 posts.map((post) {
                   return PostCard(post: post);
