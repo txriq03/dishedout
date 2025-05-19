@@ -5,6 +5,7 @@ import 'package:dishedout/models/user_model.dart';
 import 'package:dishedout/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -83,6 +84,30 @@ class _PostCardState extends State<PostCard> {
                   ),
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 5,
+            left: 16,
+            child: Chip(
+              label: Row(
+                children: [
+                  Icon(
+                    Icons.timelapse,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    timeago.format(widget.post.createdAt!),
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              side: BorderSide.none,
             ),
           ),
         ],
