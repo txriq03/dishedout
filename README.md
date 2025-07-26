@@ -1,7 +1,7 @@
 # DishedOut 🍽️
 
 <img alt="DishedOut" src="./assets/images//readme/dishedout.png" width="100%" >
-## A food lending application built with Flutter that connects the local community with the goal of reducing food waste. Designed with accessibility and community support in mind, it enables users to post, claim and manage food items with ease.
+A food lending application built with Flutter that connects the local community with the goal of reducing food waste. Designed with accessibility and community support in mind, it enables users to post, claim and manage food items with ease.
 
 ## 📱 Features
 
