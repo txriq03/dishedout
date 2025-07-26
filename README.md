@@ -59,4 +59,5 @@ flutter run
 ## 👨‍💻 Author
 
 Tariq Brown
+
 [Portfolio Website](https://tariqbrown.dev) • [Github](https://github.com/txriq03)
