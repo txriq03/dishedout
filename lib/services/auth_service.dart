@@ -6,6 +6,7 @@ export 'package:firebase_auth/firebase_auth.dart' show User;
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  // User that is currently logged in
   User? get currentUser => _firebaseAuth.currentUser;
 
   /* 
@@ -14,7 +15,7 @@ class AuthService {
   */
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  // Updated FCM token
+  // Updated FCM token. Needed so each user has a different FCM token
   void _handleFCMTokenRefresh(User user) {
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
